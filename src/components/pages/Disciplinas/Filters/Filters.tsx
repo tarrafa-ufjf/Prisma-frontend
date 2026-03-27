@@ -27,7 +27,6 @@ export default function Filters() {
                         <option>Interação Não Avaliativa</option>
                         <option>Desempenho</option>
                         <option>Profundidade Cognitiva</option>
-                        {/* <option>Relação Aluno-Professor</option> */}
                         <option>Desistência</option>
                     </select>
                 </div>

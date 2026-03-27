@@ -770,7 +770,7 @@ export const getColumns = (
   const allSubjectsColumns = [
     {
       label: "Disciplina",
-      name: "full_name",
+      name: "fullname",
       options: {
         sticky: true,
         headerClassName: "min-w-96",
@@ -925,7 +925,7 @@ export const getColumns = (
     },
     {
       label: "Semestre",
-      name: "semestre",
+      name: "period",
       cell: (row: DisciplinaType) => row.data,
     },
     {
@@ -933,12 +933,7 @@ export const getColumns = (
       name: "detalhes",
       cell: (row: DisciplinaType) => (
         <Link
-          href={{
-            pathname: "/cursos",
-            query: {
-              id: row.id,
-            },
-          }}
+          href={`/cursos/${row.id}`}
           className="cursor-pointer flex items-center justify-center w-full"
         >
           <FaPlus className="text-2xl text-gray-700" />
