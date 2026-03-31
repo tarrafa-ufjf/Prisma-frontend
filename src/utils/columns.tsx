@@ -789,7 +789,14 @@ export const getColumns = (
           </div>
         </div>
       ),
-      name: "full_name",
+      name: "flagEngajamento",
+      cell: (row: DisciplinaType) => (
+        <div
+          className={`py-1 rounded-md text-xs font-medium border-[1.5px] ${getFlagCor(row.flagMotivacao ?? "Não definido")}`}
+        >
+          {getNivel(row.flagMotivacao ?? "Não definido")}
+        </div>
+      ),
     },
     {
       label: (
@@ -913,21 +920,21 @@ export const getColumns = (
       name: "mediaNotasTurma",
       cell: () => Math.floor(Math.random() * 100),
     },
-    {
-      label: "Curso",
-      name: "cursoGrad",
-      cell: () => "Graduação",
-    },
+    // {
+    //   label: "Curso",
+    //   name: "cursoGrad",
+    //   cell: () => "Graduação",
+    // },
     {
       label: "Professor",
       name: "professor",
       cell: () => "Professor",
     },
-    {
-      label: "Semestre",
-      name: "period",
-      cell: (row: DisciplinaType) => row.data,
-    },
+    // {
+    //   label: "Semestre",
+    //   name: "period",
+    //   cell: (row: DisciplinaType) => row.data,
+    // },
     {
       label: "Detalhes",
       name: "detalhes",
