@@ -3,26 +3,32 @@ import NotFound from '@/components/ui/not-found';
 import { getCourses } from '@/utils/api';
 
 interface PageProps {
-  params: Promise<{
-    id: string
-    student_id: string
-  }>
+  params: {
+    id: string;
+    student_id: string;
+  };
 }
 
 export default async function Page({ params }: PageProps) {
-  const page_param = await params
-  const cursos = await getCourses()
-  const curso = cursos.filter(curso => curso.id == Number(page_param.id))[0]
+  const { id, student_id } = params;
+
+  const cursos = await getCourses();
+  const curso = cursos.find(curso => curso.id === Number(id));
 
   if (!curso) {
     return (
       <NotFound cursos={cursos}>
         <div className="flex-1 flex justify-center items-center pt-4 pl-[240px]">
-          <p>Curso {page_param.id} não encontrado! Por favor, use o menu no canto superior esquerdo, ou tente novamente mais tarde!</p>
+          <p>Curso {id} não encontrado!</p>
         </div>
       </NotFound>
-    )
+    );
   }
 
-  return <AlunoPageClient />;
+  return (
+    <AlunoPageClient
+      curso={curso}
+      alunoId={Number(student_id)}
+    />
+  );
 }
