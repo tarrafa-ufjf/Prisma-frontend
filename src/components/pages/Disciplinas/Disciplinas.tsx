@@ -26,7 +26,7 @@ export default function Disciplinas({ disciplinas }: DisciplinasProps) {
       </div>
     );
   }
-
+  
   return (
     <div className="flex-1 flex justify-center items-center pl-[240px]">
       <div className="BoxCurso">

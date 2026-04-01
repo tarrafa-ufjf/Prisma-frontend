@@ -59,7 +59,9 @@ const DataTable: React.FC<DataTableProps> = ({
   const [currentPage, setCurrentPage] = useState(1);
 
   const filteredData = data.filter((item) =>
-    normalizeString(item.full_name).includes(normalizeString(searchTerm)),
+    Object.values(item).some((value) =>
+      normalizeString(String(value)).includes(normalizeString(searchTerm))
+    )
   );
 
   const totalPages = Math.ceil(filteredData.length / rowsPerPage);
@@ -120,7 +122,7 @@ const DataTable: React.FC<DataTableProps> = ({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data.length > 0 ? (
+          {filteredData.length > 0 ? (
             currentData.map((row, rowIndex) => (
               <TableRow key={rowIndex} className="odd:bg-white even:bg-gray-50">
                 {columns.map((column, colIndex) => (
