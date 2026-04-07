@@ -47,7 +47,7 @@ export default function Header({ id, cursos }: HeaderProps) {
       <div className="componentsheader space-x-2">
         <Link href="/" className={getLinkClass('/')}>Home</Link>
         <Link href={currentBasePath == "/cursos" ? currentBasePath : `/cursos${savedCourse ? `/${savedCourse.id}` : ''}`} className={getLinkClass('/cursos')}>Disciplina</Link>
-        <Link href={currentBasePath == "/alunoss" ? currentBasePath : `/alunoss${savedCourse ? `/${savedCourse.id}` : ''}`} className={getLinkClass('/alunoss')}>Alunos</Link>
+        <Link href={currentBasePath == "/alunos" ? currentBasePath : `/alunos${savedCourse ? `/${savedCourse.id}` : ''}`} className={getLinkClass('/alunos')}>Alunos</Link>
 
         {cursos ? (
           <select

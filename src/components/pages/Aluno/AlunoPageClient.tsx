@@ -1,44 +1,53 @@
 'use client';
 
 import Aluno from '@/components/pages/Aluno/Aluno';
-import Header from '@/components/sidebar/Header/Header';
-import Sidebar from '@/components/ui/sidebar';
-import { useState, useEffect } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
-import { getAlunos } from '@/utils/mocks';
+import { useEffect, useState } from 'react';
+import { api } from '@/utils/api';
 
-const alunosMock = getAlunos();
+interface Props {
+  curso: any;
+  alunoId: number;
+}
 
-export default function AlunoPageClient() {
-    const [cursoSelecionado, setCursoSelecionado] = useState<number | null>(null);
-    const [alunoSelecionado, setAlunoSelecionado] = useState<number | null>(null);
-    const searchParams = useSearchParams();
-    const router = useRouter();
+export default function AlunoPageClient({ curso, alunoId }: Props) {
+  const [alunos, setAlunos] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const cursoIdFromURL = searchParams.get('cursoId');
-        const alunoIdFromURL = searchParams.get('alunoId');
+  useEffect(() => {
+    const fetchAlunos = async () => {
+      try {
+        const response = await api.get(
+          `analysis/subject/${curso.id}/students/engagement`
+        );
 
-        if (cursoIdFromURL && alunoIdFromURL) {
-            const cursoIdNumber = parseInt(cursoIdFromURL, 10);
-            const alunoIdNumber = parseInt(alunoIdFromURL, 10);
-            setCursoSelecionado(cursoIdNumber);
-            setAlunoSelecionado(alunoIdNumber);
-        }
-    }, [searchParams]);
+        const lista = response.data.data;
 
-    useEffect(() => {
-        if (cursoSelecionado && alunoSelecionado) {
-            router.push(`/alunos?cursoId=${cursoSelecionado}&alunoId=${alunoSelecionado}`);
-        }
-    }, [cursoSelecionado, alunoSelecionado, router]);
+        const alunosFormatados = lista.map((item: any) => ({
+          ...item,
+          id: item.user_id,
+        }));
 
-    return (
-        <Aluno
-            cursos={[]}
-            cursoSelecionado={cursoSelecionado}
-            alunos={alunosMock}
-            alunoSelecionado={alunoSelecionado}
-        />
-    );
+        setAlunos(alunosFormatados);
+      } catch (err) {
+        console.error("Erro ao buscar alunos:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAlunos();
+  }, [curso.id]);
+
+  if (loading) {
+    return <div>Carregando...</div>;
+  }
+
+  return (
+    <Aluno
+      cursos={[curso]}
+      cursoSelecionado={curso.id}
+      alunos={alunos}
+      alunoSelecionado={alunoId}
+    />
+  );
 }

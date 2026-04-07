@@ -40,15 +40,15 @@ export default function LoginPage({ redirectTo = '/' }: LoginPageProps) {
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
                 <div className="flex justify-center">
                     <Image
-                        src="/iconeTarrafa.svg"
-                        alt="Tarrafa Logo"
+                        src="/iconePrisma.png"
+                        alt="Prisma Logo"
                         width={80}
                         height={80}
                         className="mx-auto"
                     />
                 </div>
                 <h2 className="mt-6 text-center text-3xl font-semibold text-gray-900 font-poppins">
-                    Projeto Tarrafa
+                    Projeto Prisma
                 </h2>
                 <p className="mt-2 text-center text-sm text-gray-600 font-poppins">
                     Faça login em sua conta

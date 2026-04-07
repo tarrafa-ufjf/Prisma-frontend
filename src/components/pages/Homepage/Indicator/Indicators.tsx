@@ -74,7 +74,7 @@ export default function Indicators() {
         </div>
         <div className="m-10">
           <Link
-            href="/cursos"
+            href="/disciplinas"
             className="px-4 py-2 rounded bg-[#5a6acf] text-white hover:bg-[#374DAA] transition"
           >
             Saiba mais

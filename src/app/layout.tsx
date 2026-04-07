@@ -12,7 +12,7 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Projeto Tarrafa",
+  title: "Projeto Prisma",
   description: "Aplicação usando Next.js",
   icons: {
     icon: "/favicon.png",

@@ -47,8 +47,8 @@ export default function Sidebar() {
         <div className="sidebaralign">
           <Link href="/">
             <Image
-              src="/iconeTarrafa.svg"
-              alt="Tarrafa logomark"
+              src="/iconePrisma.png"
+              alt="Prisma logomark"
               width={200}
               height={60}
             />
