@@ -840,9 +840,9 @@ export const getColumns = (
       name: "flagMotivacao",
       cell: (row: DisciplinaType) => (
         <div
-          className={`py-1 rounded-md text-xs font-medium border-[1.5px] ${getFlagCor(row.flagMotivacao ?? "Não definido")}`}
+          className={`py-1 rounded-md text-xs font-medium border-[1.5px] ${getFlagCor(row.flagEngajamento ?? "Não definido")}`}
         >
-          {getNivel(row.flagMotivacao ?? "Não definido")}
+          {getNivel(row.flagEngajamento ?? "Não definido")}
         </div>
       ),
     },

@@ -61,7 +61,7 @@ export default function GeneralData() {
 
             <div className="flex flex-row items-center">
               <p className="text-base text-gray-600 mb-2 text-left mr-6">
-                Média de<br />tutores por<br />disciplina
+                Média de<br />alunos por<br />tutor
               </p>
               <div className="w-20 h-12 bg-gray-100 flex items-center justify-center rounded text-base ">
                 {data.mean_tutors_per_degree_program ? data.mean_tutors_per_degree_program.toLocaleString('pt-BR') : 0}

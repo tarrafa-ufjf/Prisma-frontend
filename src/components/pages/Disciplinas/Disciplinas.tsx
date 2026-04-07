@@ -11,6 +11,8 @@ interface DisciplinasProps {
 
 export default function Disciplinas({ disciplinas }: DisciplinasProps) {
   const [searchTerm, setSearchTerm] = React.useState('');
+  const [indicador, setIndicador] = React.useState('');
+  const [magnitude, setMagnitude] = React.useState('');
   const activeTab = 'allSubjects';
 
   const columns = getColumns(activeTab, null);
@@ -26,6 +28,34 @@ export default function Disciplinas({ disciplinas }: DisciplinasProps) {
       </div>
     );
   }
+
+  const normalize = (value: string) => {
+    return value
+      .toLowerCase()
+      .trim()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/\s+/g, "_");
+  };
+
+  const disciplinasFiltradas = disciplinas.filter((d) => {
+    if (!indicador) return true;
+
+    const map: Record<string, string | undefined> = {
+      "Interação Avaliativa": d.flagMotivacao,
+      "Interação Não Avaliativa": d.flagEngajamento,
+      "Desempenho": d.flagDesempenho,
+      "Profundidade Cognitiva": d.flagProfCog,
+      "Desistência": d.flagDesistencia ? "alto" : "baixo",
+    };
+    const valor = map[indicador];
+
+    if (!valor) return false;
+
+    if (!magnitude) return true;
+
+    return normalize(valor) === normalize(magnitude);
+  });
   
   return (
     <div className="flex-1 flex justify-center items-center pl-[240px]">
@@ -42,7 +72,12 @@ export default function Disciplinas({ disciplinas }: DisciplinasProps) {
         </div>
         <div className="flex flex-col gap-4">
           <div className="flex flex-row items-center justify-between gap-1 mb-1">
-            <Filters />
+            <Filters
+              indicador={indicador}
+              setIndicador={setIndicador}
+              magnitude={magnitude}
+              setMagnitude={setMagnitude}
+            />
             <div className="flex-shrink-0">
               <SearchInput searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder="Disciplina" />
             </div>
@@ -50,7 +85,7 @@ export default function Disciplinas({ disciplinas }: DisciplinasProps) {
 
           <DataTable
             rowsPerPage={10}
-            data={disciplinas}
+            data={disciplinasFiltradas}
             columns={columns}
             searchTerm={searchTerm}
           />
