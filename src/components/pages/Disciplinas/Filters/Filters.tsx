@@ -6,6 +6,11 @@ interface FiltersProps {
 }
 
 export default function Filters({indicador, setIndicador, magnitude, setMagnitude,}: FiltersProps) {
+    const opcoesMagnitude =
+    indicador === "Desistência"
+      ? ["Positiva", "Negativa"]
+      : ["Muito Alto", "Alto", "Médio", "Baixo", "Muito Baixo"];
+      
     return (
         <div className="flex flex-row min-w-0">
             <div className="flex flex-row gap-2">
@@ -36,17 +41,15 @@ export default function Filters({indicador, setIndicador, magnitude, setMagnitud
                     </select>
                 </div>
                 <div className="flex flex-row">
-                    <div className="flex-1 border-2 border-gray-300 bg-gray-100 p-2">
-                        <span className="text-gray-700">Magnitude</span>
-                    </div>
-                    <select className="flex-1 select-filter cursor-pointer" value={magnitude} onChange={(e) => setMagnitude(e.target.value)}>
-                        <option value="">Selecione</option>
-                        <option>Muito Alto</option>
-                        <option>Alto</option>
-                        <option>Médio</option>
-                        <option>Baixo</option>
-                        <option>Muito Baixo</option>
-                    </select>
+                <div className="flex-1 border-2 border-gray-300 bg-gray-100 p-2">
+                    <span className="text-gray-700">Magnitude</span>
+                </div>
+                <select className="flex-1 select-filter cursor-pointer" value={magnitude} onChange={(e) => setMagnitude(e.target.value)}>
+                    <option value="">Selecione</option>
+                    {opcoesMagnitude.map((m) => (
+                        <option key={m} value={m}>{m}</option>
+                    ))}
+                </select>
                 </div>
             </div>
         </div>

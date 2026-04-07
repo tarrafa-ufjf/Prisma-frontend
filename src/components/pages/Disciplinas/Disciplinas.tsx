@@ -46,7 +46,7 @@ export default function Disciplinas({ disciplinas }: DisciplinasProps) {
       "Interação Não Avaliativa": d.flagEngajamento,
       "Desempenho": d.flagDesempenho,
       "Profundidade Cognitiva": d.flagProfCog,
-      "Desistência": d.flagDesistencia ? "alto" : "baixo",
+      "Desistência": d.flagDesistencia ? "positiva" : "negativa",
     };
     const valor = map[indicador];
 
