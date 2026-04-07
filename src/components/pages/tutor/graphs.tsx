@@ -152,7 +152,7 @@ function DotPlotChart({ title, subtitle, data, xLabel }: DotPlotChartProps) {
                 </text>
 
                 {/* Linha da Média (sólida roxa) */}
-                {data.mean > 0 && (
+                {data.mean >= 0 && (
                     <line
                         x1={scaleX(data.mean)}
                         y1={padding.top}
@@ -164,7 +164,7 @@ function DotPlotChart({ title, subtitle, data, xLabel }: DotPlotChartProps) {
                 )}
 
                 {/* Linha da Mediana (tracejada roxa) */}
-                {data.median > 0 && (
+                {data.median >= 0 && (
                     <line
                         x1={scaleX(data.median)}
                         y1={padding.top}
