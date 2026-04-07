@@ -7,6 +7,32 @@ import { Tutor as TutorType } from "@/types/tutor";
 import { get } from "http";
 import { Aluno as AlunoType } from "@/types/aluno";
 
+const getProfessores = (teachers?: { full_name: string; tutor_id: number }[]) => {
+  if (!teachers || teachers.length === 0) {
+    return <span>Não definido</span>;
+  }
+
+  const max = 1;
+  const visible = teachers.slice(0, max);
+  const remaining = teachers.length - max;
+
+  return (
+    <div className="flex flex-col">
+      {visible.map((teacher) => (
+        <span key={teacher.tutor_id} className="text-sm">
+          {teacher.full_name}
+        </span>
+      ))}
+
+      {remaining > 0 && (
+        <span className="text-xs text-gray-500">
+          +{remaining} outros
+        </span>
+      )}
+    </div>
+  );
+};
+
 export const getNivel = (flag: string) => {
   if (flag == null || typeof flag !== "string") return "Não definido";
   const normalized = flag
@@ -927,8 +953,12 @@ export const getColumns = (
     // },
     {
       label: "Professor",
-      name: "professor",
-      cell: () => "Professor",
+      name: "teachers",
+      options: {
+        headerClassName: "min-w-64",
+        cellClassName: "min-w-64",
+      },
+      cell: (row: DisciplinaType) => getProfessores(row.teachers),
     },
     // {
     //   label: "Semestre",

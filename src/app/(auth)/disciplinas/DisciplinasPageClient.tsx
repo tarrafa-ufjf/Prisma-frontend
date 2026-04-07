@@ -31,7 +31,7 @@ export default function DisciplinasPageClient() {
         numAlunosMatriculados: s.total_enrolled ?? 0,
         mediaNotasTurma: s.mean_subject ?? 0,
 
-        professor: s.teachers?.[0] ?? "—",
+        teachers: s.teachers ?? [],
       }));
 
       setDisciplinas(mapped);

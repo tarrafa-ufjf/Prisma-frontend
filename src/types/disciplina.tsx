@@ -5,6 +5,10 @@ export interface DisciplinaType {
     data: string;
     value: number;
     // flags
+    teachers?: {
+        full_name: string;
+        tutor_id: number;
+    }[];
     flagEngajamento?: string;
     flagMotivacao?: string;
     flagDesempenho?: string;
