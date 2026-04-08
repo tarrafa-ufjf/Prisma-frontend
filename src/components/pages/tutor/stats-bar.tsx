@@ -3,23 +3,8 @@
 import { useEffect, useState } from "react";
 import { useError } from "@/hooks/useError";
 import { api } from "@/utils/api";
-
-type PointsInfo = {
-    is_current: boolean;
-    tutor_id: number;
-    value: number;
-};
-
-type GraphInfo = {
-    mean: number;
-    median: number;
-    points: PointsInfo[];
-};
-
-type GraphsInfo = {
-    interactions: GraphInfo;
-    response_time_hours: GraphInfo;
-};
+import ScrollableTabs from "@/components/template/indicadoresTabs";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/tabela';
 
 interface StatsBarProps {
     id_course: number;
@@ -31,12 +16,14 @@ type Metric = {
     value: number | string;
 };
 
+type TutorTab = 'Respostas em Fóruns' | 'Acessos ao Moodle' | 'Feedbacks';
+
 export default function StatsBar({ id_course, id_tutor }: StatsBarProps) {
     const [accessStats, setAccessStats] = useState<any>(null);
     const [forumStats, setForumStats] = useState<any>(null);
     const [feedbackStats, setFeedbackStats] = useState<any>(null);
-    const [activeTab, setActiveTab] = useState("Respostas em Fóruns");
-
+    const [activeTab, setActiveTab] = useState<TutorTab>("Respostas em Fóruns");
+    const tabs: TutorTab[] = ["Respostas em Fóruns", "Acessos ao Moodle", "Feedbacks"];
     const error = useError();
 
     useEffect(() => {
@@ -76,7 +63,7 @@ export default function StatsBar({ id_course, id_tutor }: StatsBarProps) {
     if (!accessStats || !forumStats || !feedbackStats) {
         return <div className="text-gray-500">Carregando Indicadores...</div>;
     }
-
+    
     // FORUM 
     const forumMetrics: Metric[] = forumStats
         ? [
@@ -107,63 +94,40 @@ export default function StatsBar({ id_course, id_tutor }: StatsBarProps) {
             ? forumMetrics
             : activeTab === "Feedbacks"
                 ? feedbackMetrics
-                : accessMetrics;                  
+                : accessMetrics;              
         
     return (
-        <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4 w-full">
+    <div className="bg-white rounded-xl border border-gray-100 shadow-sm p-4 w-full">
+      {/* Tabs */}
+      <ScrollableTabs
+        tabs={tabs}
+        activeTab={activeTab}
+        setTab={setActiveTab}
+        />
 
-            {/* TABS */}
-            <div className="flex gap-2 mb-4">
-                {["Respostas em Fóruns", "Acessos ao Moodle", "Feedbacks"].map(tab => (
-                    <button
-                        key={tab}
-                        onClick={() => setActiveTab(tab)}
-                        className={`px-4 py-2 rounded transition font-bold
-                            ${activeTab === tab
-                                ? "bg-[#5a6acf] text-white"
-                                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-                            }`}
-                    >
-                        {tab}
-                    </button>
-                ))}
-            </div>
-
-            {/* TABELA */}
-            <div className="overflow-x-auto">
-                <div className="min-w-[900px]">
-
-                    {/* HEADER */}
-                    <div
-                        className="px-2 py-0 rounded grid bg-gray-100 text-gray-500 text-sm font-semibold rounded-t-md"
-                        style={{
-                            gridTemplateColumns: `repeat(${metricsToShow.length}, minmax(150px, 1fr))`
-                        }}
-                    >
-                        {metricsToShow.map((metric, i) => (
-                            <div key={i} className="p-3 text-center leading-normal">
-                                {metric.label}
-                            </div>
-                        ))}
-                    </div>
-
-                    {/* VALORES */}
-                    <div
-                        className="grid bg-white text-gray-800 text-base border border-gray-200 rounded-b-md"
-                        style={{
-                            gridTemplateColumns: `repeat(${metricsToShow.length}, minmax(150px, 1fr))`
-                        }}
-                    >
-                        {metricsToShow.map((metric, i) => (
-                            <div key={i} className="p-3 text-center">
-                                {metric.value}
-                            </div>
-                        ))}
-                    </div>
-
-                </div>
-            </div>
-
-        </div>
-    );
+      {/* Tabela */}
+      <div className="overflow-x-auto mt-4">
+        <Table className="border border-gray-100 shadow-sm">
+          <TableHeader>
+            <TableRow className="bg-gray-100 h-16">
+              {metricsToShow.map((metric, i) => (
+                <TableHead key={i} className="text-center min-w-40">
+                  {metric.label}
+                </TableHead>
+              ))}
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            <TableRow className="h-16">
+              {metricsToShow.map((metric, i) => (
+                <TableCell key={i} className="p-4">
+                  <div className="flex items-center justify-center">{metric.value}</div>
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableBody>
+        </Table>
+      </div>
+    </div>
+  );
 }
