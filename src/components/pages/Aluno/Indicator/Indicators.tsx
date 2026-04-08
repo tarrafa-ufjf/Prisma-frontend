@@ -12,12 +12,29 @@ import AlunoRow from '@/components/template/alunoRow';
 import ScrollableTabs from '@/components/template/indicadoresTabs';
 import { Tooltip } from '@/components/template/tooltip';
 import { getIndicatorsInfo } from '@/utils/indicatorsInfo';
-import Link from 'next/link';
+import { api } from '@/utils/api';
 
 interface IndicatorsProps {
   aluno: AlunoType;
   cursoSelecionado: number | null;
-}
+};
+
+type Indicadores = {
+  performance: string;
+  cognitive: string;
+  engagement: string;
+  motivation: string;
+  give_up: boolean;
+};
+
+const formatarIndicador = (texto?: string) => {
+  if (!texto) return "";
+
+  return texto
+    .toLowerCase()
+    .replace(/_/g, " ")
+    .replace(/\b\w/g, (letra) => letra.toUpperCase());
+};
 
 export const getNivel = (nivel: number) => {
   switch (nivel) {
@@ -43,6 +60,43 @@ const tabs: Tab[] = [
 
 export default function Indicators({ aluno, cursoSelecionado }: IndicatorsProps) {
   const [activeTab, setActiveTab] = React.useState<Tab>("Interação Avaliativa");
+  const [indicadores, setIndicadores] = React.useState<Indicadores | null>(null);
+  const [loading, setLoading] = React.useState(false);
+
+  React.useEffect(() => {
+    async function fetchData() {
+      try {
+        setLoading(true);
+
+        const response = await api.get(
+          `analysis/subject/${cursoSelecionado}/student/${aluno.id}/indicators`
+        );
+
+        const data =
+          response.data?.data.indicators || null;
+
+        setIndicadores(data);
+
+      } catch (error) {
+        console.error("Erro ao buscar nota final:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    if (cursoSelecionado && aluno?.id) {
+      fetchData();
+    }
+  }, [cursoSelecionado, aluno?.id]); 
+
+  if (loading) {
+    return <p className="text-sm">Carregando...</p>;
+  }
+
+  if (!indicadores) {
+    return <p className="text-sm">Indicadores não encontrados.</p>;
+  }
+  console.log("Indicadores recebidos:", indicadores);
 
   return (
     <div className="Box my-6">
@@ -73,7 +127,7 @@ export default function Indicators({ aluno, cursoSelecionado }: IndicatorsProps)
               </div>
               <div className="flex w-full justify-center">
                 <div className="flex flex-col leading-snug">
-                  <p className="font-semibold text-2xl">{aluno.posts_unrequired_label}</p>
+                  <p className="font-semibold text-2xl">{formatarIndicador(indicadores.engagement)}</p>
                 </div>
               </div>
             </div>
@@ -98,7 +152,7 @@ export default function Indicators({ aluno, cursoSelecionado }: IndicatorsProps)
               </div>
               <div className="flex w-full justify-center">
                 <div className="flex flex-col leading-snug">
-                  <p className="font-semibold text-2xl">{aluno.posts_unrequired_label}</p>
+                  <p className="font-semibold text-2xl">{formatarIndicador(indicadores.motivation)}</p>
                 </div>
               </div>
             </div>
@@ -123,7 +177,7 @@ export default function Indicators({ aluno, cursoSelecionado }: IndicatorsProps)
               </div>
               <div className="flex w-full justify-center">
                 <div className="flex flex-col leading-snug">
-                  <p className="font-semibold text-2xl">{aluno.performance_label}</p>
+                  <p className="font-semibold text-2xl">{formatarIndicador(indicadores.performance)}</p>
                 </div>
               </div>
             </div>
@@ -148,7 +202,7 @@ export default function Indicators({ aluno, cursoSelecionado }: IndicatorsProps)
               </div>
               <div className="flex w-full justify-center">
                 <div className="flex flex-col leading-snug">
-                  <p className="font-semibold text-2xl">{aluno.cognitive_label}</p>
+                  <p className="font-semibold text-2xl">{formatarIndicador(indicadores.cognitive)}</p>
                 </div>
               </div>
             </div>
@@ -202,7 +256,7 @@ export default function Indicators({ aluno, cursoSelecionado }: IndicatorsProps)
             </div>
             <div className="flex w-full justify-center">
               <div className="flex flex-col leading-snug">
-                <p className="font-semibold text-2xl">{aluno.give_up}</p>
+                <p className="font-semibold text-2xl">{getDesistencia(indicadores.give_up)}</p>
               </div>
             </div>
           </div>
