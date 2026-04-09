@@ -1,13 +1,9 @@
+import { Aluno as AlunoType } from "@/types/aluno";
+import { Curso } from "@/types/curso";
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
-
-const atividades = [
-  { nome: "Apresentação AC 1", nota: 100 },
-  { nome: "Fórum 1", nota: 100 },
-  { nome: "Fórum 3", nota: 50 },
-  { nome: "Avaliação Presencial", nota: 70 },
-];
+import { api } from '@/utils/api';
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 25,
@@ -26,17 +22,65 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
     }),
   },
 }));
+type Props = {
+  curso: Curso;
+  aluno: AlunoType;
+};
 
-export default function ProgressBars() {
+export default function AtividadesChart({ curso, aluno }: Props) {
+  const [atividades, setAtividades] = React.useState<any[]>([]);
+  const [loading, setLoading] = React.useState(false);
+
+  React.useEffect(() => {
+    async function fetchData() {
+      try {
+        setLoading(true);
+
+        const response = await api.get(
+          `analysis/subject/${curso.id}/student/${aluno.id}/grades`
+        );
+
+        const activities =
+          response.data?.data?.student_grades?.activities || [];
+
+        setAtividades(activities);
+      } catch (error) {
+        console.error('Erro ao buscar atividades:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    if (curso?.id && aluno?.id) {
+      fetchData();
+    }
+  }, [curso, aluno]);
+
+  if (loading) {
+    return <p className="text-sm">Carregando...</p>;
+  }
+
+  if (!atividades.length) {
+    return <p className="text-sm">Nenhuma atividade encontrada.</p>;
+  }
+  console.log("Atividades: ", atividades);
+  
   return (
     <div className="p-3 max-w-[475px] w-full max-h-[225px] overflow-y-auto space-y-4">
       {atividades.map((a, i) => (
-        <>
+        <React.Fragment key={i}>
           <div className="flex flex-row justify-between">
-            <p key={i} className="text-xs font-medium">{a.nome}</p>
-            <p className="text-xs font-medium">{a.nota}%</p>
+            <p className="text-xs font-medium">{a.activity_name}</p>
+            <p className="text-xs font-medium">
+              {((a.grade_real / a.grade_max) * 100).toFixed(2)} %
+            </p>
           </div>
-          <BorderLinearProgress variant="determinate" key={i} value={a.nota} />
+
+          <BorderLinearProgress
+            variant="determinate"
+            value={(a.grade_real / a.grade_max) * 100}
+          />
+
           <div className="flex flex-row justify-between text-xs text-gray-500">
             <p>0</p>
             <p>20</p>
@@ -45,8 +89,8 @@ export default function ProgressBars() {
             <p>80</p>
             <p>100</p>
           </div>
-        </>
-      ))}
+        </React.Fragment>
+    ))}
     </div>
   );
 }

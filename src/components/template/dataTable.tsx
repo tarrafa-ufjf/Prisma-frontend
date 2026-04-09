@@ -146,7 +146,7 @@ const DataTable: React.FC<DataTableProps> = ({
           ) : (
             <TableRow>
               <TableCell colSpan={columns.length} className="py-7">
-                <Loading>Carregando Alunos...</Loading>
+                <Loading>Carregando dados...</Loading>
               </TableCell>
             </TableRow>
           )}

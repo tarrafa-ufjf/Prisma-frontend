@@ -11,6 +11,8 @@ type CursoType = {
   nome: string;
   data: string;
   value: number;
+  fullname: string;
+  period: string;
 };
 
 interface AlunoProps {
@@ -60,7 +62,7 @@ export default function Aluno({ cursos, cursoSelecionado, alunos, alunoSeleciona
         </div>
         {curso && aluno && (
           <div className="flex flex-col justify-between">
-            <DadosPessoais aluno={aluno} />
+            <DadosPessoais aluno={aluno} curso={curso} />
 
             <Indicators aluno={aluno} cursoSelecionado={cursoSelecionado} />
 
@@ -70,7 +72,7 @@ export default function Aluno({ cursos, cursoSelecionado, alunos, alunoSeleciona
                   Nota final
                 </h1>
                 <p className="text-[#9291A5] mb-6 pb-4 border-b border-gray-200">da disciplina</p>
-                <div className="flex p-2 justify-center"><GaugeChart/></div>
+                <div className="flex p-2 justify-center"><GaugeChart curso={curso} aluno={aluno}/></div>
               </div>
 
               <div className="Box4 flex-1 p-6">
@@ -79,7 +81,7 @@ export default function Aluno({ cursos, cursoSelecionado, alunos, alunoSeleciona
                 </h1>
                 <p className="text-[#9291A5] mb-4 pb-4 border-b border-gray-200">da disciplina</p>
                 <div className="overflow-auto">
-                  <AtividadesChart/>
+                  <AtividadesChart curso={curso} aluno={aluno}/>
                 </div>
               </div>
             </div>
