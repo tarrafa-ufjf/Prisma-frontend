@@ -15,11 +15,14 @@ import {
 interface AlunoRowProps {
     aluno: AlunoType;
     activeTab: string;
-}
+};
 
 const AlunoRow: React.FC<AlunoRowProps> = ({ aluno, activeTab }) => {
     const render = (columnName: string, value: any) => {
         switch (columnName) {
+            case 'num_posts_required':
+            case 'media_percentual':
+                return value !== null && value !== undefined ? value.toString() : '-';
             case 'flagEngajamento':
             case 'flagMotivacao':
             case 'flagDesempenho':
@@ -51,14 +54,14 @@ const AlunoRow: React.FC<AlunoRowProps> = ({ aluno, activeTab }) => {
         switch (activeTab) {
             case "Interação Avaliativa":
                 return [
-                    { label: "Nº de Posts em Fóruns Avaliativos", name: "nPostsForunsAv" },
+                    { label: "Nº de Posts em Fóruns Avaliativos", name: "num_posts_required" },
                     { label: "Percentual de Quizzes Realizados", name: "quizzesRealiz" },
                     { label: "Percentual de Tarefas Enviadas", name: "tarefasEnv" },
                 ];
 
             case "Desempenho":
                 return [
-                    { label: "Média Geral das Notas Avaliativas", name: "mediaNotas" },
+                    { label: "Média Geral das Notas Avaliativas", name: "media_percentual" },
                     { label: "Comparação com a Média da Turma", name: "compMedia" },
                     { label: "Nº de Atividades Abaixo da Média", name: "ativAbaixoMedia" },
                 ];
@@ -79,18 +82,9 @@ const AlunoRow: React.FC<AlunoRowProps> = ({ aluno, activeTab }) => {
 
             case "Relação Aluno-Professor":
                 return [
-                    { label: "Nº de Mensagens Trocadas com o Professor", name: "nMsgsAlunoProf" },
+                    { label: "Nº de Mensagens Trocadas com o Professor", name: "nMsgsAlunoProf"},
                     { label: "Percentual de Participação em Fóruns Mediados pelo Docente", name: "partForunsDocente" },
                     { label: "Frequência de Contato Aluno-Professor", name: "freqContAlunoProf" },
-                ];
-
-            case "Desistência":
-                return [
-                    { label: "Índice de Interação Avaliativa", name: "flagEngajamento" },
-                    { label: "Índice de Interação Não Avaliativa", name: "flagMotivacao" },
-                    { label: "Índice de Desempenho", name: "flagDesempenho" },
-                    { label: "Índice de Relação Aluno-Professor", name: "flagRelAlunoProf" },
-                    { label: "Índice de Desistência", name: "flagDesistencia" },
                 ];
 
             default:
