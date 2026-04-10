@@ -13,6 +13,8 @@ import ScrollableTabs from '@/components/template/indicadoresTabs';
 import { Tooltip } from '@/components/template/tooltip';
 import { getIndicatorsInfo } from '@/utils/indicatorsInfo';
 import { api } from '@/utils/api';
+import Loading from "@/components/ui/loading";
+
 
 interface IndicatorsProps {
   aluno: AlunoType;
@@ -55,14 +57,13 @@ const tabs: Tab[] = [
   'Desempenho',
   'Profundidade Cognitiva',
   // 'Relação Aluno-Professor',
-  'Desistência'
 ];
 
 export default function Indicators({ aluno, cursoSelecionado }: IndicatorsProps) {
   const [activeTab, setActiveTab] = React.useState<Tab>("Interação Avaliativa");
   const [indicadores, setIndicadores] = React.useState<Indicadores | null>(null);
   const [loading, setLoading] = React.useState(false);
-
+  
   React.useEffect(() => {
     async function fetchData() {
       try {
@@ -90,7 +91,8 @@ export default function Indicators({ aluno, cursoSelecionado }: IndicatorsProps)
   }, [cursoSelecionado, aluno?.id]); 
 
   if (loading) {
-    return <p className="text-sm">Carregando...</p>;
+    return  <Loading>Carregando Dados</Loading>
+    
   }
 
   if (!indicadores) {
