@@ -37,6 +37,7 @@ export default function Filters({indicador, setIndicador, magnitude, setMagnitud
                         <option>Interação Não Avaliativa</option>
                         <option>Desempenho</option>
                         <option>Profundidade Cognitiva</option>
+                        <option>Relação Aluno-Professor</option>
                         <option>Desistência</option>
                     </select>
                 </div>
