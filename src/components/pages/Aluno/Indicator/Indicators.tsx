@@ -91,7 +91,7 @@ export default function Indicators({ aluno, cursoSelecionado }: IndicatorsProps)
   }, [cursoSelecionado, aluno?.id]); 
 
   if (loading) {
-    return  <Loading>Carregando Dados</Loading>
+    return  <Loading>Carregando Indicadores</Loading>
     
   }
 
@@ -281,7 +281,7 @@ export default function Indicators({ aluno, cursoSelecionado }: IndicatorsProps)
         </div>
       </div>
 
-      <AlunoRow aluno={aluno} activeTab={activeTab} />
+      <AlunoRow aluno={aluno} activeTab={activeTab} cursoSelecionado={cursoSelecionado} />
     </div>
   );
 }
