@@ -15,4 +15,6 @@ export interface DisciplinaType {
     flagProfCog?: string;
     flagRelAlunoProf?: string;
     flagDesistencia?: boolean;
+    total_enrolled?: number;
+    mean_subject?:number;
 }

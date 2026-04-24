@@ -12,12 +12,31 @@ import AlunoRow from '@/components/template/alunoRow';
 import ScrollableTabs from '@/components/template/indicadoresTabs';
 import { Tooltip } from '@/components/template/tooltip';
 import { getIndicatorsInfo } from '@/utils/indicatorsInfo';
-import Link from 'next/link';
+import { api } from '@/utils/api';
+import Loading from "@/components/ui/loading";
+
 
 interface IndicatorsProps {
   aluno: AlunoType;
   cursoSelecionado: number | null;
-}
+};
+
+type Indicadores = {
+  performance: string;
+  cognitive: string;
+  engagement: string;
+  motivation: string;
+  give_up: boolean;
+};
+
+const formatarIndicador = (texto?: string) => {
+  if (!texto) return "";
+
+  return texto
+    .toLowerCase()
+    .replace(/_/g, " ")
+    .replace(/\b\w/g, (letra) => letra.toUpperCase());
+};
 
 export const getNivel = (nivel: number) => {
   switch (nivel) {
@@ -38,11 +57,48 @@ const tabs: Tab[] = [
   'Desempenho',
   'Profundidade Cognitiva',
   // 'Relação Aluno-Professor',
-  'Desistência'
 ];
 
 export default function Indicators({ aluno, cursoSelecionado }: IndicatorsProps) {
   const [activeTab, setActiveTab] = React.useState<Tab>("Interação Avaliativa");
+  const [indicadores, setIndicadores] = React.useState<Indicadores | null>(null);
+  const [loading, setLoading] = React.useState(false);
+  
+  React.useEffect(() => {
+    async function fetchData() {
+      try {
+        setLoading(true);
+
+        const response = await api.get(
+          `analysis/subject/${cursoSelecionado}/student/${aluno.id}/indicators`
+        );
+
+        const data =
+          response.data?.data.indicators || null;
+
+        setIndicadores(data);
+
+      } catch (error) {
+        console.error("Erro ao buscar nota final:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    if (cursoSelecionado && aluno?.id) {
+      fetchData();
+    }
+  }, [cursoSelecionado, aluno?.id]); 
+
+  if (loading) {
+    return  <Loading>Carregando Dados</Loading>
+    
+  }
+
+  if (!indicadores) {
+    return <p className="text-sm">Indicadores não encontrados.</p>;
+  }
+  console.log("Indicadores recebidos:", indicadores);
 
   return (
     <div className="Box my-6">
@@ -59,21 +115,21 @@ export default function Indicators({ aluno, cursoSelecionado }: IndicatorsProps)
         <div className={styles.EspacarIndicadores}>
           <div className="relative quadrado bg-[#DCFCE7]">
             <div className="flex flex-col w-full justify-between">
-              <div className="flex justify-center items-center space-x-3 mb-3">
-                <div className="bg-[#3CD856] rounded-full flex items-center justify-center min-w-8 h-8 ml-9">
+              <div className="ml-5 flex justify-start space-x-3">
+                <div className="bg-[#3CD856] rounded-full flex items-center justify-center w-8 h-8 min-w-8">
                   <Image
                     src={alunoIcon1}
                     alt="Ícone aluno-professor"
                     width={15}
                     height={20}
-                    className="mr-0.5 object-cover"
+                    className="object-cover"
                   />
                 </div>
-                <p className="text-lg text-wrap font-bold text-[#3CD856] leading-snug">Índice de Interação Avaliativa</p>
+                <p className="text-lg font-bold text-[#3CD856] leading-snug">Índice de Interação Avaliativa</p>
               </div>
-              <div className="flex w-full justify-center">
+              <div className="ml-17 mt-3 flex text-left">
                 <div className="flex flex-col leading-snug">
-                  <p className="font-semibold text-2xl">{aluno.posts_unrequired_label}</p>
+                  <p className="text-xl font-bold text-gray-900">{formatarIndicador(indicadores.engagement)}</p>
                 </div>
               </div>
             </div>
@@ -84,21 +140,23 @@ export default function Indicators({ aluno, cursoSelecionado }: IndicatorsProps)
 
           <div className="relative quadrado bg-[#C3D8FF]">
             <div className="flex flex-col w-full justify-between">
-              <div className="flex justify-center items-center space-x-3 mb-3">
-                <div className="bg-[#3C56D8] rounded-full flex items-center justify-center min-w-8 h-8 ml-7">
+              <div className="ml-5 flex justify-start space-x-3">
+                <div className="bg-[#3C56D8] rounded-full flex items-center justify-center w-8 h-8 min-w-8">
                   <Image
                     src={alunoIcon3}
                     alt="Ícone aluno-professor"
                     width={21}
                     height={28}
-                    className="ml-2.5 object-cover"
+                    className="object-cover translate-x-[5px]"
                   />
                 </div>
-                <p className="text-lg text-wrap font-bold text-[#3C56D8] leading-snug">Índice de Interação Não Avaliativa</p>
+                <p className="text-lg font-bold text-[#3C56D8] leading-snug">
+                  Índice de Interação<br />Não Avaliativa
+                </p>
               </div>
-              <div className="flex w-full justify-center">
+              <div className="ml-17 mt-3 flex text-left">
                 <div className="flex flex-col leading-snug">
-                  <p className="font-semibold text-2xl">{aluno.posts_unrequired_label}</p>
+                  <p className="text-xl font-bold text-gray-900">{formatarIndicador(indicadores.motivation)}</p>
                 </div>
               </div>
             </div>
@@ -121,9 +179,11 @@ export default function Indicators({ aluno, cursoSelecionado }: IndicatorsProps)
                 </div>
                 <p className="text-xl font-bold text-[#D8D03C]">Desempenho</p>
               </div>
-              <div className="flex w-full justify-center">
+              <div className="ml-17 mt-3 flex text-left">
                 <div className="flex flex-col leading-snug">
-                  <p className="font-semibold text-2xl">{aluno.performance_label}</p>
+                  <p className="text-xl font-bold text-gray-900">
+                    {formatarIndicador(indicadores.performance)}
+                  </p>
                 </div>
               </div>
             </div>
@@ -134,21 +194,21 @@ export default function Indicators({ aluno, cursoSelecionado }: IndicatorsProps)
 
           <div className="relative quadrado bg-[#FFD3A6]">
             <div className="flex flex-col w-full justify-between">
-              <div className="flex justify-center items-center space-x-3 mb-4">
-                <div className="bg-[#D86D3C] rounded-full flex items-center justify-center min-w-8 h-8 ml-6">
+              <div className="ml-5 flex justify-start space-x-3">
+                <div className="bg-[#D86D3C] rounded-full flex items-center justify-center w-8 h-8 min-w-8">
                   <Image
                     src={cognitive_depth}
-                    alt="Ícone motivação"
+                    alt="Ícone profundidade cognitiva"
                     width={18}
                     height={20}
-                    className="mlobject-cover"
+                    className="object-cover"
                   />
                 </div>
-                <p className="text-lg font-bold text-[#D86D3C]">Profundidade Cognitiva</p>
+                <p className="text-lg font-bold text-[#D86D3C] leading-snug">Profundidade Cognitiva</p>
               </div>
-              <div className="flex w-full justify-center">
+              <div className="ml-17 mt-3 flex text-left">
                 <div className="flex flex-col leading-snug">
-                  <p className="font-semibold text-2xl">{aluno.cognitive_label}</p>
+                  <p className="text-xl font-bold text-gray-900">{formatarIndicador(indicadores.cognitive)}</p>
                 </div>
               </div>
             </div>
@@ -156,7 +216,6 @@ export default function Indicators({ aluno, cursoSelecionado }: IndicatorsProps)
               <Tooltip message={getIndicatorsInfo.profCogInfo} />
             </div>
           </div>
-
         </div>
       </div>
 
@@ -186,9 +245,9 @@ export default function Indicators({ aluno, cursoSelecionado }: IndicatorsProps)
           </div>
         </div> */}
 
-        <div className="relative quadrado bg-[#FFD8E2]">
+        <div className="relative quadrado bg-[#FFD8E2] !w-[223px]">
           <div className="flex flex-col w-full justify-between">
-            <div className="flex justify-center items-center space-x-3 mb-4">
+            <div className="flex items-center space-x-3 ml-5 mt-1">
               <div className="bg-[#D83C8C] rounded-full flex items-center justify-center w-8 h-8">
                 <Image
                   src={alunoIcon5}
@@ -200,9 +259,9 @@ export default function Indicators({ aluno, cursoSelecionado }: IndicatorsProps)
               </div>
               <p className="text-xl font-bold text-[#D83C8C]">Desistência</p>
             </div>
-            <div className="flex w-full justify-center">
-              <div className="flex flex-col leading-snug">
-                <p className="font-semibold text-2xl">{aluno.give_up}</p>
+            <div className="flex w-full justify-center mt-2">
+              <div className="flex flex-col items-center leading-snug">
+                <p className="text-xl font-bold text-gray-900">{getDesistencia(indicadores.give_up)}</p>
               </div>
             </div>
           </div>

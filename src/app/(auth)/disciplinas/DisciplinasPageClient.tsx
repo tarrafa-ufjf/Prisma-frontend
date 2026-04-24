@@ -28,8 +28,8 @@ export default function DisciplinasPageClient() {
         flagRelAlunoProf: s.label_relation_teacher_student,
         flagDesistencia: s.label_give_up === "alto",
 
-        numAlunosMatriculados: s.total_enrolled ?? 0,
-        mediaNotasTurma: s.mean_subject ?? 0,
+        total_enrolled: s.total_enrolled ?? 0,
+        mean_subject: s.mean_subject ?? 0,
 
         teachers: s.teachers ?? [],
       }));

@@ -33,6 +33,26 @@ const getProfessores = (teachers?: { full_name: string; tutor_id: number }[]) =>
   );
 };
 
+const getMatriculados = (total_enrolled?: number) => {
+  if (total_enrolled == null) {
+    return (
+      <span>Não definido</span>
+    );
+  }
+
+  return (
+    <span>{total_enrolled}</span>
+  );
+};
+
+const getNotaMedia = (mean_subject?: number) => {
+  if (mean_subject == null || mean_subject === 0) {
+    return <span>Não definido</span>;
+  }
+
+  return <span>{mean_subject.toFixed(3)}</span>;
+};
+
 export const getNivel = (flag: string) => {
   if (flag == null || typeof flag !== "string") return "Não definido";
   const normalized = flag
@@ -392,7 +412,7 @@ export const getColumns = (
       label: (
         <div className="flex flex-row relative">
           <div className="w-[90%]">
-            <p>Índice da procentagem de feedbacks</p>
+            <p>Índice da porcentagem de feedbacks</p>
           </div>
         </div>
       ),
@@ -928,23 +948,23 @@ export const getColumns = (
     },
     {
       label: "Nº de Alunos Matriculados",
-      name: "numAlunosMatriculados",
-      cell: () => Math.floor(Math.random() * 100) + 30,
+      name: "total_enrolled",
+      cell: (row: DisciplinaType) => getMatriculados(row.total_enrolled),
     },
-    {
-      label: "Nº de Alunos Aprovados",
-      name: "numAlunosAprovados",
-      cell: () => Math.floor(Math.random() * 70) + 30,
-    },
-    {
-      label: "Nº de Alunos Reprovados",
-      name: "numAlunosReprovados",
-      cell: () => Math.floor(Math.random() * 20),
-    },
+    // {
+    //   label: "Nº de Alunos Aprovados",
+    //   name: "numAlunosAprovados",
+    //   cell: () => Math.floor(Math.random() * 70) + 30,
+    // },
+    // {
+    //   label: "Nº de Alunos Reprovados",
+    //   name: "numAlunosReprovados",
+    //   cell: () => Math.floor(Math.random() * 20),
+    // },
     {
       label: "Média de Notas da Turma",
-      name: "mediaNotasTurma",
-      cell: () => Math.floor(Math.random() * 100),
+      name: "mean_subject",
+      cell: (row: DisciplinaType) => getNotaMedia(row.mean_subject),
     },
     // {
     //   label: "Curso",

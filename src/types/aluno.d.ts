@@ -15,12 +15,13 @@ export type Aluno = {
     detalhes?: React.ReactNode;
     full_name?: string
     user_id?: number
-
+    
     // engajamento & desempenho
     num_posts_required?: number
     posts_required_label?: string
 
     // motivacao
+    num_posts_unrequired?: number
     posts_unrequired_label?: string
     comparative?: number
     media_percentual?: number
@@ -29,7 +30,9 @@ export type Aluno = {
     user_id?: number
 
     // profundidade cognitiva
-
+    forum_mean_level?: number
+    quiz_mean_level?: number
+    assign_mean_level?: number
     // relacao aluno-professor
 
     // desistencia
@@ -45,4 +48,4 @@ export type Aluno = {
     value?: number; // usado para os rankings de alunos 
 }
 
-export type Tab = 'Interação Avaliativa' | 'Interação Não Avaliativa' | 'Desempenho' | 'Profundidade Cognitiva' | 'Desistência' | 'Respostas em Fóruns' | 'Acesso à Disciplina' | 'Feedback';
+export type Tab = 'Interação Avaliativa' | 'Interação Não Avaliativa' | 'Desempenho' | 'Profundidade Cognitiva' | 'Respostas em Fóruns' | 'Acesso à Disciplina' | 'Feedback';
