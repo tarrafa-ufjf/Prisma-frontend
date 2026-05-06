@@ -1,11 +1,11 @@
+import { createClient } from "@/supabase/server-client";
 import { Curso } from "@/types/curso";
 import axios from "axios";
 
 const base_url = process.env.NEXT_PUBLIC_API_BASE_URL || ''
 
 async function getSupabaseAccessToken() {
-    const { createClient } = await import("@/supabase/browers-client")
-    const supabase = createClient()
+    const supabase = await createClient()
     const { data } = await supabase.auth.getSession()
 
     return data.session?.access_token ?? null

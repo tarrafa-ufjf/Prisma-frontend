@@ -3,7 +3,7 @@ import Graficos from '@/components/pages/Curso/Graficos/graficos';
 import Indicators from '@/components/pages/Curso/Indicator/Indicators';
 import Rankings from '@/components/pages/Curso/rankings/ranking';
 import NotFound from '@/components/ui/not-found';
-import { getCourses } from '@/utils/api';
+import { getCourses } from '@/utils/api-server';
 
 interface PageProps {
   params: Promise<{

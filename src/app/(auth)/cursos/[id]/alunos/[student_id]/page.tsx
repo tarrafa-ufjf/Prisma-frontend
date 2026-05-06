@@ -1,6 +1,6 @@
 import AlunoPageClient from '@/components/pages/Aluno/AlunoPageClient';
 import NotFound from '@/components/ui/not-found';
-import { getCourses } from '@/utils/api';
+import { getCourses } from '@/utils/api-server';
 
 interface PageProps {
   params: {

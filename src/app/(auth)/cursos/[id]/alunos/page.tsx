@@ -1,4 +1,4 @@
-import { getCourses } from '@/utils/api';
+import { getCourses } from '@/utils/api-server';
 import NotFound from '@/components/ui/not-found';
 import Alunos from '@/components/pages/Alunos/Alunos';
 

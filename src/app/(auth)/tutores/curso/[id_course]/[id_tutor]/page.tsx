@@ -5,7 +5,7 @@ import StatsBar from "@/components/pages/tutor/stats-bar"
 import PageTemplate from "@/components/template/page-template"
 import ErrorMessage from "@/components/ui/error-message"
 import NotFound from "@/components/ui/not-found"
-import { api, getCourses } from "@/utils/api"
+import { api, getCourses } from "@/utils/api-server"
 import Link from "next/link"
 
 interface PageProps {
