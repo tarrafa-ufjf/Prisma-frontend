@@ -28,24 +28,12 @@ export default function CadastrarUsuarioPage() {
 
                     <div className="flex flex-col gap-2">
                         <label className="text-sm text-gray-700">
-                            Nome
-                        </label>
-
-                        <input
-                            type="text"
-                            placeholder="Digite o nome do usuário"
-                            className="border border-gray-200 rounded-lg p-3"
-                        />
-                    </div>
-
-                    <div className="flex flex-col gap-2">
-                        <label className="text-sm text-gray-700">
-                            Email
+                            E-mail
                         </label>
 
                         <input
                             type="email"
-                            placeholder="Digite o email"
+                            placeholder="Digite o e-mail"
                             className="border border-gray-200 rounded-lg p-3"
                         />
                     </div>
@@ -60,18 +48,6 @@ export default function CadastrarUsuarioPage() {
                             placeholder="Digite a senha"
                             className="border border-gray-200 rounded-lg p-3"
                         />
-                    </div>
-
-                    <div className="flex flex-col gap-2">
-                        <label className="text-sm text-gray-700">
-                            Perfil
-                        </label>
-
-                        <select className="border border-gray-200 rounded-lg p-3">
-                            <option>Administrador</option>
-                            <option>Tutor</option>
-                            <option>Professor</option>
-                        </select>
                     </div>
 
                     <div className="mt-4">

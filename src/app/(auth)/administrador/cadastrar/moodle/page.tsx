@@ -28,36 +28,60 @@ export default function CadastrarMoodlePage() {
 
                     <div className="flex flex-col gap-2">
                         <label className="text-sm text-gray-700">
-                            Nome da Instituição
+                            Host
                         </label>
 
                         <input
                             type="text"
-                            placeholder="Digite o nome"
+                            placeholder="Digite o host"
                             className="border border-gray-200 rounded-lg p-3"
                         />
                     </div>
 
                     <div className="flex flex-col gap-2">
                         <label className="text-sm text-gray-700">
-                            URL do Moodle
+                            Porta
                         </label>
 
                         <input
-                            type="text"
-                            placeholder="https://moodle.instituicao.com"
+                            type="int"
+                            placeholder="Digite a porta"
                             className="border border-gray-200 rounded-lg p-3"
                         />
                     </div>
 
                     <div className="flex flex-col gap-2">
                         <label className="text-sm text-gray-700">
-                            Token de acesso
+                            Banco de Dados
+                        </label>
+
+                        <input
+                            type="text"
+                            placeholder="Digite database"
+                            className="border border-gray-200 rounded-lg p-3"
+                        />
+                    </div>
+
+                    <div className="flex flex-col gap-2">
+                        <label className="text-sm text-gray-700">
+                            Usuário
+                        </label>
+
+                        <input
+                            type="text"
+                            placeholder="Digite o usuário"
+                            className="border border-gray-200 rounded-lg p-3"
+                        />
+                    </div>
+
+                    <div className="flex flex-col gap-2">
+                        <label className="text-sm text-gray-700">
+                            Senha
                         </label>
 
                         <input
                             type="password"
-                            placeholder="Digite o token"
+                            placeholder="Digite a senha"
                             className="border border-gray-200 rounded-lg p-3"
                         />
                     </div>
