@@ -52,7 +52,7 @@ export default function CadastrarMoodlePage() {
 
                     <div className="flex flex-col gap-2">
                         <label className="text-sm text-gray-700">
-                            Banco de Dados
+                            Database
                         </label>
 
                         <input

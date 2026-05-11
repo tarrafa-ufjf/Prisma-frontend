@@ -6,7 +6,7 @@ import PageTemplate from "@/components/template/page-template";
 export default function AdministradorPage() {
     return (
         <PageTemplate
-            title="Administração do Sistema"
+            title="Administração"
             subTitle="Gerenciamento Geral"
         >
             <AdmRow />

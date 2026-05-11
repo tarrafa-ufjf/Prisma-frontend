@@ -26,7 +26,7 @@ export default function AdmRow() {
 
                         <div className="flex flex-row items-center">
                             <p className="text-base text-gray-600 mb-2 text-left mr-6">
-                                Total de<br />usuários<br />do sistema
+                                Total de usuários do sistema
                             </p>
 
                             <div className="w-20 h-12 bg-gray-100 flex items-center justify-center rounded text-base">
@@ -36,22 +36,12 @@ export default function AdmRow() {
 
                         <div className="flex flex-row items-center">
                             <p className="text-base text-gray-600 mb-2 text-left mr-6">
-                                Moodles<br />conectados<br />ao sistema
-                            </p>
-
-                            <div className="w-20 h-12 bg-gray-100 flex items-center justify-center rounded text-base">
-                                33
-                            </div>
-                        </div>
-
-                        <div className="flex flex-row items-center">
-                            <p className="text-base text-gray-600 mb-2 text-left mr-6">
-                                Status do<br />scheduler<br />principal
+                                Status do scheduler principal
                             </p>
 
                             <div className="w-20 h-12 bg-gray-100 flex items-center justify-center rounded text-base">
                                 Online
-                            </div>
+                            </div> 
                         </div>
 
                     </div>
@@ -105,7 +95,7 @@ export default function AdmRow() {
                     </Button>
 
                     <Button href="/administrador/gerenciar/moodles">
-                        Gerenciar moodles
+                        Gerenciar moodle
                     </Button>
                 </div>
             </div>

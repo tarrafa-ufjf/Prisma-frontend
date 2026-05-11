@@ -3,13 +3,21 @@
 import { useState } from "react";
 import PageTemplate from "@/components/template/page-template";
 import DataTable from "@/components/template/dataTable";
-import { Eye, EyeOff, Trash2 } from "lucide-react";
+import {
+    Eye,
+    EyeOff,
+    Pencil,
+    Save,
+    Trash2,
+    X
+} from "lucide-react";
 
 export default function GerenciarUsuariosPage() {
     const [searchTerm] = useState("");
     const [visiblePasswords, setVisiblePasswords] = useState<number[]>([]);
+    const [editingUserId, setEditingUserId] = useState<number | null>(null);
 
-    const users = [
+    const [users, setUsers] = useState([
         {
             id: 1,
             email: "admin@sistema.com",
@@ -25,10 +33,40 @@ export default function GerenciarUsuariosPage() {
             email: "joao@instituicao.com",
             password: "987654321"
         }
-    ];
+    ]);
 
     const handleDelete = (id: number) => {
         console.log("Deletar usuário:", id);
+    };
+
+    const handleEdit = (id: number) => {
+        setEditingUserId(id);
+    };
+
+    const handleCancel = () => {
+        setEditingUserId(null);
+    };
+
+    const handleSave = (id: number) => {
+        console.log("Salvar usuário:", id);
+        setEditingUserId(null);
+    };
+
+    const handleChange = (
+        id: number,
+        field: "email" | "password",
+        value: string
+    ) => {
+        setUsers((prev) =>
+            prev.map((user) =>
+                user.id === id
+                    ? {
+                        ...user,
+                        [field]: value
+                    }
+                    : user
+            )
+        );
     };
 
     const togglePasswordVisibility = (id: number) => {
@@ -44,30 +82,85 @@ export default function GerenciarUsuariosPage() {
             label: "E-mail",
             name: "email",
             options: {
-                headerClassName: "text-left pl-6 border-r border-gray-200",
-                cellClassName: "text-left pl-6 border-r border-gray-100",
+                headerClassName:
+                    "w-[40%] text-left pl-6 border-r border-gray-200",
+                cellClassName:
+                    "w-[40%] text-left pl-6 border-r border-gray-100",
+            },
+            cell: (row: any) => {
+                const isEditing = editingUserId === row.id;
+
+                return isEditing ? (
+                    <input
+                        type="email"
+                        value={row.email}
+                        onChange={(e) =>
+                            handleChange(
+                                row.id,
+                                "email",
+                                e.target.value
+                            )
+                        }
+                        className="
+                            border
+                            border-gray-200
+                            rounded-lg
+                            p-2
+                            w-[90%]
+                        "
+                    />
+                ) : (
+                    <span>{row.email}</span>
+                );
             },
         },
         {
             label: "Senha",
             name: "password",
             options: {
-                headerClassName: "text-left pl-6 border-r border-gray-200",
-                cellClassName: "text-left pl-6 border-r border-gray-100",
+                headerClassName:
+                    "w-[35%] text-left pl-6 border-r border-gray-200",
+                cellClassName:
+                    "w-[35%] text-left pl-6 border-r border-gray-100",
             },
             cell: (row: any) => {
                 const isVisible = visiblePasswords.includes(row.id);
+                const isEditing = editingUserId === row.id;
 
                 return (
-                    <div className="flex items-center justify-between pr-4">
-                        <span>
-                            {isVisible
-                                ? row.password
-                                : "•".repeat(row.password.length)}
-                        </span>
+                    <div className="flex items-center justify-between gap-3 pr-4">
+
+                        {isEditing ? (
+                            <input
+                                type={isVisible ? "text" : "password"}
+                                value={row.password}
+                                onChange={(e) =>
+                                    handleChange(
+                                        row.id,
+                                        "password",
+                                        e.target.value
+                                    )
+                                }
+                                className="
+                                    border
+                                    border-gray-200
+                                    rounded-lg
+                                    p-2
+                                    w-[90%]
+                                "
+                            />
+                        ) : (
+                            <span>
+                                {isVisible
+                                    ? row.password
+                                    : "•".repeat(row.password.length)}
+                            </span>
+                        )}
 
                         <button
-                            onClick={() => togglePasswordVisibility(row.id)}
+                            onClick={() =>
+                                togglePasswordVisibility(row.id)
+                            }
                             className="
                                 text-gray-500
                                 hover:text-gray-700
@@ -81,34 +174,103 @@ export default function GerenciarUsuariosPage() {
                                 <Eye size={16} />
                             )}
                         </button>
+
                     </div>
                 );
             },
         },
         {
             label: "",
-            name: "delete",
+            name: "actions",
             options: {
-                headerClassName: "text-center",
-                cellClassName: "text-center",
+                headerClassName: "w-[25%] text-center",
+                cellClassName: "w-[25%] text-center",
             },
-            cell: (row: any) => (
-                <button
-                    onClick={() => handleDelete(row.id)}
-                    className="
-                        flex
-                        items-center
-                        justify-center
-                        mx-auto
-                        text-red-500
-                        hover:text-red-700
-                        transition-colors
-                        cursor-pointer
-                    "
-                >
-                    <Trash2 size={18} />
-                </button>
-            ),
+            cell: (row: any) => {
+                const isEditing = editingUserId === row.id;
+
+                return (
+                    <div className="flex items-center justify-center gap-6">
+
+                        {isEditing ? (
+                            <>
+                                <button
+                                    onClick={() =>
+                                        handleSave(row.id)
+                                    }
+                                    className="
+                                        flex
+                                        items-center
+                                        gap-2
+                                        text-[#374DAA]
+                                        hover:text-[#2d3f8a]
+                                        transition-colors
+                                        cursor-pointer
+                                    "
+                                >
+                                    <Save size={18} />
+                                    Salvar
+                                </button>
+
+                                <button
+                                    onClick={handleCancel}
+                                    className="
+                                        flex
+                                        items-center
+                                        gap-2
+                                        text-gray-500
+                                        hover:text-gray-700
+                                        transition-colors
+                                        cursor-pointer
+                                    "
+                                >
+                                    <X size={18} />
+                                    Cancelar
+                                </button>
+                            </>
+                        ) : (
+                            <>
+                                <button
+                                    onClick={() =>
+                                        handleEdit(row.id)
+                                    }
+                                    className="
+                                        flex
+                                        items-center
+                                        gap-2
+                                        text-[#374DAA]
+                                        hover:text-[#2d3f8a]
+                                        transition-colors
+                                        cursor-pointer
+                                    "
+                                >
+                                    <Pencil size={18} />
+                                    Editar
+                                </button>
+
+                                <button
+                                    onClick={() =>
+                                        handleDelete(row.id)
+                                    }
+                                    className="
+                                        flex
+                                        items-center
+                                        gap-2
+                                        text-red-500
+                                        hover:text-red-700
+                                        transition-colors
+                                        cursor-pointer
+                                    "
+                                >
+                                    <Trash2 size={18} />
+                                    Deletar
+                                </button>
+                            </>
+                        )}
+
+                    </div>
+                );
+            },
         },
     ];
 
