@@ -65,6 +65,7 @@ export default function AtividadesChart({ curso, aluno }: Props) {
   }
   console.log("Atividades: ", atividades);
   
+  
   return (
     <div className="p-3 max-w-[475px] w-full max-h-[225px] overflow-y-auto space-y-4">
       {atividades.map((a, i) => (
@@ -72,13 +73,19 @@ export default function AtividadesChart({ curso, aluno }: Props) {
           <div className="flex flex-row justify-between">
             <p className="text-xs font-medium">{a.activity_name}</p>
             <p className="text-xs font-medium">
-              {((a.grade_real / a.grade_max) * 100).toFixed(2)} %
+              {a.grade_real != null && a.grade_max != null && a.grade_max > 0
+                ? `${((a.grade_real / a.grade_max) * 100).toFixed(2)} %`
+                : "n/a"}
             </p>
           </div>
 
           <BorderLinearProgress
             variant="determinate"
-            value={(a.grade_real / a.grade_max) * 100}
+            value={
+              a.grade_real != null && a.grade_max != null && a.grade_max > 0
+                ? (a.grade_real / a.grade_max) * 100
+                : 0
+            }
           />
 
           <div className="flex flex-row justify-between text-xs text-gray-500">

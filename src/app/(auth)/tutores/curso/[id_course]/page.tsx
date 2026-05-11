@@ -3,7 +3,7 @@ import DadosGeraisTutores from "@/components/pages/Tutores/DadosGerais/DadosGera
 import Indicators from "@/components/pages/Tutores/Indicador/indicator-tutor";
 import TableComponent from "@/components/pages/Tutores/Table/Table-component";
 import NotFound from "@/components/ui/not-found";
-import { getCourses } from "@/utils/api";
+import { getCourses } from "@/utils/api-server";
 import PageTemplate from "@/components/template/page-template";
 
 interface PageProps {

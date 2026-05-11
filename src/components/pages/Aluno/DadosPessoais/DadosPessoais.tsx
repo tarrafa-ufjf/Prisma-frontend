@@ -2,6 +2,8 @@ import { Aluno as AlunoType } from "@/types/aluno";
 import { Curso } from "@/types/curso";
 import { api } from "@/utils/api";
 import React from "react";
+import Loading from "@/components/ui/loading";
+import ErrorMessage from "@/components/ui/error-message";
 
 interface DadosPessoaisProps {
     aluno: AlunoType;
@@ -40,11 +42,11 @@ export default function DadosPessoais({ aluno, curso }: DadosPessoaisProps) {
     }, [curso, aluno]);
 
     if (loading) {
-        return <p className="text-sm">Carregando...</p>;
+        return <Loading>Carregando Dados</Loading>;
     }
 
     if (!summary) {
-        return <p className="text-sm">Nenhuma atividade encontrada.</p>;
+        return <ErrorMessage>Erro ao carregar dados pessoais.</ErrorMessage>;
     }
     console.log("summary: ", summary);
     return (

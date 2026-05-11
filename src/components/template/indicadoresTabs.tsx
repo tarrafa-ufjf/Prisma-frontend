@@ -30,7 +30,7 @@ function ScrollableTabs<T extends string>({
   return (
     <div className="flex justify-between items-center gap-2 mb-2">
       <div className="flex items-center gap-1 max-w-full overflow-hidden">
-        {tabs.length > 3 && (
+        {tabs.length > 4 && (
           <button
             onClick={scrollLeft}
             className="mr-3 rounded-lg border border-gray-300 min-w-7 h-7 flex items-center justify-center hover:cursor-pointer hover:bg-gray-100 transition-colors"
@@ -54,7 +54,7 @@ function ScrollableTabs<T extends string>({
           ))}
         </div>
 
-        {tabs.length > 3 && (
+        {tabs.length > 4 && (
           <button
             onClick={scrollRight}
             className="mx-3 rounded-lg border border-gray-300 min-w-7 h-7 flex items-center justify-center hover:cursor-pointer hover:bg-gray-50 transition-colors"
