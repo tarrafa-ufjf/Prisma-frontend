@@ -18,8 +18,6 @@
     "@nivo/bar": "^0.89.1",
     "@nivo/core": "^0.89.1",
     "@nivo/pie": "^0.89.1",
-    "@supabase/auth-helpers-nextjs": "^0.10.0",
-    "@supabase/ssr": "^0.7.0",
     "ag-charts-enterprise": "^12.2.0",
     "ag-charts-react": "^12.2.0",
     "axios": "^1.12.2",

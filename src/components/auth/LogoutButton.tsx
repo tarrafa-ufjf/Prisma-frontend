@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { signOut } from '@/supabase/auth';
+import { signOut } from '@/utils/auth';
 import { FiLogOut } from 'react-icons/fi';
 
 interface LogoutButtonProps {
@@ -16,6 +16,7 @@ export default function LogoutButton({ className = "", children = "Sair" }: Logo
         try {
             await signOut();
             router.push('/login');
+            router.refresh();
         } catch (error) {
             console.error('Erro ao fazer logout:', error);
         }

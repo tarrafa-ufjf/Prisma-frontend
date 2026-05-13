@@ -4,7 +4,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { login } from '@/supabase/auth';
+import { login } from '@/utils/auth';
 
 interface LoginPageProps {
     redirectTo?: string
@@ -32,6 +32,7 @@ export default function LoginPage({ redirectTo = '/' }: LoginPageProps) {
         } else {
             // Redireciona para a página solicitada ou para a home
             router.push(redirectTo);
+            router.refresh();
         }
     }
 
