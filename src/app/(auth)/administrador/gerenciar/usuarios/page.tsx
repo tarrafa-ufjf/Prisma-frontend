@@ -4,8 +4,6 @@ import { useState } from "react";
 import PageTemplate from "@/components/template/page-template";
 import DataTable from "@/components/template/dataTable";
 import {
-    Eye,
-    EyeOff,
     Pencil,
     Save,
     Trash2,
@@ -14,24 +12,20 @@ import {
 
 export default function GerenciarUsuariosPage() {
     const [searchTerm] = useState("");
-    const [visiblePasswords, setVisiblePasswords] = useState<number[]>([]);
     const [editingUserId, setEditingUserId] = useState<number | null>(null);
 
     const [users, setUsers] = useState([
         {
             id: 1,
             email: "admin@sistema.com",
-            password: "123456"
         },
         {
             id: 2,
             email: "maria@instituicao.com",
-            password: "abcdefghi"
         },
         {
             id: 3,
             email: "joao@instituicao.com",
-            password: "987654321"
         }
     ]);
 
@@ -54,7 +48,7 @@ export default function GerenciarUsuariosPage() {
 
     const handleChange = (
         id: number,
-        field: "email" | "password",
+        field: "email",
         value: string
     ) => {
         setUsers((prev) =>
@@ -69,23 +63,15 @@ export default function GerenciarUsuariosPage() {
         );
     };
 
-    const togglePasswordVisibility = (id: number) => {
-        setVisiblePasswords((prev) =>
-            prev.includes(id)
-                ? prev.filter((item) => item !== id)
-                : [...prev, id]
-        );
-    };
-
     const columns = [
         {
             label: "E-mail",
             name: "email",
             options: {
                 headerClassName:
-                    "w-[40%] text-left pl-6 border-r border-gray-200",
+                    "w-[75%] text-left pl-6 border-r border-gray-200",
                 cellClassName:
-                    "w-[40%] text-left pl-6 border-r border-gray-100",
+                    "w-[75%] text-left pl-6 border-r border-gray-100",
             },
             cell: (row: any) => {
                 const isEditing = editingUserId === row.id;
@@ -111,71 +97,6 @@ export default function GerenciarUsuariosPage() {
                     />
                 ) : (
                     <span>{row.email}</span>
-                );
-            },
-        },
-        {
-            label: "Senha",
-            name: "password",
-            options: {
-                headerClassName:
-                    "w-[35%] text-left pl-6 border-r border-gray-200",
-                cellClassName:
-                    "w-[35%] text-left pl-6 border-r border-gray-100",
-            },
-            cell: (row: any) => {
-                const isVisible = visiblePasswords.includes(row.id);
-                const isEditing = editingUserId === row.id;
-
-                return (
-                    <div className="flex items-center justify-between gap-3 pr-4">
-
-                        {isEditing ? (
-                            <input
-                                type={isVisible ? "text" : "password"}
-                                value={row.password}
-                                onChange={(e) =>
-                                    handleChange(
-                                        row.id,
-                                        "password",
-                                        e.target.value
-                                    )
-                                }
-                                className="
-                                    border
-                                    border-gray-200
-                                    rounded-lg
-                                    p-2
-                                    w-[90%]
-                                "
-                            />
-                        ) : (
-                            <span>
-                                {isVisible
-                                    ? row.password
-                                    : "•".repeat(row.password.length)}
-                            </span>
-                        )}
-
-                        <button
-                            onClick={() =>
-                                togglePasswordVisibility(row.id)
-                            }
-                            className="
-                                text-gray-500
-                                hover:text-gray-700
-                                transition-colors
-                                cursor-pointer
-                            "
-                        >
-                            {isVisible ? (
-                                <EyeOff size={16} />
-                            ) : (
-                                <Eye size={16} />
-                            )}
-                        </button>
-
-                    </div>
                 );
             },
         },

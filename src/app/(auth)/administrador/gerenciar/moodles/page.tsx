@@ -8,29 +8,36 @@ import { Eye, EyeOff, Pencil, Save, Trash2, X } from "lucide-react";
 export default function GerenciarMoodlePage() {
     const router = useRouter();
 
-    const [showPassword, setShowPassword] = useState(false);
-    const [isEditing, setIsEditing] = useState(false);
-    const [showDeleteModal, setShowDeleteModal] = useState(false);
-    const [showSuccess, setShowSuccess] = useState(false);
-
-    const [moodle, setMoodle] = useState({
+    const initialMoodle = {
         host: "localhost",
         port: "5432",
         database: "moodle",
         user: "postgres",
         password: "123456"
-    });
+    };
+
+    const [showPassword, setShowPassword] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [showSuccess, setShowSuccess] = useState(false);
+
+    const [moodle, setMoodle] = useState(initialMoodle);
+    const [originalMoodle, setOriginalMoodle] = useState(initialMoodle);
 
     const handleEdit = () => {
+        setOriginalMoodle(moodle);
         setIsEditing(true);
     };
 
     const handleCancel = () => {
+        setMoodle(originalMoodle);
         setIsEditing(false);
     };
 
     const handleSave = () => {
         console.log("Salvar moodle:", moodle);
+
+        setOriginalMoodle(moodle);
         setIsEditing(false);
     };
 
@@ -164,6 +171,7 @@ export default function GerenciarMoodlePage() {
                                 />
 
                                 <button
+                                    type="button"
                                     onClick={() => setShowPassword(!showPassword)}
                                     className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
                                 >
@@ -179,6 +187,7 @@ export default function GerenciarMoodlePage() {
                                 </span>
 
                                 <button
+                                    type="button"
                                     onClick={() => setShowPassword(!showPassword)}
                                     className="text-gray-500"
                                 >
@@ -192,25 +201,38 @@ export default function GerenciarMoodlePage() {
 
                         {isEditing ? (
                             <>
-                                <button onClick={handleSave} className="text-[#374DAA] flex gap-2">
-                                    <Save size={18} /> Salvar
+                                <button
+                                    onClick={handleSave}
+                                    className="text-[#374DAA] flex items-center gap-2"
+                                >
+                                    <Save size={18} />
+                                    Salvar
                                 </button>
 
-                                <button onClick={handleCancel} className="text-gray-500 flex gap-2">
-                                    <X size={18} /> Cancelar
+                                <button
+                                    onClick={handleCancel}
+                                    className="text-gray-500 flex items-center gap-2"
+                                >
+                                    <X size={18} />
+                                    Cancelar
                                 </button>
                             </>
                         ) : (
                             <>
-                                <button onClick={handleEdit} className="text-[#374DAA] flex gap-2">
-                                    <Pencil size={18} /> Editar
+                                <button
+                                    onClick={handleEdit}
+                                    className="text-[#374DAA] flex items-center gap-2"
+                                >
+                                    <Pencil size={18} />
+                                    Editar
                                 </button>
 
                                 <button
                                     onClick={handleDelete}
-                                    className="text-red-500 flex gap-2"
+                                    className="text-red-500 flex items-center gap-2"
                                 >
-                                    <Trash2 size={18} /> Deletar
+                                    <Trash2 size={18} />
+                                    Deletar
                                 </button>
                             </>
                         )}
