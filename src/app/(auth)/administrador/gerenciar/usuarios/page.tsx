@@ -1,8 +1,12 @@
 'use client';
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
 import PageTemplate from "@/components/template/page-template";
 import DataTable from "@/components/template/dataTable";
+
+import { api } from "@/utils/api";
+
 import {
     Pencil,
     Save,
@@ -11,26 +15,48 @@ import {
 } from "lucide-react";
 
 export default function GerenciarUsuariosPage() {
+
     const [searchTerm] = useState("");
+
     const [editingUserId, setEditingUserId] = useState<number | null>(null);
 
-    const [users, setUsers] = useState([
-        {
-            id: 1,
-            email: "admin@sistema.com",
-        },
-        {
-            id: 2,
-            email: "maria@instituicao.com",
-        },
-        {
-            id: 3,
-            email: "joao@instituicao.com",
-        }
-    ]);
+    const [users, setUsers] = useState<any[]>([]);
 
-    const handleDelete = (id: number) => {
-        console.log("Deletar usuário:", id);
+    useEffect(() => {
+        async function loadUsers() {
+            try {
+                const response = await api.get('/auth/users');
+
+                setUsers(response.data.users);
+
+            } catch (error) {
+                console.error('Erro ao carregar usuários:', error);
+            }
+        }
+
+        loadUsers();
+    }, []);
+
+    const handleDelete = async (id: number) => {
+
+        const confirmDelete = window.confirm(
+            "Tem certeza que deseja deletar este usuário?"
+        );
+
+        if (!confirmDelete) {
+            return;
+        }
+
+        try {
+            await api.delete(`/auth/users/${id}`);
+
+            setUsers((prev) =>
+                prev.filter((user) => user.id !== id)
+            );
+
+        } catch (error) {
+            console.error('Erro ao deletar usuário:', error);
+        }
     };
 
     const handleEdit = (id: number) => {
@@ -41,9 +67,19 @@ export default function GerenciarUsuariosPage() {
         setEditingUserId(null);
     };
 
-    const handleSave = (id: number) => {
-        console.log("Salvar usuário:", id);
-        setEditingUserId(null);
+    const handleSave = async (id: number) => {
+        try {
+            const user = users.find((u) => u.id === id);
+
+            await api.patch(`/auth/users/${id}`, {
+                email: user.email,
+            });
+
+            setEditingUserId(null);
+
+        } catch (error) {
+            console.error('Erro ao atualizar usuário:', error);
+        }
     };
 
     const handleChange = (
@@ -67,12 +103,15 @@ export default function GerenciarUsuariosPage() {
         {
             label: "E-mail",
             name: "email",
+
             options: {
                 headerClassName:
                     "w-[75%] text-left pl-6 border-r border-gray-200",
+
                 cellClassName:
                     "w-[75%] text-left pl-6 border-r border-gray-100",
             },
+
             cell: (row: any) => {
                 const isEditing = editingUserId === row.id;
 
@@ -100,13 +139,17 @@ export default function GerenciarUsuariosPage() {
                 );
             },
         },
+
         {
             label: "",
             name: "actions",
+
             options: {
                 headerClassName: "w-[25%] text-center",
+
                 cellClassName: "w-[25%] text-center",
             },
+
             cell: (row: any) => {
                 const isEditing = editingUserId === row.id;
 
@@ -204,6 +247,7 @@ export default function GerenciarUsuariosPage() {
 
                 <div className="maincurso">
                     <div className="mt-10 ml-10 mb-5">
+
                         <h1 className="text-xl font-poppins font-semibold text-left">
                             Usuários Cadastrados
                         </h1>
@@ -211,18 +255,21 @@ export default function GerenciarUsuariosPage() {
                         <p style={{ color: "#9291A5" }}>
                             gerenciamento de acessos
                         </p>
+
                     </div>
                 </div>
 
                 <div className="relative after:absolute after:bottom-0 after:left-1/2 after:translate-x-[-50%] after:w-[90%] after:h-[1px] after:bg-gray-200 after:shadow-[0_2px_4px_rgba(0,0,0,0.05)] bg-white" />
 
                 <div className="p-10">
+
                     <DataTable
                         rowsPerPage={5}
                         data={users}
                         columns={columns}
                         searchTerm={searchTerm}
                     />
+
                 </div>
 
             </div>

@@ -97,7 +97,7 @@ export default function CadastrarUsuarioPage() {
                         </label>
 
                         <input
-                            type="email"
+                            type="email" 
                             placeholder="Digite o e-mail"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
