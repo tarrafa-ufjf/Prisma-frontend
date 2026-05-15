@@ -2,11 +2,12 @@ import { AuthResponse, AuthUser } from "@/types/auth";
 import { api } from "@/utils/api";
 import axios from "axios";
 
-export async function login(email: string, password: string) {
+export async function login(email: string, password: string, rememberMe = false) {
     try {
         const response = await api.post<AuthResponse>('/auth/login', {
             email,
             password,
+            remember_me: rememberMe,
         });
 
         return { user: response.data.user, error: null };
