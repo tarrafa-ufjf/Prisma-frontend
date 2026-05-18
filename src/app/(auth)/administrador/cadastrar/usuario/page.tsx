@@ -18,11 +18,24 @@ export default function CadastrarUsuarioPage() {
     const [success, setSuccess] = React.useState("");
     const [error, setError] = React.useState("");
 
+    function emailValido(email: string) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    const emailEhValido = email.length > 0 && emailValido(email);
+
     async function cadastrarUsuario() {
         try {
             setLoading(true);
             setError("");
             setSuccess("");
+
+            // ❌ bloqueio real
+            if (!emailValido(email)) {
+                setError("E-mail inválido. Verifique o formato.");
+                setLoading(false);
+                return;
+            }
 
             const response = await api.post("/auth/users", {
                 email,
@@ -90,6 +103,7 @@ export default function CadastrarUsuarioPage() {
                         </div>
                     )}
 
+                    {/* EMAIL */}
                     <div className="flex flex-col gap-2">
 
                         <label className="text-sm text-gray-700">
@@ -97,15 +111,29 @@ export default function CadastrarUsuarioPage() {
                         </label>
 
                         <input
-                            type="email" 
+                            type="email"
                             placeholder="Digite o e-mail"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             className="border border-gray-200 rounded-lg p-3"
                         />
 
+                        {/* mensagem dinâmica */}
+                        {email.length > 0 && (
+                            emailEhValido ? (
+                                <p className="text-xs text-green-600 ml-1">
+                                    ✔ E-mail válido
+                                </p>
+                            ) : (
+                                <p className="text-xs text-red-500 ml-1">
+                                    Digite um e-mail válido (ex: nome@dominio.com)
+                                </p>
+                            )
+                        )}
+
                     </div>
 
+                    {/* SENHA */}
                     <div className="flex flex-col gap-2">
 
                         <label className="text-sm text-gray-700">
@@ -121,9 +149,12 @@ export default function CadastrarUsuarioPage() {
                         />
 
                     </div>
-                    <div className="mt-4">
 
-                        <Button onClick={cadastrarUsuario}>
+                    <div className="mt-4">
+                        <Button
+                            onClick={cadastrarUsuario}
+                            disabled={!emailEhValido}
+                        >
                             Cadastrar usuário
                         </Button>
 
