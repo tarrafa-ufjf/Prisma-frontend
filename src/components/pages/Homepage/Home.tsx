@@ -2,6 +2,7 @@ import Indicators from './Indicator/Indicators';
 import DadosGerais from './DadosGerais/DadosGerais';
 import HomeRanking from './ranking';
 import AdminButton from './Administrador/Admin';
+import MoodleWarning from "@/components/pages/administrador/moodleWarning";
 
 export default function Home() {
 
@@ -17,6 +18,7 @@ export default function Home() {
                 da Instituição
               </p>
           </div>
+          <MoodleWarning />
           <AdminButton />
       </div>
         <div>

@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 
 import Button from "@/components/ui/button";
 import AdminAuth from "@/components/pages/administrador/admAuth";
-
 import { api } from "@/utils/api";
 
 export default function AdmRow() {
@@ -48,8 +47,8 @@ export default function AdmRow() {
     }, []);
 
     return (
-        <AdminAuth>
 
+        <AdminAuth>
             <div className="flex flex-col gap-6 mt-4">
 
                 <div className="Box2 mt-10">
