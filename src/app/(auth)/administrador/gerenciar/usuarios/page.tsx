@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 
 import PageTemplate from "@/components/template/page-template";
 import DataTable from "@/components/template/dataTable";
+import Button from "@/components/ui/button";
+import Loading from "@/components/ui/loading";
+import ErrorMessage from "@/components/ui/error-message";
 
 import { api } from "@/utils/api";
 
@@ -14,48 +17,174 @@ import {
     X
 } from "lucide-react";
 
-export default function GerenciarUsuariosPage() {
+export default function UsuariosPage() {
 
     const [searchTerm] = useState("");
 
-    const [editingUserId, setEditingUserId] = useState<number | null>(null);
+    const [editingUserId, setEditingUserId] =
+        useState<number | null>(null);
 
     const [users, setUsers] = useState<any[]>([]);
 
-    useEffect(() => {
-        async function loadUsers() {
-            try {
-                const response = await api.get('/auth/users');
+    const [email, setEmail] = useState("");
+    const [senha, setSenha] = useState("");
 
-                setUsers(response.data.users);
+    const [loading, setLoading] = useState(false);
+
+    const [success, setSuccess] = useState("");
+    const [error, setError] = useState("");
+
+    const [showDeleteModal, setShowDeleteModal] =
+        useState(false);
+
+    const [selectedUserId, setSelectedUserId] =
+        useState<number | null>(null);
+
+    function emailValido(email: string) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    const emailEhValido =
+        email.length > 0 &&
+        emailValido(email);
+
+    useEffect(() => {
+
+        async function loadUsers() {
+
+            try {
+
+                const response = await api.get(
+                    "/auth/users"
+                );
+
+                setUsers(
+                    response.data.users
+                );
 
             } catch (error) {
-                console.error('Erro ao carregar usuários:', error);
+
+                console.error(
+                    "Erro ao carregar usuários:",
+                    error
+                );
             }
         }
 
         loadUsers();
+
     }, []);
 
-    const handleDelete = async (id: number) => {
+    async function cadastrarUsuario() {
 
-        const confirmDelete = window.confirm(
-            "Tem certeza que deseja deletar este usuário?"
-        );
+        try {
 
-        if (!confirmDelete) {
+            setLoading(true);
+
+            setError("");
+            setSuccess("");
+
+            if (!emailValido(email)) {
+
+                setError(
+                    "E-mail inválido. Verifique o formato."
+                );
+
+                setLoading(false);
+
+                return;
+            }
+
+            const response = await api.post(
+                "/auth/users",
+                {
+                    email,
+                    password: senha,
+                }
+            );
+
+            const novoUsuario =
+                response.data.user;
+
+            if (novoUsuario) {
+
+                setUsers((prev) => [
+                    ...prev,
+                    novoUsuario
+                ]);
+            }
+
+            setSuccess(
+                "Usuário cadastrado com sucesso!"
+            );
+
+            setEmail("");
+            setSenha("");
+
+        } catch (error: any) {
+
+            console.error(
+                "Erro ao cadastrar usuário:",
+                error
+            );
+
+            setError(
+                error?.response?.data?.detail ||
+                "Erro ao cadastrar usuário."
+            );
+
+        } finally {
+
+            setLoading(false);
+        }
+    }
+
+    const handleDelete = (id: number) => {
+
+        setSelectedUserId(id);
+
+        setShowDeleteModal(true);
+    };
+
+    const confirmDelete = async () => {
+
+        if (!selectedUserId) {
             return;
         }
 
         try {
-            await api.delete(`/auth/users/${id}`);
+
+            await api.delete(
+                `/auth/users/${selectedUserId}`
+            );
 
             setUsers((prev) =>
-                prev.filter((user) => user.id !== id)
+                prev.filter(
+                    (user) =>
+                        user.id !== selectedUserId
+                )
+            );
+
+            setSuccess(
+                "Usuário deletado com sucesso!"
             );
 
         } catch (error) {
-            console.error('Erro ao deletar usuário:', error);
+
+            console.error(
+                "Erro ao deletar usuário:",
+                error
+            );
+
+            setError(
+                "Erro ao deletar usuário."
+            );
+
+        } finally {
+
+            setShowDeleteModal(false);
+
+            setSelectedUserId(null);
         }
     };
 
@@ -68,17 +197,48 @@ export default function GerenciarUsuariosPage() {
     };
 
     const handleSave = async (id: number) => {
-        try {
-            const user = users.find((u) => u.id === id);
 
-            await api.patch(`/auth/users/${id}`, {
-                email: user.email,
-            });
+        try {
+
+            const user = users.find(
+                (u) => u.id === id
+            );
+
+            if (!emailValido(user.email)) {
+
+                setError(
+                    "Digite um e-mail válido antes de salvar."
+                );
+
+                return;
+            }
+
+            setError("");
+
+            await api.patch(
+                `/auth/users/${id}`,
+                {
+                    email: user.email,
+                }
+            );
+
+            setSuccess(
+                "Usuário atualizado com sucesso!"
+            );
 
             setEditingUserId(null);
 
-        } catch (error) {
-            console.error('Erro ao atualizar usuário:', error);
+        } catch (error: any) {
+
+            console.error(
+                "Erro ao atualizar usuário:",
+                error
+            );
+
+            setError(
+                error?.response?.data?.detail ||
+                "Erro ao atualizar usuário."
+            );
         }
     };
 
@@ -87,6 +247,7 @@ export default function GerenciarUsuariosPage() {
         field: "email",
         value: string
     ) => {
+
         setUsers((prev) =>
             prev.map((user) =>
                 user.id === id
@@ -100,11 +261,13 @@ export default function GerenciarUsuariosPage() {
     };
 
     const columns = [
+
         {
             label: "E-mail",
             name: "email",
 
             options: {
+
                 headerClassName:
                     "w-[75%] text-left pl-6 border-r border-gray-200",
 
@@ -113,28 +276,54 @@ export default function GerenciarUsuariosPage() {
             },
 
             cell: (row: any) => {
-                const isEditing = editingUserId === row.id;
+
+                const isEditing =
+                    editingUserId === row.id;
 
                 return isEditing ? (
-                    <input
-                        type="email"
-                        value={row.email}
-                        onChange={(e) =>
-                            handleChange(
-                                row.id,
-                                "email",
-                                e.target.value
+
+                    <div className="flex flex-col gap-1 w-full items-start">
+
+                        <input
+                            type="email"
+                            value={row.email}
+                            onChange={(e) =>
+                                handleChange(
+                                    row.id,
+                                    "email",
+                                    e.target.value
+                                )
+                            }
+                            className="
+                                border
+                                border-gray-200
+                                rounded-lg
+                                p-2
+                                w-[90%]
+                            "
+                        />
+
+                        {row.email.length > 0 && (
+
+                            emailValido(row.email) ? (
+
+                                <p className="text-xs text-green-600 ml-1">
+                                    ✔ E-mail válido
+                                </p>
+
+                            ) : (
+
+                                <p className="text-xs text-red-500 ml-1">
+                                    Digite um e-mail válido
+                                </p>
+
                             )
-                        }
-                        className="
-                            border
-                            border-gray-200
-                            rounded-lg
-                            p-2
-                            w-[90%]
-                        "
-                    />
+                        )}
+
+                    </div>
+
                 ) : (
+
                     <span>{row.email}</span>
                 );
             },
@@ -145,15 +334,21 @@ export default function GerenciarUsuariosPage() {
             name: "actions",
 
             options: {
-                headerClassName: "w-[25%] text-center",
 
-                cellClassName: "w-[25%] text-center",
+                headerClassName:
+                    "w-[25%] text-center",
+
+                cellClassName:
+                    "w-[25%] text-center",
             },
 
             cell: (row: any) => {
-                const isEditing = editingUserId === row.id;
+
+                const isEditing =
+                    editingUserId === row.id;
 
                 return (
+
                     <div className="flex items-center justify-center gap-6">
 
                         {isEditing ? (
@@ -240,27 +435,161 @@ export default function GerenciarUsuariosPage() {
 
     return (
         <PageTemplate
-            title="Gerenciar"
-            subTitle="Usuários"
+            title="Usuários"
+            subTitle="Gerenciamento"
         >
+
             <div className="Box pb-10 mt-4">
 
                 <div className="maincurso">
+
                     <div className="mt-10 ml-10 mb-5">
 
                         <h1 className="text-xl font-poppins font-semibold text-left">
-                            Usuários Cadastrados
+                            Gerenciamento de Usuários
                         </h1>
 
                         <p style={{ color: "#9291A5" }}>
-                            gerenciamento de acessos
+                            cadastro e gerenciamento de acessos
                         </p>
 
                     </div>
+
                 </div>
 
-                <div className="relative after:absolute after:bottom-0 after:left-1/2 after:translate-x-[-50%] after:w-[90%] after:h-[1px] after:bg-gray-200 after:shadow-[0_2px_4px_rgba(0,0,0,0.05)] bg-white" />
+                <div className="relative after:absolute after:bottom-0 after:left-1/2 after:translate-x-[-50%] after:w-[90%] after:h-[1px] after:bg-gray-200 bg-white" />
 
+                {/* FORMULÁRIO */}
+                <div className="p-10 flex flex-col gap-6">
+
+                    {/* EMAIL */}
+                    <div className="flex flex-col gap-2">
+
+                        <label className="text-sm text-gray-700">
+                            E-mail
+                        </label>
+
+                        <input
+                            type="email"
+                            placeholder="Digite o e-mail"
+                            value={email}
+                            onChange={(e) =>
+                                setEmail(e.target.value)
+                            }
+                            className="
+                                border
+                                border-gray-200
+                                rounded-lg
+                                p-3
+                            "
+                        />
+
+                        {email.length > 0 && (
+
+                            emailEhValido ? (
+
+                                <p className="text-xs text-green-600 ml-1">
+                                    ✔ E-mail válido
+                                </p>
+
+                            ) : (
+
+                                <p className="text-xs text-red-500 ml-1">
+                                    Digite um e-mail válido
+                                    (ex: nome@dominio.com)
+                                </p>
+
+                            )
+                        )}
+
+                    </div>
+
+                    {/* SENHA */}
+                    <div className="flex flex-col gap-2">
+
+                        <label className="text-sm text-gray-700">
+                            Senha
+                        </label>
+
+                        <input
+                            type="password"
+                            placeholder="Digite a senha"
+                            value={senha}
+                            onChange={(e) =>
+                                setSenha(e.target.value)
+                            }
+                            className="
+                                border
+                                border-gray-200
+                                rounded-lg
+                                p-3
+                            "
+                        />
+
+                    </div>
+
+                    {/* BOTÃO */}
+                    <div className="mt-4">
+
+                        <Button
+                            onClick={cadastrarUsuario}
+                            disabled={!emailEhValido}
+                        >
+                            Cadastrar usuário
+                        </Button>
+
+                    </div>
+
+                    {/* FEEDBACK */}
+                    {loading && (
+                        <div className="mt-2">
+                            <Loading>
+                                Cadastrando usuário...
+                            </Loading>
+                        </div>
+                    )}
+
+                    {error && (
+                        <div className="mt-2">
+                            <ErrorMessage>
+                                {error}
+                            </ErrorMessage>
+                        </div>
+                    )}
+
+                    {success && (
+                        <div className="
+                            mt-2
+                            bg-green-100
+                            border
+                            border-green-300
+                            text-green-700
+                            px-4
+                            py-3
+                            rounded-lg
+                        ">
+                            {success}
+                        </div>
+                    )}
+
+                </div>
+
+                {/* DIVISÓRIA */}
+                <div className="
+                    relative
+                    after:absolute
+                    after:bottom-0
+                    after:left-1/2
+                    after:translate-x-[-50%]
+                    after:w-[90%]
+                    after:h-[1px]
+                    after:bg-gray-200
+                    after:shadow-[0_2px_4px_rgba(0,0,0,0.05)]
+                    bg-white
+                    mt-4
+                " />
+
+                {/* TABELA */}
                 <div className="p-10">
 
                     <DataTable
@@ -273,6 +602,83 @@ export default function GerenciarUsuariosPage() {
                 </div>
 
             </div>
+
+            {/* MODAL DELETE */}
+            {showDeleteModal && (
+
+                <div className="
+                    fixed
+                    inset-0
+                    bg-black/40
+                    flex
+                    items-center
+                    justify-center
+                    z-50
+                ">
+
+                    <div className="
+                        bg-white
+                        rounded-xl
+                        p-6
+                        w-[400px]
+                        shadow-lg
+                    ">
+
+                        <h2 className="
+                            text-lg
+                            font-semibold
+                            mb-2
+                        ">
+                            Confirmar exclusão
+                        </h2>
+
+                        <p className="
+                            text-sm
+                            text-gray-500
+                            mb-6
+                        ">
+                            Tem certeza que deseja deletar este usuário?
+                        </p>
+
+                        <div className="
+                            flex
+                            justify-end
+                            gap-3
+                        ">
+
+                            <button
+                                onClick={() =>
+                                    setShowDeleteModal(false)
+                                }
+                                className="
+                                    px-4
+                                    py-2
+                                    text-gray-600
+                                "
+                            >
+                                Cancelar
+                            </button>
+
+                            <button
+                                onClick={confirmDelete}
+                                className="
+                                    px-4
+                                    py-2
+                                    bg-red-500
+                                    text-white
+                                    rounded-lg
+                                "
+                            >
+                                Confirmar
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            )}
+
         </PageTemplate>
     );
 }
