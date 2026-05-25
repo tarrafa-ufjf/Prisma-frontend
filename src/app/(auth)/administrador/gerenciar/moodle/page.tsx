@@ -369,13 +369,6 @@ export default function GerenciarMoodlePage() {
 
                             <button
                                 onClick={() => setShowModal(false)}
-                                className="px-4 py-2 text-gray-600"
-                            >
-                                Fechar
-                            </button>
-
-                            <button
-                                onClick={() => setShowModal(false)}
                                 className={`px-4 py-2 text-white rounded-lg ${
                                     successModal
                                         ? "bg-green-500"

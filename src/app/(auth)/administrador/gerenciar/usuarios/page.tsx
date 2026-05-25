@@ -435,8 +435,8 @@ export default function UsuariosPage() {
 
     return (
         <PageTemplate
-            title="Usuários"
-            subTitle="Gerenciamento"
+            title="Gerenciamento"
+            subTitle="de usuários"
         >
 
             <div className="Box pb-10 mt-4">
