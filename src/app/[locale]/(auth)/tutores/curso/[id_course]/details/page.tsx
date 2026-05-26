@@ -4,6 +4,7 @@ import { getCourses } from "@/utils/api-server";
 
 interface PageProps {
   params: Promise<{
+    locale: string;
     id_course: string;
   }>;
 }

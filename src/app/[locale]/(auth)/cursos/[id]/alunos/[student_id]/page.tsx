@@ -3,14 +3,15 @@ import NotFound from '@/components/ui/not-found';
 import { getCourses } from '@/utils/api-server';
 
 interface PageProps {
-  params: {
+  params: Promise<{
+    locale: string;
     id: string;
     student_id: string;
-  };
+  }>;
 }
 
 export default async function Page({ params }: PageProps) {
-  const { id, student_id } = params;
+  const { id, student_id } = await params;
 
   const cursos = await getCourses();
   const curso = cursos.find(curso => curso.id === Number(id));

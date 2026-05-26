@@ -1,11 +1,47 @@
+import createIntlMiddleware from "next-intl/middleware";
 import { NextRequest, NextResponse } from "next/server";
 
+import { routing } from "@/i18n/routing";
+
+const intlMiddleware = createIntlMiddleware(routing);
+
 export const config = {
-  matcher: ["/((?!_next|api|.*\\..*).*)"],
+  matcher: ["/((?!api|_next|_vercel|.*\\..*).*)"],
 };
+
+function getPathInfo(pathname: string) {
+  const [, maybeLocale] = pathname.split("/");
+  const hasLocalePrefix = routing.locales.some((locale) => locale === maybeLocale);
+  const locale = hasLocalePrefix ? maybeLocale : routing.defaultLocale;
+  const pathnameWithoutLocale = hasLocalePrefix
+    ? pathname.replace(`/${maybeLocale}`, "") || "/"
+    : pathname;
+
+  return {
+    locale,
+    pathnameWithoutLocale,
+    localePrefix:
+      hasLocalePrefix && locale !== routing.defaultLocale ? `/${locale}` : "",
+  };
+}
+
+function localizedUrl(request: NextRequest, pathname: string, localePrefix: string) {
+  return new URL(`${localePrefix}${pathname}`, request.url);
+}
+
+function withAuthCookie(response: NextResponse, authSetCookie: string | null) {
+  if (authSetCookie) {
+    response.headers.set("set-cookie", authSetCookie);
+  }
+
+  return response;
+}
 
 export async function middleware(request: NextRequest) {
   const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+  const { pathnameWithoutLocale, localePrefix } = getPathInfo(
+    request.nextUrl.pathname
+  );
   let isAuthenticated = false;
   let authSetCookie: string | null = null;
 
@@ -27,34 +63,24 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  //Tratamento do usuário deslogado
+  // Tratamento do usuario deslogado
   if (!isAuthenticated) {
-    if (request.nextUrl.pathname != "/login") {
-      const response = NextResponse.redirect(new URL("/login", request.url));
+    if (pathnameWithoutLocale !== "/login") {
+      const response = NextResponse.redirect(
+        localizedUrl(request, "/login", localePrefix)
+      );
 
-      if (authSetCookie) {
-        response.headers.set("set-cookie", authSetCookie);
-      }
-
-      return response;
+      return withAuthCookie(response, authSetCookie);
     }
   } else {
-    if (request.nextUrl.pathname == "/login") {
-      const response = NextResponse.redirect(new URL("/", request.url));
+    if (pathnameWithoutLocale === "/login") {
+      const response = NextResponse.redirect(
+        localizedUrl(request, "/", localePrefix)
+      );
 
-      if (authSetCookie) {
-        response.headers.set("set-cookie", authSetCookie);
-      }
-
-      return response;
+      return withAuthCookie(response, authSetCookie);
     }
   }
 
-  const response = NextResponse.next();
-
-  if (authSetCookie) {
-    response.headers.set("set-cookie", authSetCookie);
-  }
-
-  return response;
+  return withAuthCookie(intlMiddleware(request), authSetCookie);
 }

@@ -8,6 +8,7 @@ import PageTemplate from "@/components/template/page-template";
 
 interface PageProps {
   params: Promise<{
+    locale: string;
     id_course: string;
   }>;
 }

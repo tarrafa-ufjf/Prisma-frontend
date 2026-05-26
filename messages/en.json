@@ -1,0 +1,22 @@
+{
+  "Metadata": {
+    "title": "Prisma Project",
+    "description": "Application using Next.js"
+  },
+  "Common": {
+    "appName": "Prisma Project"
+  },
+  "Login": {
+    "subtitle": "Sign in to your account",
+    "email": "Email",
+    "emailPlaceholder": "Enter your email",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "rememberMe": "Remember me",
+    "forgotPassword": "Forgot password?",
+    "submit": "Sign in",
+    "loading": "Signing in...",
+    "invalidCredentials": "Incorrect email or password. Please try again."
+  }
+}
+

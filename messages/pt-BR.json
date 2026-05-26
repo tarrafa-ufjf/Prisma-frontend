@@ -1,0 +1,22 @@
+{
+  "Metadata": {
+    "title": "Projeto Prisma",
+    "description": "Aplicacao usando Next.js"
+  },
+  "Common": {
+    "appName": "Projeto Prisma"
+  },
+  "Login": {
+    "subtitle": "Faca login em sua conta",
+    "email": "Email",
+    "emailPlaceholder": "Digite seu email",
+    "password": "Senha",
+    "passwordPlaceholder": "Digite sua senha",
+    "rememberMe": "Lembrar-me",
+    "forgotPassword": "Esqueceu a senha?",
+    "submit": "Entrar",
+    "loading": "Entrando...",
+    "invalidCredentials": "Email ou senha incorretos. Tente novamente."
+  }
+}
+

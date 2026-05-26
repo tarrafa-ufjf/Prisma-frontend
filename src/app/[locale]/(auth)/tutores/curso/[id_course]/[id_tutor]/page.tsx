@@ -10,6 +10,7 @@ import Link from "next/link"
 
 interface PageProps {
     params: Promise<{
+        locale: string
         id_course: string
         id_tutor: string
     }>

@@ -2,8 +2,9 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
+import { useRouter } from '@/i18n/navigation';
 import { login } from '@/utils/auth';
 
 interface LoginPageProps {
@@ -11,6 +12,8 @@ interface LoginPageProps {
 }
 
 export default function LoginPage({ redirectTo = '/' }: LoginPageProps) {
+    const t = useTranslations('Login');
+    const common = useTranslations('Common');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
@@ -28,7 +31,7 @@ export default function LoginPage({ redirectTo = '/' }: LoginPageProps) {
 
         if (error) {
             console.error(error);
-            setError('Email ou senha incorretos. Tente novamente.');
+            setError(t('invalidCredentials'));
             setIsLoading(false);
         } else {
             // Redireciona para a página solicitada ou para a home
@@ -50,10 +53,10 @@ export default function LoginPage({ redirectTo = '/' }: LoginPageProps) {
                     />
                 </div>
                 <h2 className="mt-6 text-center text-3xl font-semibold text-gray-900 font-poppins">
-                    Projeto Prisma
+                    {common('appName')}
                 </h2>
                 <p className="mt-2 text-center text-sm text-gray-600 font-poppins">
-                    Faça login em sua conta
+                    {t('subtitle')}
                 </p>
             </div>
 
@@ -68,7 +71,7 @@ export default function LoginPage({ redirectTo = '/' }: LoginPageProps) {
 
                         <div>
                             <label htmlFor="email" className="block text-sm font-medium text-gray-700 font-poppins">
-                                Email
+                                {t('email')}
                             </label>
                             <div className="mt-1">
                                 <input
@@ -80,14 +83,14 @@ export default function LoginPage({ redirectTo = '/' }: LoginPageProps) {
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm font-poppins"
-                                    placeholder="Digite seu email"
+                                    placeholder={t('emailPlaceholder')}
                                 />
                             </div>
                         </div>
 
                         <div>
                             <label htmlFor="password" className="block text-sm font-medium text-gray-700 font-poppins">
-                                Senha
+                                {t('password')}
                             </label>
                             <div className="mt-1 relative">
                                 <input
@@ -99,7 +102,7 @@ export default function LoginPage({ redirectTo = '/' }: LoginPageProps) {
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm font-poppins pr-10"
-                                    placeholder="Digite sua senha"
+                                    placeholder={t('passwordPlaceholder')}
                                 />
                                 <button
                                     type="button"
@@ -137,13 +140,13 @@ export default function LoginPage({ redirectTo = '/' }: LoginPageProps) {
                                     className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                                 />
                                 <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900 font-poppins">
-                                    Lembrar-me
+                                    {t('rememberMe')}
                                 </label>
                             </div>
 
                             <div className="text-sm">
                                 <a href="#" className="font-medium text-blue-600 hover:text-blue-500 font-poppins">
-                                    Esqueceu a senha?
+                                    {t('forgotPassword')}
                                 </a>
                             </div>
                         </div>
@@ -165,7 +168,7 @@ export default function LoginPage({ redirectTo = '/' }: LoginPageProps) {
                                     }
                                 }}
                             >
-                                {isLoading ? 'Entrando...' : 'Entrar'}
+                                {isLoading ? t('loading') : t('submit')}
                             </button>
                         </div>
                     </form>

@@ -4,7 +4,8 @@ import Alunos from '@/components/pages/Alunos/Alunos';
 
 interface PageProps {
   params: Promise<{
-    id: string
+    locale: string;
+    id: string;
   }>
 }
 

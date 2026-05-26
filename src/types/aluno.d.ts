@@ -48,4 +48,4 @@ export type Aluno = {
     value?: number; // usado para os rankings de alunos 
 }
 
-export type Tab = 'Interação Avaliativa' | 'Interação Não Avaliativa' | 'Desempenho' | 'Profundidade Cognitiva' | 'Respostas em Fóruns' | 'Acesso à Disciplina' | 'Feedback';
+export type Tab = 'Interação Avaliativa' | 'Interação Não Avaliativa' | 'Desempenho' | 'Profundidade Cognitiva' | 'Desistência' | 'Respostas em Fóruns' | 'Acesso à Disciplina' | 'Feedback';
