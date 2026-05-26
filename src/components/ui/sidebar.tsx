@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { IconType } from 'react-icons';
-import { FaGraduationCap, FaHome, FaUserGraduate } from 'react-icons/fa';
+import { FaChartBar, FaGraduationCap, FaHome, FaUserGraduate } from 'react-icons/fa';
 
 interface NavItem {
   title: string;
@@ -28,6 +28,11 @@ const navItems: NavItem[] = [
     title: 'Painel dos Tutores',
     href: '/tutores',
     icon: FaUserGraduate,
+  },
+  {
+    title: 'Playground Vega',
+    href: '/vega',
+    icon: FaChartBar,
   },
 ];
 
