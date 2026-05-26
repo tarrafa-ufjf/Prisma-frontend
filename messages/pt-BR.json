@@ -17,6 +17,14 @@
     "submit": "Entrar",
     "loading": "Entrando...",
     "invalidCredentials": "Email ou senha incorretos. Tente novamente."
+  },
+  "Admin":{
+    "MoodleWarning": {
+      "title": "Moodle não configurado",
+      "description": "Nenhuma integração Moodle foi cadastrada ainda. Cadastre uma conexão para utiliar os recursos do sistema.",
+      "dismiss": "Depois",
+      "configure": "Configurar Moodle"
+    }
   }
 }
 

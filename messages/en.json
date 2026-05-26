@@ -17,6 +17,14 @@
     "submit": "Sign in",
     "loading": "Signing in...",
     "invalidCredentials": "Incorrect email or password. Please try again."
+  },
+  "Admin": {
+    "MoodleWarning": {
+      "title": "Moodle not configured",
+      "description": "No Moodle integration has been registred yet. Register a connection to use the system features.",
+      "dismiss": "Later",
+      "configure": "Configure Moodle"
+    }
   }
 }
 

@@ -1,12 +1,15 @@
 'use client';
 
 import { useEffect, useState } from "react";
+import { useTranslations } from 'next-intl';
 
 import { api } from "@/utils/api";
 
 import Button from "@/components/ui/button";
 
 export default function MoodleWarning() {
+
+    const t = useTranslations('Admin.MoodleWarning');
 
     const [showWarning, setShowWarning] = useState(false);
     const [loading, setLoading] = useState(true);
@@ -60,12 +63,11 @@ export default function MoodleWarning() {
             <div className="bg-white rounded-xl p-6 w-[430px] shadow-lg">
 
                 <h2 className="text-lg font-semibold mb-2">
-                    Moodle não configurado
+                    {t('title')}
                 </h2>
 
                 <p className="text-sm text-gray-500 mb-6">
-                    Nenhuma integração Moodle foi cadastrada ainda.
-                    Cadastre uma conexão para utilizar os recursos do sistema.
+                    {t('description')}
                 </p>
 
                 <div className="flex justify-end gap-3">
@@ -74,11 +76,11 @@ export default function MoodleWarning() {
                         onClick={() => setShowWarning(false)}
                         className="px-4 py-2 text-gray-600"
                     >
-                        Depois
+                        {t('dismiss')}
                     </button>
 
                     <Button href="/administrador/gerenciar/moodle">
-                        Configurar Moodle
+                        {t('configure')}
                     </Button>
 
                 </div>
