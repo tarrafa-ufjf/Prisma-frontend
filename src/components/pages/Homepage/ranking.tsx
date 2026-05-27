@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { useError } from '@/hooks/useError';
 import { api } from '@/utils/api';
 import BoxTemplate from '@/components/ui/box-template';
@@ -11,6 +12,7 @@ interface HomeRankingProps {
 }
 
 export default function HomeRanking({ type }: HomeRankingProps) {
+    const t = useTranslations('Home.ranking')
     const [ranking, setRanking] = useState<any[]>([])
     const error = useError()
 
@@ -22,9 +24,9 @@ export default function HomeRanking({ type }: HomeRankingProps) {
                 const ranking_vector = response.data.data.ranking
                 setRanking(ranking_vector)
                 if (ranking_vector.length < 1)
-                    error.setError("A turma não possui alunos o suficiente para criar um ranking")
+                    error.setError(t("notEnoughStudents"))
             } catch (err) {
-                error.setError("Erro ao buscar ranking desempenho")
+                error.setError(t("fetchError"))
                 console.error("Erro ao buscar ranking desempenho: ", err)
             }
         }
@@ -33,13 +35,13 @@ export default function HomeRanking({ type }: HomeRankingProps) {
 
     return (
         <BoxTemplate
-            title='Ranking'
-            sub_title={type == 'best-performance' ? "Disciplinas com Melhores Desempenho" : "Disciplinas com Piores Desempenho"}
+            title={t("title")}
+            sub_title={type == 'best-performance' ? t("bestPerformance") : t("worstPerformance")}
         >
             {error.hasError ? (
                 error.renderError()
             ) : ranking.length <= 0 && (
-                <Loading>Carregando ranking</Loading>
+                <Loading>{t("loading")}</Loading>
             )}
             {ranking.map((item, index) => (
                 <RankingItem

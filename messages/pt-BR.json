@@ -51,6 +51,14 @@
       "totalSubjects": "Total de disciplinas cadastradas",
       "loading": "Carregando dados gerais",
       "fetchError": "Erro ao buscar dados gerais"
+    },
+    "ranking": {
+      "title": "Ranking",
+      "bestPerformance": "Disciplinas com Melhores Desempenho",
+      "worstPerformance": "Disciplinas com Piores Desempenho",
+      "loading": "Carregando ranking",
+      "notEnoughStudents": "A turma nao possui alunos o suficiente para criar um ranking",
+      "fetchError": "Erro ao buscar ranking desempenho"
     }
   },
   "Login": {

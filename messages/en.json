@@ -51,6 +51,14 @@
       "totalSubjects": "Total registered subjects",
       "loading": "Loading general data",
       "fetchError": "Error loading general data"
+    },
+    "ranking": {
+      "title": "Ranking",
+      "bestPerformance": "Courses with Best Performance",
+      "worstPerformance": "Courses with Worst Performance",
+      "loading": "Loading ranking",
+      "notEnoughStudents": "The class does not have enough students to create a ranking",
+      "fetchError": "Error loading performance ranking"
     }
   },
   "Login": {
