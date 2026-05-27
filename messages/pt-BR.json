@@ -64,6 +64,35 @@
       "saveSuccessUpdate": "Configuração atualizada com sucesso!",
       "saveSuccessCreate": "Configuração salva com sucesso!",
       "saveError": "Erro ao salvar Configuração"
+    },
+    "ManageUsers": {
+      "templateTitle": "Gerenciamento",
+      "templateSubtitle": "de usuários",
+      "title": "Gerenciamento de Usuários",
+      "subtitle": "cadastro e gerenciamento de acessos",
+      "email": "E-mail",
+      "emailPlaceholder": "Digite o e-mail",
+      "emailValid": "✔ E-mail válido",
+      "emailInvalid": "Digite um e-mail válido",
+      "emailInvalidFormat": "Digite um e-mail válido (ex: nome@dominio.com)",
+      "emailInvalidError": "E-mail inválido. Verifique o formato.",
+      "password": "Senha",
+      "passwordPlaceholder": "Digite a senha",
+      "registerButton": "Cadastrar usuário",
+      "loadingRegister": "Cadastrando usuário...",
+      "registerSuccess": "Usuário cadastrado com sucesso!",
+      "registerError": "Erro ao cadastrar usuário.",
+      "deleteSuccess": "Usuário deletado com sucesso!",
+      "deleteError": "Erro ao deletar usuário.",
+      "updateSuccess": "Usuário atualizado com sucesso!",
+      "updateError": "Erro ao atualizar usuário.",
+      "save": "Salvar",
+      "cancel": "Cancelar",
+      "edit": "Editar",
+      "delete": "Deletar",
+      "confirmDeleteTitle": "Confirmar exclusão",
+      "confirmDeleteText": "Tem certeza que deseja deletar este usuário?",
+      "confirm": "Confirmar"
     }
   }
 }

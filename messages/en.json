@@ -64,6 +64,35 @@
       "saveSuccessUpdate": "Configuration updated successfully!",
       "saveSuccessCreate": "Configuration savaed successfully!",
       "saveError": "Error saving configuration."
+    },
+    "ManageUsers": {
+      "templateTitle": "Management",
+      "templateSubtitle": "of users",
+      "title": "User Management",
+      "subtitle": "registration and access management",
+      "email": "Email",
+      "emailPlaceholder": "Enter email",
+      "emailValid": "✔ Valid email",
+      "emailInvalid": "Enter a valid email",
+      "emailInvalidFormat": "Enter a valid email (e.g., name@domain.com)",
+      "emailInvalidError": "Invalid email. Check the format.",
+      "password": "Password",
+      "passwordPlaceholder": "Enter password",
+      "registerButton": "Register user",
+      "loadingRegister": "Registering user...",
+      "registerSuccess": "User registered successfully!",
+      "registerError": "Error registering user.",
+      "deleteSuccess": "User deleted successfully!",
+      "deleteError": "Error deleting user.",
+      "updateSuccess": "User updated successfully!",
+      "updateError": "Error updating user.",
+      "save": "Save",
+      "cancel": "Cancel",
+      "edit": "Edit",
+      "delete": "Delete",
+      "confirmDeleteTitle": "Confirm deletion",
+      "confirmDeleteText": "Are you sure you want to delete this user?",
+      "confirm": "Confirm"
     }
   }
 }
