@@ -40,6 +40,10 @@
     "title": "Informacao",
     "ok": "Ok"
   },
+  "Home": {
+    "overview": "Visao Geral",
+    "institution": "da Instituicao"
+  },
   "Login": {
     "subtitle": "Faca login em sua conta",
     "email": "Email",

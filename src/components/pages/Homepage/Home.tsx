@@ -1,3 +1,6 @@
+'use client';
+
+import { useTranslations } from 'next-intl';
 import Indicators from './Indicator/Indicators';
 import DadosGerais from './DadosGerais/DadosGerais';
 import HomeRanking from './ranking';
@@ -5,6 +8,7 @@ import AdminButton from './Administrador/Admin';
 import MoodleWarning from "@/components/pages/administrador/moodleWarning";
 
 export default function Home() {
+  const t = useTranslations('Home');
 
   return (
     <div className="flex-1 flex justify-center items-center pl-[240px]">
@@ -12,10 +16,10 @@ export default function Home() {
         <div className="flex flex-row justify-between items-center w-full">
           <div className="flex flex-col items-start">
               <h1 className="text-xl font-poppins font-semibold text-left">
-                  Visão Geral
+                  {t('overview')}
               </h1>
               <p style={{ color: '#374DAA' }} className="text-left text-xl font-semibold">
-                da Instituição
+                {t('institution')}
               </p>
           </div>
           <MoodleWarning />

@@ -40,6 +40,10 @@
     "title": "Information",
     "ok": "Ok"
   },
+  "Home": {
+    "overview": "Overview",
+    "institution": "of the Institution"
+  },
   "Login": {
     "subtitle": "Sign in to your account",
     "email": "Email",
