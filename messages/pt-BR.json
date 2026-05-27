@@ -35,6 +35,10 @@
     "feedback": "Feedback",
     "studentTeacherRelationship": "Relacao Aluno-Professor"
   },
+  "Tooltip": {
+    "title": "Informacao",
+    "ok": "Ok"
+  },
   "Login": {
     "subtitle": "Faca login em sua conta",
     "email": "Email",

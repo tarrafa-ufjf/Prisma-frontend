@@ -1,5 +1,8 @@
+'use client';
+
 import React, { useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
+import { useTranslations } from "next-intl";
 import { FaInfoCircle, FaTimes } from "react-icons/fa";
 
 type TooltipIndicatorProps = {
@@ -7,6 +10,7 @@ type TooltipIndicatorProps = {
 };
 
 export function Tooltip({ message }: TooltipIndicatorProps) {
+  const t = useTranslations("Tooltip");
   const [visible, setVisible] = useState(false);
   const modalRef = useRef<HTMLDivElement | null>(null);
 
@@ -75,7 +79,7 @@ export function Tooltip({ message }: TooltipIndicatorProps) {
               <div className="flex items-center justify-between p-6 border-b border-gray-200">
                 <h2 className="text-xl font-semibold text-gray-800 flex items-center gap-2">
                   <FaInfoCircle className="text-blue-500" />
-                  Informação
+                  {t("title")}
                 </h2>
                 <button
                   onClick={closeModal}
@@ -98,7 +102,7 @@ export function Tooltip({ message }: TooltipIndicatorProps) {
                   onClick={closeModal}
                   className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:cursor-pointer hover:bg-blue-600 transition-colors duration-200 font-medium"
                 >
-                  Ok
+                  {t("ok")}
                 </button>
               </div>
             </div>

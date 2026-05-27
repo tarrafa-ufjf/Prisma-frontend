@@ -35,6 +35,10 @@
     "feedback": "Feedback",
     "studentTeacherRelationship": "Student-Teacher Relationship"
   },
+  "Tooltip": {
+    "title": "Information",
+    "ok": "Ok"
+  },
   "Login": {
     "subtitle": "Sign in to your account",
     "email": "Email",
