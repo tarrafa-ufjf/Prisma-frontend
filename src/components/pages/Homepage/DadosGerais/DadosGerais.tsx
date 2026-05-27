@@ -43,8 +43,8 @@ export default function DadosGerais() {
         {data ? (
           <div className="flex flex-row justify-between items-center space-x-47">
             <div className="flex flex-row items-center">
-              <p className="text-base text-gray-600 mb-2 text-left mr-6">
-                {t("totalUsersLine1")}<br />{t("totalUsersLine2")} <br /> {t("totalUsersLine3")}
+              <p className="text-base text-gray-600 mb-2 text-left mr-6 max-w-[90px]">
+                {t("totalUsers")}
               </p>
               <div className="w-20 h-12 bg-gray-100 flex items-center justify-center rounded text-base ">
                 {data.total_users}
@@ -52,8 +52,8 @@ export default function DadosGerais() {
             </div>
 
             <div className="flex flex-row items-center">
-              <p className="text-base text-gray-600 mb-2 text-left mr-6">
-                {t("totalCoursesLine1")}<br />{t("totalCoursesLine2")} <br />{t("totalCoursesLine3")}
+              <p className="text-base text-gray-600 mb-2 text-left mr-6 max-w-[90px]">
+                {t("totalCourses")}
               </p>
               <div className="w-20 h-12 bg-gray-100 flex items-center justify-center rounded text-base ">
                 {data.total_courses_offered}
@@ -61,8 +61,8 @@ export default function DadosGerais() {
             </div>
 
             <div className="flex flex-row items-center">
-              <p className="text-base text-gray-600 mb-2 text-left mr-6">
-                {t("totalSubjectsLine1")}<br />{t("totalSubjectsLine2")} <br />{t("totalSubjectsLine3")}
+              <p className="text-base text-gray-600 mb-2 text-left mr-6 max-w-[110px]">
+                {t("totalSubjects")}
               </p>
               <div className="w-20 h-12 bg-gray-100 flex items-center justify-center rounded text-base ">
                 {data.total_subjects}

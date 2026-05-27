@@ -46,15 +46,9 @@
     "generalData": {
       "title": "General Data",
       "subtitle": "of the Institution",
-      "totalUsersLine1": "Total",
-      "totalUsersLine2": "registered",
-      "totalUsersLine3": "users",
-      "totalCoursesLine1": "Total",
-      "totalCoursesLine2": "offered",
-      "totalCoursesLine3": "courses",
-      "totalSubjectsLine1": "Total",
-      "totalSubjectsLine2": "registered",
-      "totalSubjectsLine3": "subjects",
+      "totalUsers": "Total registered users",
+      "totalCourses": "Total offered courses",
+      "totalSubjects": "Total registered subjects",
       "loading": "Loading general data",
       "fetchError": "Error loading general data"
     }

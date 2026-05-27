@@ -46,15 +46,9 @@
     "generalData": {
       "title": "Dados Gerais",
       "subtitle": "da Instituicao",
-      "totalUsersLine1": "Total de",
-      "totalUsersLine2": "usuarios",
-      "totalUsersLine3": "cadastrados",
-      "totalCoursesLine1": "Total de",
-      "totalCoursesLine2": "cursos",
-      "totalCoursesLine3": "ofertados",
-      "totalSubjectsLine1": "Total de",
-      "totalSubjectsLine2": "disciplinas",
-      "totalSubjectsLine3": "cadastradas",
+      "totalUsers": "Total de usuarios cadastrados",
+      "totalCourses": "Total de cursos ofertados",
+      "totalSubjects": "Total de disciplinas cadastradas",
       "loading": "Carregando dados gerais",
       "fetchError": "Erro ao buscar dados gerais"
     }
