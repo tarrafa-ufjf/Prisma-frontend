@@ -24,6 +24,17 @@
   "Filters": {
     "search": "Search"
   },
+  "IndicatorsTabs": {
+    "evaluativeInteraction": "Evaluative Interaction",
+    "nonEvaluativeInteraction": "Non-Evaluative Interaction",
+    "performance": "Performance",
+    "cognitiveDepth": "Cognitive Depth",
+    "dropout": "Dropout",
+    "forumResponses": "Forum Responses",
+    "courseAccess": "Course Access",
+    "feedback": "Feedback",
+    "studentTeacherRelationship": "Student-Teacher Relationship"
+  },
   "Login": {
     "subtitle": "Sign in to your account",
     "email": "Email",

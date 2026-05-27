@@ -24,6 +24,17 @@
   "Filters": {
     "search": "Buscar"
   },
+  "IndicatorsTabs": {
+    "evaluativeInteraction": "Interacao Avaliativa",
+    "nonEvaluativeInteraction": "Interacao Nao Avaliativa",
+    "performance": "Desempenho",
+    "cognitiveDepth": "Profundidade Cognitiva",
+    "dropout": "Desistencia",
+    "forumResponses": "Respostas em Foruns",
+    "courseAccess": "Acesso a Disciplina",
+    "feedback": "Feedback",
+    "studentTeacherRelationship": "Relacao Aluno-Professor"
+  },
   "Login": {
     "subtitle": "Faca login em sua conta",
     "email": "Email",

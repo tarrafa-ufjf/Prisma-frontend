@@ -1,4 +1,7 @@
+'use client';
+
 import React, { useRef } from 'react';
+import { useTranslations } from 'next-intl';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 interface ScrollableTabsProps<T extends string> {
@@ -9,6 +12,18 @@ interface ScrollableTabsProps<T extends string> {
   setTutores?: (tutores: any[]) => void;
 }
 
+const tabTranslationKeys: Record<string, string> = {
+  'Interação Avaliativa': 'evaluativeInteraction',
+  'Interação Não Avaliativa': 'nonEvaluativeInteraction',
+  'Desempenho': 'performance',
+  'Profundidade Cognitiva': 'cognitiveDepth',
+  'Desistência': 'dropout',
+  'Respostas em Fóruns': 'forumResponses',
+  'Acesso à Disciplina': 'courseAccess',
+  'Feedback': 'feedback',
+  'Relação Aluno-Professor': 'studentTeacherRelationship',
+};
+
 function ScrollableTabs<T extends string>({
   tabs,
   activeTab,
@@ -16,6 +31,7 @@ function ScrollableTabs<T extends string>({
   setAlunos,
   setTutores
 }: ScrollableTabsProps<T>) {
+  const t = useTranslations('IndicatorsTabs');
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scrollLeft = () => scrollRef.current?.scrollBy({ left: -200, behavior: 'smooth' });
@@ -25,6 +41,11 @@ function ScrollableTabs<T extends string>({
     setTab(tab);
     setAlunos?.([]);
     setTutores?.([]);
+  };
+
+  const getTabLabel = (tab: T) => {
+    const key = tabTranslationKeys[String(tab)];
+    return key ? t(key) : String(tab);
   };
 
   return (
@@ -48,8 +69,7 @@ function ScrollableTabs<T extends string>({
                 activeTab === tab ? 'text-white bg-[#374DAA] border-[#374DAA]' : 'text-gray-800 bg-white border-gray-300 hover:bg-gray-100'
               }`}
             >
-              {/* Garantindo que o T renderize como string */}
-              {String(tab)}
+              {getTabLabel(tab)}
             </button>
           ))}
         </div>
