@@ -31,6 +31,39 @@
     "MainPage": {
       "title": "Administration",
       "subtitle": "General Management"
+    },
+    "ManageMoodle": {
+      "templateTitle": "Manage",
+      "templateSubtitle": "Moodle",
+      "title": "Moodle Integration",
+      "subtitle": "information management",
+      "host": "Host",
+      "hostPlaceholder": "Enter the host",
+      "port": "Port",
+      "portPlaceholder": "Enter the port",
+      "database": "Database",
+      "databasePlaceholder": "Enter database",
+      "user": "User",
+      "userPlaceholder": "Enter the user",
+      "password": "Password",
+      "passwordPlaceholder":"Enter the password",
+      "passwordProtected": "Protected password",
+      "testing": "Testing...",
+      "testingConnection": "Testing connection",
+      "saving": "Saving...",
+      "saveChanges": "Save changes",
+      "registerMoodle": "Register Moodle",
+      "edit": "Edit",
+      "cancel": "Cancel",
+      "success": "Success",
+      "error": "Error",
+      "ok": "OK",
+      "understand": "Understand",
+      "testSuccess": "Connection successful! Moodle version {version}",
+      "testError": "Failed to onnect to Moodle. Please check the information.",
+      "saveSuccessUpdate": "Configuration updated successfully!",
+      "saveSuccessCreate": "Configuration savaed successfully!",
+      "saveError": "Error saving configuration."
     }
   }
 }

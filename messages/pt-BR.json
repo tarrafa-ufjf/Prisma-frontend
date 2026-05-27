@@ -31,6 +31,39 @@
     "MainPage": {
       "title": "Administração",
       "subtitle": "Gerenciamento Geral"
+    },
+    "ManageMoodle": {
+      "templateTitle": "Gerenciar",
+      "templateSubtitle": "Moodle",
+      "title": "Integração Moodle",
+      "subtitle": "gerenciamento de informações",
+      "host": "Host",
+      "hostPlaceholder": "Digite o host",
+      "port": "Porta",
+      "portPlaceholder": "Digite a porta",
+      "database": "Database",
+      "databasePlaceholder": "Digite database",
+      "user": "Usuário",
+      "userPlaceholder": "Digite o Usuário",
+      "password": "Senha",
+      "passwordPlaceholder":"Digite a senha",
+      "passwordProtected": "Senha protegida",
+      "testing": "Testando...",
+      "testingConnection": "Testar conexão",
+      "saving": "Salvando...",
+      "saveChanges": "Salvar alterações",
+      "registerMoodle": "Cadastrar Moodle",
+      "edit": "Editar",
+      "cancel": "Cancelar",
+      "success": "Sucesso",
+      "error": "Erro",
+      "ok": "OK",
+      "understand": "Entendi",
+      "testSuccess": "Conexão realizada com sucesso! Moodle versão {version}",
+      "testError": "Falha ao conectar com o Moodle. Verifique as informações.",
+      "saveSuccessUpdate": "Configuração atualizada com sucesso!",
+      "saveSuccessCreate": "Configuração salva com sucesso!",
+      "saveError": "Erro ao salvar Configuração"
     }
   }
 }
