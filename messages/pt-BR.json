@@ -27,6 +27,10 @@
     },
     "Auth": {
       "loading": "Carregando..."
+    },
+    "MainPage": {
+      "title": "Administração",
+      "subtitle": "Gerenciamento Geral"
     }
   }
 }
