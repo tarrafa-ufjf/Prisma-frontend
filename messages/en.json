@@ -21,6 +21,9 @@
     "previous": "Previous",
     "next": "Next"
   },
+  "Filters": {
+    "search": "Search"
+  },
   "Login": {
     "subtitle": "Sign in to your account",
     "email": "Email",
