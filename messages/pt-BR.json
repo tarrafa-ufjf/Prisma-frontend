@@ -40,6 +40,17 @@
     "title": "Informacao",
     "ok": "Ok"
   },
+  "IndicatorInfo": {
+    "interacaoAvaliativaInfo": "Considera as interacoes dos alunos em foruns avaliativos da disciplina.",
+    "interacaoNaoAvaliativaInfo": "Considera as interacoes voluntarias de discentes em foruns nao avaliativos da disciplina.",
+    "desempenhoInfo": "Considera a nota final de discentes na disciplina.",
+    "profCogInfo": "Considera o envolvimento cognitivo de discentes no conjunto de tarefas da disciplina.",
+    "relacaoAlunoProfInfo": "Considera a comunicabilidade direta entre discentes e docentes atraves de foruns.",
+    "desistenciaInfo": "Indica discentes com baixas classificacoes gerais na agregacao dos demais indicadores, comumente associado a desistencia do curso.",
+    "feedbackInfo": "Avalia a qualidade e a frequencia dos feedbacks fornecidos pelo tutor nas atividades avaliativas, considerando correcoes realizadas, presenca de feedback e o tipo de retorno oferecido aos estudantes (textual e/ou anotacoes em PDF).",
+    "accessInfo": "Analisa a presenca e regularidade de acesso do tutor a plataforma, a partir dos registros de log, indicando o nivel de acompanhamento da disciplina.",
+    "responseInfo": "Avalia a participacao do tutor em foruns, considerando o volume de respostas e o tempo medio de atendimento as mensagens dos estudantes, com classificacao do tempo de resposta em: rapida (menos de 1 dia), normal (entre 1 a 5 dias), atrasada (mais que 5 dias) ou sem resposta."
+  },
   "Home": {
     "overview": "Visao Geral",
     "institution": "da Instituicao",

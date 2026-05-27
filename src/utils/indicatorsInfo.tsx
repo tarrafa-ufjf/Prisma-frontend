@@ -1,22 +1,24 @@
 export const getIndicatorsInfo = {
-    interacaoAvaliativaInfo: "Considera as interações dos alunos em fóruns avaliativos da disciplina.",
+    interacaoAvaliativaInfo: "interacaoAvaliativaInfo",
 
-    interacaoNaoAvaliativaInfo: "Considera as interações voluntárias de discentes em fóruns não avaliativos da disciplina.",
+    interacaoNaoAvaliativaInfo: "interacaoNaoAvaliativaInfo",
 
-    desempenhoInfo: "Considera a nota final de discentes na disciplina.",
+    desempenhoInfo: "desempenhoInfo",
 
-    profCogInfo: "Considera o envolvimento cognitivo de discentes no conjunto de tarefas da disciplina.",
+    profCogInfo: "profCogInfo",
     // Para mais informações, acesse: https://docs.moodle.org/501/en/Learning_analytics_indicators#Cognitive_depth
-    relacaoAlunoProfInfo: "Considera a comunicabilidade direta entre discentes e docentes através de fóruns.",
+    relacaoAlunoProfInfo: "relacaoAlunoProfInfo",
 
-    desistenciaInfo: "Indica discentes com baixas classificações gerais na agregação dos demais indicadores, comumente associado à desistência do curso.",
+    desistenciaInfo: "desistenciaInfo",
 
     // Tutores:
 
-    feedbackInfo: "Avalia a qualidade e a frequência dos feedbacks fornecidos pelo tutor nas atividades avaliativas, considerando correções realizadas, presença de feedback e o tipo de retorno oferecido aos estudantes (textual e/ou anotações em PDF).",
+    feedbackInfo: "feedbackInfo",
 
-    accessInfo: "Analisa a presença e regularidade de acesso do tutor à plataforma, a partir dos registros de log, indicando o nível de acompanhamento da disciplina.",
+    accessInfo: "accessInfo",
 
-    responseInfo: "Avalia a participação do tutor em fóruns, considerando o volume de respostas e o tempo médio de atendimento às mensagens dos estudantes, com classificação do tempo de resposta em: rápida (menos de 1 dia), normal (entre 1 a 5 dias), atrasada (mais que 5 dias) ou sem resposta."
+    responseInfo: "responseInfo"
 
-};
+} as const;
+
+export const indicatorInfoKeys = new Set<string>(Object.values(getIndicatorsInfo));

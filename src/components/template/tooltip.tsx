@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { useTranslations } from "next-intl";
 import { FaInfoCircle, FaTimes } from "react-icons/fa";
+import { indicatorInfoKeys } from "@/utils/indicatorsInfo";
 
 type TooltipIndicatorProps = {
   message: string | null;
@@ -11,6 +12,7 @@ type TooltipIndicatorProps = {
 
 export function Tooltip({ message }: TooltipIndicatorProps) {
   const t = useTranslations("Tooltip");
+  const indicatorInfo = useTranslations("IndicatorInfo");
   const [visible, setVisible] = useState(false);
   const modalRef = useRef<HTMLDivElement | null>(null);
 
@@ -55,6 +57,9 @@ export function Tooltip({ message }: TooltipIndicatorProps) {
     setVisible(false);
   };
 
+  const modalMessage =
+    message && indicatorInfoKeys.has(message) ? indicatorInfo(message) : message;
+
   return (
     <>
       <button
@@ -92,7 +97,7 @@ export function Tooltip({ message }: TooltipIndicatorProps) {
               {/* Conteúdo do Modal */}
               <div className="p-6">
                 <div className="text-gray-700 leading-relaxed">
-                  <p className="text-base">{message}</p>
+                  <p className="text-base">{modalMessage}</p>
                 </div>
               </div>
 

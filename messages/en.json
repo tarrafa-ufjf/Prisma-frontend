@@ -40,6 +40,17 @@
     "title": "Information",
     "ok": "Ok"
   },
+  "IndicatorInfo": {
+    "interacaoAvaliativaInfo": "Considers students' interactions in graded course forums.",
+    "interacaoNaoAvaliativaInfo": "Considers students' voluntary interactions in non-graded course forums.",
+    "desempenhoInfo": "Considers students' final grade in the course.",
+    "profCogInfo": "Considers students' cognitive engagement across the course tasks.",
+    "relacaoAlunoProfInfo": "Considers direct communication between students and teachers through forums.",
+    "desistenciaInfo": "Indicates students with low overall classifications across the other indicators, commonly associated with course dropout.",
+    "feedbackInfo": "Assesses the quality and frequency of feedback provided by the tutor in graded activities, considering corrections made, feedback presence, and the type of response offered to students (textual and/or PDF annotations).",
+    "accessInfo": "Analyzes the tutor's presence and regularity of access to the platform, based on log records, indicating the level of course monitoring.",
+    "responseInfo": "Assesses the tutor's forum participation, considering response volume and average response time to student messages, classified as: fast (less than 1 day), normal (between 1 and 5 days), delayed (more than 5 days), or no response."
+  },
   "Home": {
     "overview": "Overview",
     "institution": "of the Institution",
