@@ -1,8 +1,6 @@
 'use client';
 
 import { Curso } from "@/types/curso";
-import Sidebar from "../../ui/sidebar";
-import Header from "../../sidebar/Header/Header";
 import CoursesDisplay from "./courses-display";
 import { useState } from "react";
 

@@ -6,6 +6,12 @@
   "Common": {
     "appName": "Projeto Prisma"
   },
+  "Sidebar": {
+    "menu": "MENU",
+    "home": "Pagina Principal",
+    "courses": "Painel das Disciplinas",
+    "tutors": "Painel dos Tutores"
+  },
   "Login": {
     "subtitle": "Faca login em sua conta",
     "email": "Email",
@@ -19,4 +25,3 @@
     "invalidCredentials": "Email ou senha incorretos. Tente novamente."
   }
 }
-

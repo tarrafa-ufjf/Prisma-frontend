@@ -6,6 +6,12 @@
   "Common": {
     "appName": "Prisma Project"
   },
+  "Sidebar": {
+    "menu": "MENU",
+    "home": "Home",
+    "courses": "Courses Dashboard",
+    "tutors": "Tutors Dashboard"
+  },
   "Login": {
     "subtitle": "Sign in to your account",
     "email": "Email",
@@ -19,4 +25,3 @@
     "invalidCredentials": "Incorrect email or password. Please try again."
   }
 }
-

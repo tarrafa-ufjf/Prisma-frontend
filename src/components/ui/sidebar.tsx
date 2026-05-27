@@ -1,37 +1,38 @@
 'use client';
 
 import LogoutButton from '@/components/auth/LogoutButton';
+import { Link, usePathname } from '@/i18n/navigation';
 import Image from 'next/image';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { IconType } from 'react-icons';
 import { FaGraduationCap, FaHome, FaUserGraduate } from 'react-icons/fa';
 
 interface NavItem {
-  title: string;
+  titleKey: 'home' | 'courses' | 'tutors';
   href: string;
   icon: IconType;
 }
 
 const navItems: NavItem[] = [
   {
-    title: 'Página Principal',
+    titleKey: 'home',
     href: '/',
     icon: FaHome,
   },
   {
-    title: 'Painel das Disciplinas',
+    titleKey: 'courses',
     href: '/cursos',
     icon: FaGraduationCap,
   },
   {
-    title: 'Painel dos Tutores',
+    titleKey: 'tutors',
     href: '/tutores',
     icon: FaUserGraduate,
   },
 ];
 
 export default function Sidebar() {
+  const t = useTranslations('Sidebar');
   const pathname = usePathname();
 
   const isActive = (href: string) => {
@@ -55,7 +56,7 @@ export default function Sidebar() {
           </Link>
 
           <nav className="sidebaralign space-y-4 mt-4">
-            <span className="text-xs font-semibold">MENU</span>
+            <span className="text-xs font-semibold">{t('menu')}</span>
             <ul className="space-y-2">
               {navItems.map((item) => {
                 const Icon = item.icon;
@@ -68,7 +69,7 @@ export default function Sidebar() {
                         }`}
                     >
                       <Icon className="w-5 h-5" />
-                      <span>{item.title}</span>
+                      <span>{t(item.titleKey)}</span>
                     </Link>
                   </li>
                 );

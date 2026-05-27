@@ -1,4 +1,3 @@
-import Header from "@/components/sidebar/Header/Header";
 import Sidebar from "@/components/ui/sidebar";
 import { Curso } from "@/types/curso";
 
