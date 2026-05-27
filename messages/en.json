@@ -59,6 +59,9 @@
       "loading": "Loading ranking",
       "notEnoughStudents": "The class does not have enough students to create a ranking",
       "fetchError": "Error loading performance ranking"
+    },
+    "adminButton": {
+      "label": "Administrator Dashboard"
     }
   },
   "Login": {

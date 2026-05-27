@@ -1,11 +1,13 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 import Button from '@/components/ui/button';
 import { getCurrentUser } from '@/utils/auth';
 
 export default function AdminButton() {
+    const t = useTranslations('Home.adminButton');
 
     const [isAdmin, setIsAdmin] = useState(false);
 
@@ -32,7 +34,7 @@ export default function AdminButton() {
 
     return (
         <Button href="/administrador">
-            Painel do Administrador
+            {t('label')}
         </Button>
     );
 }

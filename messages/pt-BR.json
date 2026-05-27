@@ -59,6 +59,9 @@
       "loading": "Carregando ranking",
       "notEnoughStudents": "A turma nao possui alunos o suficiente para criar um ranking",
       "fetchError": "Erro ao buscar ranking desempenho"
+    },
+    "adminButton": {
+      "label": "Painel do Administrador"
     }
   },
   "Login": {
