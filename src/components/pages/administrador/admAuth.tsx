@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
+import { useRouter } from '@/i18n/navigation';
 
 import { getCurrentUser } from '@/utils/auth';
 
@@ -12,6 +13,7 @@ interface Props {
 export default function AdminAuth({ children }: Props) {
 
     const router = useRouter();
+    const t = useTranslations('Admin.Auth');
 
     const [loading, setLoading] = useState(true);
     const [authorized, setAuthorized] = useState(false);
@@ -49,7 +51,7 @@ export default function AdminAuth({ children }: Props) {
     if (loading) {
         return (
             <div className="flex justify-center items-center h-screen">
-                Carregando...
+                {t('loading')}
             </div>
         );
     }

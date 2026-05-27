@@ -24,6 +24,9 @@
       "description": "No Moodle integration has been registred yet. Register a connection to use the system features.",
       "dismiss": "Later",
       "configure": "Configure Moodle"
+    },
+    "Auth": {
+      "loading": "Loading..."
     }
   }
 }

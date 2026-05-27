@@ -24,6 +24,9 @@
       "description": "Nenhuma integração Moodle foi cadastrada ainda. Cadastre uma conexão para utiliar os recursos do sistema.",
       "dismiss": "Depois",
       "configure": "Configurar Moodle"
+    },
+    "Auth": {
+      "loading": "Carregando..."
     }
   }
 }
