@@ -12,6 +12,15 @@
     "courses": "Painel das Disciplinas",
     "tutors": "Painel dos Tutores"
   },
+  "Tables": {
+    "loadingData": "Carregando dados...",
+    "showingEntries": "Mostrando {range} de {total} entradas"
+  },
+  "Pagination": {
+    "showingResults": "Mostrando {start} a {end} de {total} resultados",
+    "previous": "Anterior",
+    "next": "Proximo"
+  },
   "Login": {
     "subtitle": "Faca login em sua conta",
     "email": "Email",

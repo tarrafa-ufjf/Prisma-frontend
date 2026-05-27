@@ -12,6 +12,15 @@
     "courses": "Courses Dashboard",
     "tutors": "Tutors Dashboard"
   },
+  "Tables": {
+    "loadingData": "Loading data...",
+    "showingEntries": "Showing {range} of {total} entries"
+  },
+  "Pagination": {
+    "showingResults": "Showing {start} to {end} of {total} results",
+    "previous": "Previous",
+    "next": "Next"
+  },
   "Login": {
     "subtitle": "Sign in to your account",
     "email": "Email",

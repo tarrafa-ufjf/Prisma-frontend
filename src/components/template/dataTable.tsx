@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
 import {
   Table,
   TableBody,
@@ -40,9 +41,9 @@ const normalizeString = (str: string | undefined | null) => {
     .toLowerCase();
 };
 
-const formatCellValue = (value: any) => {
+const formatCellValue = (value: any, locale: string) => {
   if (typeof value === "number") {
-    return new Intl.NumberFormat("pt-BR", {
+    return new Intl.NumberFormat(locale, {
       minimumFractionDigits: Number.isInteger(value) ? 0 : 2,
       maximumFractionDigits: 2,
     }).format(value);
@@ -56,6 +57,8 @@ const DataTable: React.FC<DataTableProps> = ({
   columns,
   searchTerm,
 }) => {
+  const t = useTranslations("Tables");
+  const locale = useLocale();
   const [currentPage, setCurrentPage] = useState(1);
 
   const filteredData = data.filter((item) =>
@@ -138,7 +141,7 @@ const DataTable: React.FC<DataTableProps> = ({
                   >
                     {column.cell
                       ? column.cell(row)
-                      : formatCellValue(row[column.name])}
+                      : formatCellValue(row[column.name], locale)}
                   </TableCell>
                 ))}
               </TableRow>
@@ -146,7 +149,7 @@ const DataTable: React.FC<DataTableProps> = ({
           ) : (
             <TableRow>
               <TableCell colSpan={columns.length} className="py-7">
-                <Loading>Carregando dados...</Loading>
+                <Loading>{t("loadingData")}</Loading>
               </TableCell>
             </TableRow>
           )}
@@ -197,14 +200,16 @@ const DataTable: React.FC<DataTableProps> = ({
           )}
         </div>
         <span>
-          Mostrando{" "}
-          {filteredData.length === 0
-            ? "0 – 0"
-            : `${(currentPage - 1) * rowsPerPage + 1} – ${Math.min(
-                currentPage * rowsPerPage,
-                filteredData.length,
-              )}`}{" "}
-          de {filteredData.length} entradas
+          {t("showingEntries", {
+            range:
+              filteredData.length === 0
+                ? "0 - 0"
+                : `${(currentPage - 1) * rowsPerPage + 1} - ${Math.min(
+                    currentPage * rowsPerPage,
+                    filteredData.length,
+                  )}`,
+            total: filteredData.length,
+          })}
         </span>
       </div>
     </div>

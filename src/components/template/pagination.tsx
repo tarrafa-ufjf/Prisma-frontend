@@ -1,3 +1,7 @@
+'use client';
+
+import { useTranslations } from 'next-intl';
+
 interface PaginationProps {
     currentPage: number;
     totalPages: number;
@@ -13,6 +17,7 @@ export default function Pagination({
     totalItems,
     itemsPerPage
 }: PaginationProps) {
+    const t = useTranslations('Pagination');
     const startItem = (currentPage - 1) * itemsPerPage + 1;
     const endItem = Math.min(currentPage * itemsPerPage, totalItems);
 
@@ -56,7 +61,11 @@ export default function Pagination({
     return (
         <div className="flex flex-col items-center gap-4 mt-6">
             <div className="text-sm font-medium" style={{ color: '#374DAA' }}>
-                Mostrando {startItem} a {endItem} de {totalItems} resultados
+                {t('showingResults', {
+                    start: startItem,
+                    end: endItem,
+                    total: totalItems,
+                })}
             </div>
 
             <div className="flex items-center gap-2">
@@ -68,7 +77,7 @@ export default function Pagination({
                             : 'bg-white text-gray-700 border border-gray-200 hover:bg-gray-50 hover:border-gray-300 shadow-sm hover:shadow-md'
                         }`}
                 >
-                    Anterior
+                    {t('previous')}
                 </button>
 
                 {getVisiblePages().map((page, index) => (
@@ -95,7 +104,7 @@ export default function Pagination({
                             : 'bg-white text-gray-700 border border-gray-200 hover:bg-gray-50 hover:border-gray-300 shadow-sm hover:shadow-md'
                         }`}
                 >
-                    Próximo
+                    {t('next')}
                 </button>
             </div>
         </div>
