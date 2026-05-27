@@ -1,4 +1,5 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 import styles from './Indicators.module.css';
 import alunoIcon from './aluno.png';
 import alunoIcon2 from './baixados2.png';
@@ -48,6 +49,7 @@ type PercentualInfo = {
 }
 
 export default function Indicators() {
+  const t = useTranslations("Home.indicators")
   const [data, setData] = useState<PercentualInfo | null>(null)
   const error = useError()
 
@@ -58,26 +60,26 @@ export default function Indicators() {
         const response = await api.get(`analysis/general/indicators`)
         setData(response.data.data)
       } catch (err) {
-        error.setError("Erro ao buscar indicadores")
+        error.setError(t("fetchError"))
         console.error("Erro ao buscar indicadores: ", err)
       }
     };
     fetch();
-  }, [error.clear, error.setError]);
+  }, [error.clear, error.setError, t]);
 
   return (
     <div className="Box pb-5">
       <div className="maincurso">
         <div className="mt-10 ml-10 mb-5">
-          <h1 className="text-xl font-poppins font-semibold text-left">Indicadores</h1>
-          <p style={{ color: "#9291A5" }}>calculados</p>
+          <h1 className="text-xl font-poppins font-semibold text-left">{t("title")}</h1>
+          <p style={{ color: "#9291A5" }}>{t("subtitle")}</p>
         </div>
         <div className="m-10">
           <Link
             href="/disciplinas"
             className="px-4 py-2 rounded bg-[#5a6acf] text-white hover:bg-[#374DAA] transition"
           >
-            Saiba mais
+            {t("learnMore")}
           </Link>
         </div>
       </div>
@@ -94,7 +96,7 @@ export default function Indicators() {
                     <div className="bg-[#3CD856] rounded-full flex items-center justify-center w-8 h-8">
                       <Image
                         src={alunoIcon1}
-                        alt="Ícone aluno-professor"
+                        alt={t("indicatorIconAlt")}
                         width={15}
                         height={20}
                         className="object-cover"
@@ -104,8 +106,8 @@ export default function Indicators() {
                   </div>
                   <div className="ml-17 flex text-left">
                     <div className="flex flex-col leading-snug">
-                      <p className={styles.textoPersonalizado2}>de disciplinas</p>
-                      <p className={styles.textoPersonalizado}>com ótimo índice<br />de interação avaliativa</p>
+                      <p className={styles.textoPersonalizado2}>{t("subjectsPrefix")}</p>
+                      <p className={styles.textoPersonalizado}>{t("evaluativeInteraction")}</p>
                     </div>
                   </div>
                 </div>
@@ -120,7 +122,7 @@ export default function Indicators() {
                     <div className="bg-[#3C56D8] rounded-full flex items-center justify-center w-8 h-8">
                       <Image
                         src={alunoIcon3}
-                        alt="Ícone aluno-professor"
+                        alt={t("indicatorIconAlt")}
                         width={21}
                         height={28}
                         className="ml-2.5 object-cover"
@@ -131,8 +133,8 @@ export default function Indicators() {
 
                   <div className="ml-19 flex text-left">
                     <div className="flex flex-col leading-snug">
-                      <p className={styles.textoPersonalizado2}>de disciplinas</p>
-                      <p className={styles.textoPersonalizado}>com bom índice<br />de interação não avaliativa</p>
+                      <p className={styles.textoPersonalizado2}>{t("subjectsPrefix")}</p>
+                      <p className={styles.textoPersonalizado}>{t("nonEvaluativeInteraction")}</p>
                     </div>
                   </div>
                 </div>
@@ -147,7 +149,7 @@ export default function Indicators() {
                     <div className="bg-[#D8D03C] rounded-full flex items-center justify-center w-8 h-8">
                       <Image
                         src={alunoIcon2}
-                        alt="Ícone aluno-professor"
+                        alt={t("indicatorIconAlt")}
                         width={21}
                         height={28}
                         className="object-cover"
@@ -158,8 +160,8 @@ export default function Indicators() {
 
                   <div className="ml-17 flex text-left">
                     <div className="flex flex-col leading-snug">
-                      <p className={styles.textoPersonalizado2}>de disciplinas</p>
-                      <p className={styles.textoPersonalizado}>com bom desempenho</p>
+                      <p className={styles.textoPersonalizado2}>{t("subjectsPrefix")}</p>
+                      <p className={styles.textoPersonalizado}>{t("performance")}</p>
                     </div>
                   </div>
                 </div>
@@ -174,7 +176,7 @@ export default function Indicators() {
                     <div className="bg-[#D86D3C] rounded-full flex items-center justify-center w-8 h-8">
                       <Image
                         src={cognitive_depth}
-                        alt="Ícone aluno-professor"
+                        alt={t("indicatorIconAlt")}
                         width={18}
                         height={28}
                         className="object-cover text-white"
@@ -185,8 +187,8 @@ export default function Indicators() {
 
                   <div className="ml-17 flex text-left">
                     <div className="flex flex-col leading-snug">
-                      <p className={styles.textoPersonalizado2}>de disciplinas</p>
-                      <p className={styles.textoPersonalizado}>com nível 3<br />de profundidade cognitiva</p>
+                      <p className={styles.textoPersonalizado2}>{t("subjectsPrefix")}</p>
+                      <p className={styles.textoPersonalizado}>{t("cognitiveDepth")}</p>
                     </div>
                   </div>
                 </div>
@@ -204,7 +206,7 @@ export default function Indicators() {
                   <div className="bg-[#5C3CD8] rounded-full flex items-center justify-center w-8 h-8">
                     <Image
                       src={alunoIcon}
-                      alt="Ícone aluno-professor"
+                      alt={t("indicatorIconAlt")}
                       width={21}
                       height={28}
                       className="mr-0.5 object-cover"
@@ -214,8 +216,8 @@ export default function Indicators() {
                 </div>
                 <div className="ml-17 flex text-left">
                   <div className="flex flex-col leading-snug">
-                    <p className={styles.textoPersonalizado2}>de disciplinas</p>
-                    <p className={styles.textoPersonalizado}>com boa relação<br />aluno-professor</p>
+                    <p className={styles.textoPersonalizado2}>{t("subjectsPrefix")}</p>
+                    <p className={styles.textoPersonalizado}>{t("studentTeacherRelationship")}</p>
                   </div>
                 </div>
               </div>
@@ -230,7 +232,7 @@ export default function Indicators() {
                   <div className="bg-[#D83C8C] rounded-full flex items-center justify-center w-8 h-8">
                     <Image
                       src={alunoIcon5}
-                      alt="Ícone aluno-professor"
+                      alt={t("indicatorIconAlt")}
                       width={21}
                       height={28}
                       className="object-cover"
@@ -240,8 +242,8 @@ export default function Indicators() {
                 </div>
                 <div className="ml-17 flex text-left">
                   <div className="flex flex-col leading-snug">
-                    <p className={styles.textoPersonalizado2}>de disciplinas</p>
-                    <p className={styles.textoPersonalizado}>com baixo índice <br />de desistência</p>
+                    <p className={styles.textoPersonalizado2}>{t("subjectsPrefix")}</p>
+                    <p className={styles.textoPersonalizado}>{t("dropout")}</p>
                   </div>
                 </div>
               </div>
@@ -255,7 +257,7 @@ export default function Indicators() {
         <div className="m-13">{error.renderError()}</div>
       ) : (
         <div className="m-13">
-          <Loading>Buscando dados</Loading>
+          <Loading>{t("loading")}</Loading>
         </div>
       )}
     </div>

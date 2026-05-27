@@ -62,6 +62,21 @@
     },
     "adminButton": {
       "label": "Painel do Administrador"
+    },
+    "indicators": {
+      "title": "Indicadores",
+      "subtitle": "calculados",
+      "learnMore": "Saiba mais",
+      "subjectsPrefix": "de disciplinas",
+      "evaluativeInteraction": "com otimo indice de interacao avaliativa",
+      "nonEvaluativeInteraction": "com bom indice de interacao nao avaliativa",
+      "performance": "com bom desempenho",
+      "cognitiveDepth": "com nivel 3 de profundidade cognitiva",
+      "studentTeacherRelationship": "com boa relacao aluno-professor",
+      "dropout": "com baixo indice de desistencia",
+      "indicatorIconAlt": "Icone aluno-professor",
+      "loading": "Buscando dados",
+      "fetchError": "Erro ao buscar indicadores"
     }
   },
   "Login": {

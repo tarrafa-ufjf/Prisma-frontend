@@ -62,6 +62,21 @@
     },
     "adminButton": {
       "label": "Administrator Dashboard"
+    },
+    "indicators": {
+      "title": "Indicators",
+      "subtitle": "calculated",
+      "learnMore": "Learn more",
+      "subjectsPrefix": "of courses",
+      "evaluativeInteraction": "with an excellent evaluative interaction rate",
+      "nonEvaluativeInteraction": "with a good non-evaluative interaction rate",
+      "performance": "with good performance",
+      "cognitiveDepth": "with level 3 cognitive depth",
+      "studentTeacherRelationship": "with a good student-teacher relationship",
+      "dropout": "with a low dropout rate",
+      "indicatorIconAlt": "Student-teacher icon",
+      "loading": "Fetching data",
+      "fetchError": "Error loading indicators"
     }
   },
   "Login": {
