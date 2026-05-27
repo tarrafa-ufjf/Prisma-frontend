@@ -4,7 +4,8 @@
     "description": "Application using Next.js"
   },
   "Common": {
-    "appName": "Prisma Project"
+    "appName": "Prisma Project",
+    "logout": "Log out"
   },
   "Sidebar": {
     "menu": "MENU",
