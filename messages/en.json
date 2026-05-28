@@ -136,6 +136,15 @@
         "subtitle": "of the Course",
         "loadingChart": "Loading chart..."
       }
+    },
+    "rankings": {
+      "performance": {
+        "title": "Ranking",
+        "subtitle": "Students with Best Performance",
+        "loading": "Loading ranking",
+        "notEnoughStudents": "The class does not have enough students to create a ranking",
+        "fetchError": "Error loading best performance ranking"
+      }
     }
   },
   "Login": {

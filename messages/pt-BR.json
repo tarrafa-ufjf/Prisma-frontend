@@ -136,6 +136,15 @@
         "subtitle": "da Disciplina",
         "loadingChart": "Carregando grafico..."
       }
+    },
+    "rankings": {
+      "performance": {
+        "title": "Ranking",
+        "subtitle": "Alunos com Melhor Desempenho",
+        "loading": "Carregando ranking",
+        "notEnoughStudents": "A turma nao possui alunos o suficiente para criar um ranking",
+        "fetchError": "Erro ao buscar ranking de melhor desempenho"
+      }
     }
   },
   "Login": {
