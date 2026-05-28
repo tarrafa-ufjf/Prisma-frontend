@@ -90,6 +90,10 @@
       "fetchError": "Erro ao buscar indicadores"
     }
   },
+  "Courses": {
+    "course": "Disciplina",
+    "notFound": "Curso {courseId} nao encontrado! Por favor, use o menu no canto superior esquerdo, ou tente novamente mais tarde!"
+  },
   "Login": {
     "subtitle": "Faca login em sua conta",
     "email": "Email",

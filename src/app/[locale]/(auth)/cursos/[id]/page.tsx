@@ -4,6 +4,7 @@ import Indicators from '@/components/pages/Curso/Indicator/Indicators';
 import Rankings from '@/components/pages/Curso/rankings/ranking';
 import NotFound from '@/components/ui/not-found';
 import { getCourses } from '@/utils/api-server';
+import { getTranslations } from 'next-intl/server';
 
 interface PageProps {
   params: Promise<{
@@ -14,6 +15,7 @@ interface PageProps {
 
 export default async function Page({ params }: PageProps) {
   const page_param = await params
+  const t = await getTranslations('Courses')
   const cursos = await getCourses()
   const curso = cursos.filter(curso => curso.id == Number(page_param.id))[0]
 
@@ -21,7 +23,7 @@ export default async function Page({ params }: PageProps) {
     return (
       <NotFound cursos={cursos}>
         <div className="flex-1 flex justify-center items-center pt-4 pl-[240px]">
-          <p>Curso {page_param.id} não encontrado! Por favor, use o menu no canto superior esquerdo, ou tente novamente mais tarde!</p>
+          <p>{t('notFound', { courseId: page_param.id })}</p>
         </div>
       </NotFound>
     )
@@ -32,7 +34,7 @@ export default async function Page({ params }: PageProps) {
       <div className="BoxCurso">
         <div className="flex flex-row justify-between items-start w-full">
           <div className="flex flex-col items-start">
-            <h1 className="text-xl font-poppins font-semibold text-left">Disciplina</h1>
+            <h1 className="text-xl font-poppins font-semibold text-left">{t('course')}</h1>
             <p style={{ color: '#374DAA' }} className="text-left text-xl font-semibold">
               {curso.fullname}
             </p>

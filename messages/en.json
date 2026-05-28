@@ -90,6 +90,10 @@
       "fetchError": "Error loading indicators"
     }
   },
+  "Courses": {
+    "course": "Course",
+    "notFound": "Course {courseId} not found! Please use the menu in the upper-left corner, or try again later!"
+  },
   "Login": {
     "subtitle": "Sign in to your account",
     "email": "Email",
