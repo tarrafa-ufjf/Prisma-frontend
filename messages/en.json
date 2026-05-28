@@ -159,7 +159,31 @@
     "loading": "Loading subjects...",
     "overview": "Overview",
     "subtitle": "of Subjects",
-    "searchPlaceholder": "Subject"
+    "searchPlaceholder": "Subject",
+    "filters": {
+      "course": "Course",
+      "filterByCourse": "Filter by Course",
+      "indicator": "Indicator",
+      "magnitude": "Magnitude",
+      "select": "Select",
+      "indicators": {
+        "evaluativeInteraction": "Evaluative Interaction",
+        "nonEvaluativeInteraction": "Non-Evaluative Interaction",
+        "performance": "Performance",
+        "cognitiveDepth": "Cognitive Depth",
+        "studentTeacherRelationship": "Student-Teacher Relationship",
+        "dropout": "Dropout"
+      },
+      "magnitudes": {
+        "positive": "Positive",
+        "negative": "Negative",
+        "veryHigh": "Very High",
+        "high": "High",
+        "medium": "Medium",
+        "low": "Low",
+        "veryLow": "Very Low"
+      }
+    }
   },
   "Login": {
     "subtitle": "Sign in to your account",

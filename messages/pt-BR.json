@@ -159,7 +159,31 @@
     "loading": "Carregando disciplinas...",
     "overview": "Visao Geral",
     "subtitle": "das Disciplinas",
-    "searchPlaceholder": "Disciplina"
+    "searchPlaceholder": "Disciplina",
+    "filters": {
+      "course": "Curso",
+      "filterByCourse": "Filtrar por Curso",
+      "indicator": "Indicador",
+      "magnitude": "Magnitude",
+      "select": "Selecione",
+      "indicators": {
+        "evaluativeInteraction": "Interacao Avaliativa",
+        "nonEvaluativeInteraction": "Interacao Nao Avaliativa",
+        "performance": "Desempenho",
+        "cognitiveDepth": "Profundidade Cognitiva",
+        "studentTeacherRelationship": "Relacao Aluno-Professor",
+        "dropout": "Desistencia"
+      },
+      "magnitudes": {
+        "positive": "Positiva",
+        "negative": "Negativa",
+        "veryHigh": "Muito Alto",
+        "high": "Alto",
+        "medium": "Medio",
+        "low": "Baixo",
+        "veryLow": "Muito Baixo"
+      }
+    }
   },
   "Login": {
     "subtitle": "Faca login em sua conta",
