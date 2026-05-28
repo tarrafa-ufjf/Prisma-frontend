@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from "react";
+import { useTranslations, useLocale } from 'next-intl';
 
 import Button from "@/components/ui/button";
 import AdminAuth from "@/components/pages/administrador/admAuth";
@@ -24,6 +25,9 @@ interface SchedulerStatus {
 }
 
 export default function AdmRow() {
+
+    const t = useTranslations('Admin.Dashboard'); 
+    const locale = useLocale(); 
 
     const [totalUsers, setTotalUsers] = useState<number>(0);
     const [loadingUsers, setLoadingUsers] = useState(true);
@@ -115,11 +119,11 @@ export default function AdmRow() {
 
                                 <h1 className="text-xl font-poppins font-semibold text-left">
                                     <br />
-                                    Visão Geral
+                                    {t('overviewTitle')}
                                 </h1>
 
                                 <p style={{ color: "#9291A5" }}>
-                                    do sistema
+                                    {t('overviewSubtitle')}
                                 </p>
 
                             </div>
@@ -134,8 +138,8 @@ export default function AdmRow() {
                                     }
                                 >
                                     {showSchedulerDetails
-                                        ? "Ocultar detalhes"
-                                        : "Ver mais"}
+                                        ? t('hideDetails')
+                                        : t('showMore')}
                                 </Button>
 
                             </div>
@@ -153,7 +157,7 @@ export default function AdmRow() {
                             <div className="flex flex-row items-center">
 
                                 <p className="text-base text-gray-600 mb-2 text-left mr-6">
-                                    Total de usuários do sistema
+                                    {t('totalUsers')}
                                 </p>
 
                                 <div className="w-20 h-12 bg-gray-100 flex items-center justify-center rounded text-base font-semibold">
@@ -169,7 +173,7 @@ export default function AdmRow() {
                             <div className="flex flex-row items-center">
 
                                 <p className="text-base text-gray-600 mb-2 text-left mr-6">
-                                    Status do scheduler principal
+                                    {t('schedulerStatus')}
                                 </p>
 
                                 <div className="w-20 h-12 bg-gray-100 flex items-center justify-center rounded text-base">
@@ -177,8 +181,8 @@ export default function AdmRow() {
                                     {loadingScheduler
                                         ? "..."
                                         : schedulerStatus?.running
-                                            ? "Online"
-                                            : "Offline"}
+                                            ? t('online')
+                                            : t('offline')}
 
                                 </div>
 
@@ -195,30 +199,30 @@ export default function AdmRow() {
                                     <div>
 
                                         <h2 className="font-semibold text-lg mb-2">
-                                            Scheduler
+                                            {t('scheduler')}
                                         </h2>
 
                                         <div className="flex flex-col gap-1 text-sm text-gray-700">
 
                                             <p>
-                                                <strong>Status:</strong>{" "}
+                                                <strong>{t('statusLabel')}</strong>{" "}
                                                 {schedulerStatus.running
-                                                    ? "Online"
-                                                    : "Offline"}
+                                                    ? t('online')
+                                                    : t('offline')}
                                             </p>
 
                                             <p>
-                                                <strong>Último heartbeat:</strong>{" "}
+                                                <strong>{t('lastHeartbeat')}</strong>{" "}
                                                 {new Date(
                                                     schedulerStatus.last_heartbeat_at
-                                                ).toLocaleString("pt-BR")}
+                                                ).toLocaleString(locale)}
                                             </p>
 
                                             <p>
-                                                <strong>Timeout:</strong>{" "}
+                                                <strong>{t('timeout')}</strong>{" "}
                                                 {
                                                     schedulerStatus.heartbeat_timeout_seconds
-                                                } segundos
+                                                } {t('seconds')}
                                             </p>
 
                                         </div>
@@ -228,7 +232,7 @@ export default function AdmRow() {
                                     <div>
 
                                         <h2 className="font-semibold text-lg mb-4">
-                                            Jobs
+                                            {t('jobs')}
                                         </h2>
 
                                         <div className="flex flex-col gap-4">
@@ -243,38 +247,38 @@ export default function AdmRow() {
                                                     <div className="flex flex-col gap-1 text-sm text-gray-700">
 
                                                         <p>
-                                                            <strong>ID:</strong>{" "}
+                                                            <strong>{t('idLabel')}</strong>{" "}
                                                             {job.id}
                                                         </p>
 
                                                         <p>
-                                                            <strong>Canal:</strong>{" "}
+                                                            <strong>{t('channel')}</strong>{" "}
                                                             {job.channel}
                                                         </p>
 
                                                         <p>
-                                                            <strong>Status:</strong>{" "}
+                                                            <strong>{t('statusLabel')}</strong>{" "}
                                                             {job.last_status}
                                                         </p>
 
                                                         <p>
-                                                            <strong>Última execução:</strong>{" "}
+                                                            <strong>{t('lastFinished')}</strong>{" "}
                                                             {new Date(
                                                                 job.last_finished_at
-                                                            ).toLocaleString("pt-BR")}
+                                                            ).toLocaleString(locale)}
                                                         </p>
 
                                                         <p>
-                                                            <strong>Próxima execução:</strong>{" "}
+                                                            <strong>{t('nextRun')}</strong>{" "}
                                                             {new Date(
                                                                 job.next_run_at
-                                                            ).toLocaleString("pt-BR")}
+                                                            ).toLocaleString(locale)}
                                                         </p>
 
                                                         {job.last_error && (
 
                                                             <p className="text-red-500">
-                                                                <strong>Erro:</strong>{" "}
+                                                                <strong>{t('errorLabel')}</strong>{" "}
                                                                 {job.last_error}
                                                             </p>
 
@@ -307,11 +311,11 @@ export default function AdmRow() {
                         <div className="mt-10 ml-10 mb-5">
 
                             <h1 className="text-xl font-poppins font-semibold text-left">
-                                Gerenciar
+                                {t('manageTitle')}
                             </h1>
 
                             <p style={{ color: "#9291A5" }}>
-                                cadastro de recursos
+                                {t('manageSubtitle')}
                             </p>
 
                         </div>
@@ -323,11 +327,11 @@ export default function AdmRow() {
                     <div className="p-10 flex gap-4">
 
                         <Button href="/administrador/gerenciar/usuarios">
-                            Gerenciar usuários
+                            {t('btnManageUsers')}
                         </Button>
 
                         <Button href="/administrador/gerenciar/moodle">
-                            Gerenciar moodle
+                            {t('btnManageMoodle')}
                         </Button>
 
                     </div>

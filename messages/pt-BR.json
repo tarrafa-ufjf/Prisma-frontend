@@ -93,6 +93,31 @@
       "confirmDeleteTitle": "Confirmar exclusão",
       "confirmDeleteText": "Tem certeza que deseja deletar este usuário?",
       "confirm": "Confirmar"
+    },
+    "Dashboard": {
+      "overviewTitle": "Visão Geral",
+      "overviewSubtitle": "do sistema",
+      "hideDetails": "Ocultar detalhes",
+      "showMore": "Ver mais",
+      "totalUsers": "Total de usuários do sistema",
+      "schedulerStatus": "Status do scheduler principal",
+      "online": "Online",
+      "offline": "Offline",
+      "scheduler": "Scheduler",
+      "lastHeartbeat": "Último heartbeat:",
+      "timeout": "Timeout:",
+      "seconds": "segundos",
+      "jobs": "Jobs",
+      "channel": "Canal:",
+      "lastFinished": "Última execução:",
+      "nextRun": "Próxima execução:",
+      "errorLabel": "Erro:",
+      "manageTitle": "Gerenciar",
+      "manageSubtitle": "cadastro de recursos",
+      "btnManageUsers": "Gerenciar usuários",
+      "btnManageMoodle": "Gerenciar moodle",
+      "statusLabel": "Status",
+      "idLabel": "ID:"
     }
   }
 }
