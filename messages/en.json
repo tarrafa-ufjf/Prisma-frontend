@@ -156,7 +156,10 @@
   },
   "Subjects": {
     "loadingData": "Loading subject data...",
-    "loading": "Loading subjects..."
+    "loading": "Loading subjects...",
+    "overview": "Overview",
+    "subtitle": "of Subjects",
+    "searchPlaceholder": "Subject"
   },
   "Login": {
     "subtitle": "Sign in to your account",

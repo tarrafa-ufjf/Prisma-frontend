@@ -156,7 +156,10 @@
   },
   "Subjects": {
     "loadingData": "Carregando dados das disciplinas...",
-    "loading": "Carregando disciplinas..."
+    "loading": "Carregando disciplinas...",
+    "overview": "Visao Geral",
+    "subtitle": "das Disciplinas",
+    "searchPlaceholder": "Disciplina"
   },
   "Login": {
     "subtitle": "Faca login em sua conta",
