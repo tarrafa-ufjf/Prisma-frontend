@@ -154,6 +154,9 @@
       }
     }
   },
+  "Subjects": {
+    "loadingData": "Carregando dados das disciplinas..."
+  },
   "Login": {
     "subtitle": "Faca login em sua conta",
     "email": "Email",
