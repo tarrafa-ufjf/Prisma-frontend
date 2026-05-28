@@ -6,12 +6,14 @@ import { useError } from '@/hooks/useError';
 import BoxTemplate from '@/components/ui/box-template';
 import RankingItem from '@/components/ui/rank-item';
 import { UserRoundSearch } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 interface DifficultyRankingProps {
   id: number
 }
 
 export default function DifficultyRanking({ id }: DifficultyRankingProps) {
+  const t = useTranslations('Courses.rankings.difficulty')
   const [ranking, setRanking] = useState<RankingContent[]>([])
   const error = useError()
 
@@ -23,23 +25,23 @@ export default function DifficultyRanking({ id }: DifficultyRankingProps) {
         const ranking_vector = response.data.data.ranking
         setRanking(ranking_vector)
         if (ranking_vector.length < 1)
-          error.setError("A turma não possui alunos o suficiente para criar um ranking")
+          error.setError(t('notEnoughStudents'))
       } catch (err) {
-        error.setError("Erro ao buscar ranking de dificuldade")
+        error.setError(t('fetchError'))
         console.error("Erro ao buscar ranking de dificuldade: ", err)
       }
     }
     fetch()
-  }, [id, error.clear, error.setError])
+  }, [id, error.clear, error.setError, t])
   return (
     <BoxTemplate
-      title='Ranking'
-      sub_title="Alunos com Mais Dificuldades"
+      title={t('title')}
+      sub_title={t('subtitle')}
     >
       {error.hasError ? (
         error.renderError()
       ) : ranking.length <= 0 && (
-        <Loading>Carregando ranking</Loading>
+        <Loading>{t('loading')}</Loading>
       )}
       {ranking.map((item, index) => (
         <RankingItem

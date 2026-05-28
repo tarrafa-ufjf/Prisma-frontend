@@ -144,6 +144,13 @@
         "loading": "Loading ranking",
         "notEnoughStudents": "The class does not have enough students to create a ranking",
         "fetchError": "Error loading best performance ranking"
+      },
+      "difficulty": {
+        "title": "Ranking",
+        "subtitle": "Students with the Most Difficulties",
+        "loading": "Loading ranking",
+        "notEnoughStudents": "The class does not have enough students to create a ranking",
+        "fetchError": "Error loading difficulty ranking"
       }
     }
   },
