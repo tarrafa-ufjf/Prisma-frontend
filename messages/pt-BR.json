@@ -101,6 +101,27 @@
       "approvalRate": "Taxa de aprovacao da disciplina",
       "loading": "Buscando dados",
       "fetchError": "Erro ao buscar dados gerais"
+    },
+    "indicators": {
+      "title": "Indicadores",
+      "subtitle": "calculados",
+      "seeMore": "Ver mais",
+      "studentsPrefix": "de alunos",
+      "evaluativeInteraction": "com otimo indice de interacao avaliativa",
+      "nonEvaluativeInteraction": "com bom indice de interacao nao avaliativa",
+      "performance": "com bom desempenho",
+      "cognitiveDepth": "com nivel 3 de profundidade cognitiva",
+      "studentTeacherRelationship": "com boa relacao aluno-professor",
+      "dropout": "com baixo indice de desistencia",
+      "noEngagementInfo": "Sem informacoes de engajamento processadas",
+      "noMotivationInfo": "Sem informacoes de motivacao processadas",
+      "noPerformanceInfo": "Sem informacoes de desempenho processadas",
+      "noCognitiveInfo": "Sem informacoes cognitivas processadas",
+      "noPedagogicalInfo": "Sem informacoes pedagogicas processadas",
+      "noDropoutInfo": "Sem informacoes de desistencia processadas",
+      "indicatorIconAlt": "Icone aluno-professor",
+      "loading": "Buscando dados",
+      "fetchError": "Erro ao buscar indicadores"
     }
   },
   "Login": {

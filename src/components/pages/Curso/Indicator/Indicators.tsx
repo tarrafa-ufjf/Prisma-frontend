@@ -15,6 +15,7 @@ import { Tooltip } from "@/components/template/tooltip";
 import { getIndicatorsInfo } from "@/utils/indicatorsInfo";
 import { useError } from "@/hooks/useError";
 import Button from "@/components/ui/button";
+import { useLocale, useTranslations } from "next-intl";
 
 interface IndicatorsProps {
   id: number | null;
@@ -31,6 +32,8 @@ type PercentualInfo = {
 };
 
 export default function Indicators({ id }: IndicatorsProps) {
+  const t = useTranslations("Courses.indicators");
+  const locale = useLocale();
   const [data, setData] = useState<PercentualInfo | null>(null);
   const error = useError();
 
@@ -41,25 +44,24 @@ export default function Indicators({ id }: IndicatorsProps) {
         const response = await api.get(`analysis/subject/${id}/indicators`);
         setData(response.data.data.subject);
       } catch (err) {
-        error.setError("Erro ao buscar indicadores");
+        error.setError(t("fetchError"));
         console.error("Erro ao buscar indicadores: ", err);
       }
     }
     fetch();
-  }, [id, error.clear, error.setError]);
+  }, [id, error.clear, error.setError, t]);
   return (
     <div className="Box mt-10 pb-5">
       <div className="maincurso">
         <div className="mt-10 ml-10 mb-5">
           <h1 className="text-xl font-poppins font-semibold text-left">
-            Indicadores
+            {t("title")}
           </h1>
-          <p style={{ color: "#9291A5" }}>calculados</p>
+          <p style={{ color: "#9291A5" }}>{t("subtitle")}</p>
         </div>
         {data ? (
           <div className="m-10 flex gap-2">
-            {/* <Button href={`/cursos/${id}/alunos`}>Ver mais</Button> */}
-            <Button href={`/cursos/${id}/alunos`}>Ver mais</Button>
+            <Button href={`/cursos/${id}/alunos`}>{t("seeMore")}</Button>
           </div>
         ) : (
           <div></div>
@@ -79,7 +81,7 @@ export default function Indicators({ id }: IndicatorsProps) {
                       <div className="bg-[#3CD856] rounded-full flex items-center justify-center w-8 h-8">
                         <Image
                           src={alunoIcon1}
-                          alt="Ícone aluno-professor"
+                          alt={t("indicatorIconAlt")}
                           width={15}
                           height={20}
                           className="object-cover"
@@ -87,18 +89,16 @@ export default function Indicators({ id }: IndicatorsProps) {
                       </div>
                       <p className="text-2xl font-bold text-gray-900">
                         {data.good_percentage_engagement.toLocaleString(
-                          "pt-BR",
+                          locale,
                         )}
                         %
                       </p>
                     </div>
                     <div className="ml-17 flex text-left">
                       <div className="flex flex-col leading-snug">
-                        <p className={styles.textoPersonalizado2}>de alunos</p>
+                        <p className={styles.textoPersonalizado2}>{t("studentsPrefix")}</p>
                         <p className={styles.textoPersonalizado}>
-                          com ótimo índice
-                          <br />
-                          de interação avaliativa
+                          {t("evaluativeInteraction")}
                         </p>
                       </div>
                     </div>
@@ -107,7 +107,7 @@ export default function Indicators({ id }: IndicatorsProps) {
                   <div className="flex flex-col w-full justify-between ">
                     <div className="ml-5 flex justify-start space-x-3">
                       <p className="text-2xl font-bold text-gray-900">
-                        Sem informações de engajamento processadas
+                        {t("noEngagementInfo")}
                       </p>
                     </div>
                   </div>
@@ -127,7 +127,7 @@ export default function Indicators({ id }: IndicatorsProps) {
                       <div className="bg-[#3C56D8] rounded-full flex items-center justify-center w-8 h-8">
                         <Image
                           src={alunoIcon3}
-                          alt="Ícone aluno-professor"
+                          alt={t("indicatorIconAlt")}
                           width={21}
                           height={28}
                           className="ml-2.5 object-cover"
@@ -135,7 +135,7 @@ export default function Indicators({ id }: IndicatorsProps) {
                       </div>
                       <p className="text-2xl font-bold text-gray-900">
                         {data.good_percentage_motivation.toLocaleString(
-                          "pt-BR",
+                          locale,
                         )}
                         %
                       </p>
@@ -143,11 +143,9 @@ export default function Indicators({ id }: IndicatorsProps) {
 
                     <div className="ml-19 flex text-left">
                       <div className="flex flex-col leading-snug">
-                        <p className={styles.textoPersonalizado2}>de alunos</p>
+                        <p className={styles.textoPersonalizado2}>{t("studentsPrefix")}</p>
                         <p className={styles.textoPersonalizado}>
-                          com bom índice
-                          <br />
-                          de interação não avaliativa
+                          {t("nonEvaluativeInteraction")}
                         </p>
                       </div>
                     </div>
@@ -156,7 +154,7 @@ export default function Indicators({ id }: IndicatorsProps) {
                   <div className="flex flex-col w-full justify-between ">
                     <div className="ml-5 flex justify-start space-x-3">
                       <p className="text-2xl font-bold text-gray-900">
-                        Sem informações de motivação processadas
+                        {t("noMotivationInfo")}
                       </p>
                     </div>
                   </div>
@@ -175,7 +173,7 @@ export default function Indicators({ id }: IndicatorsProps) {
                       <div className="bg-[#D8D03C] rounded-full flex items-center justify-center w-8 h-8">
                         <Image
                           src={alunoIcon2}
-                          alt="Ícone aluno-professor"
+                          alt={t("indicatorIconAlt")}
                           width={21}
                           height={28}
                           className="object-cover"
@@ -183,7 +181,7 @@ export default function Indicators({ id }: IndicatorsProps) {
                       </div>
                       <p className="text-2xl font-bold text-gray-900">
                         {data.good_percentage_performance.toLocaleString(
-                          "pt-BR",
+                          locale,
                         )}
                         %
                       </p>
@@ -191,9 +189,9 @@ export default function Indicators({ id }: IndicatorsProps) {
 
                     <div className="ml-17 flex text-left">
                       <div className="flex flex-col leading-snug">
-                        <p className={styles.textoPersonalizado2}>de alunos</p>
+                        <p className={styles.textoPersonalizado2}>{t("studentsPrefix")}</p>
                         <p className={styles.textoPersonalizado}>
-                          com bom desempenho
+                          {t("performance")}
                         </p>
                       </div>
                     </div>
@@ -202,7 +200,7 @@ export default function Indicators({ id }: IndicatorsProps) {
                   <div className="flex flex-col w-full justify-between ">
                     <div className="ml-5 flex justify-start space-x-3">
                       <p className="text-2xl font-bold text-gray-900">
-                        Sem informações de desempenho processadas
+                        {t("noPerformanceInfo")}
                       </p>
                     </div>
                   </div>
@@ -219,24 +217,23 @@ export default function Indicators({ id }: IndicatorsProps) {
                       <div className="bg-[#D86D3C] rounded-full flex items-center justify-center w-8 h-8">
                         <Image
                           src={cognitive_depth}
-                          alt="Ícone aluno-professor"
+                          alt={t("indicatorIconAlt")}
                           width={18}
                           height={28}
                           className="object-cover text-white"
                         />
                       </div>
                       <p className="text-2xl font-bold text-gray-900">
-                        {data.good_percentage_cognitive.toLocaleString("pt-BR")}
+                        {data.good_percentage_cognitive.toLocaleString(locale)}
                         %
                       </p>
                     </div>
 
                     <div className="ml-17 flex text-left">
                       <div className="flex flex-col leading-snug">
-                        <p className={styles.textoPersonalizado2}>de alunos</p>
+                        <p className={styles.textoPersonalizado2}>{t("studentsPrefix")}</p>
                         <p className={styles.textoPersonalizado}>
-                          com nível 3<br />
-                          de profundidade cognitiva
+                          {t("cognitiveDepth")}
                         </p>
                       </div>
                     </div>
@@ -245,7 +242,7 @@ export default function Indicators({ id }: IndicatorsProps) {
                   <div className="flex flex-col w-full justify-between ">
                     <div className="ml-5 flex justify-start space-x-3">
                       <p className="text-2xl font-bold text-gray-900">
-                        Sem informações cognitivas processadas
+                        {t("noCognitiveInfo")}
                       </p>
                     </div>
                   </div>
@@ -266,25 +263,23 @@ export default function Indicators({ id }: IndicatorsProps) {
                     <div className="bg-[#5C3CD8] rounded-full flex items-center justify-center w-8 h-8">
                       <Image
                         src={alunoIcon}
-                        alt="Ícone aluno-professor"
+                        alt={t("indicatorIconAlt")}
                         width={21}
                         height={28}
                         className="mr-0.5 object-cover"
                       />
                     </div>
                     <p className="text-2xl font-bold text-gray-900">
-                      {data.good_percentage_pedagogical.toLocaleString("pt-BR")}
+                      {data.good_percentage_pedagogical.toLocaleString(locale)}
                       %
                     </p>
                   </div>
 
                   <div className="ml-17 flex text-left">
                     <div className="flex flex-col leading-snug">
-                      <p className={styles.textoPersonalizado2}>de alunos</p>
+                      <p className={styles.textoPersonalizado2}>{t("studentsPrefix")}</p>
                       <p className={styles.textoPersonalizado}>
-                        com boa relação
-                        <br />
-                        aluno-professor
+                        {t("studentTeacherRelationship")}
                       </p>
                     </div>
                   </div>
@@ -293,7 +288,7 @@ export default function Indicators({ id }: IndicatorsProps) {
                 <div className="flex flex-col w-full justify-between ">
                   <div className="ml-5 flex justify-start space-x-3">
                     <p className="text-2xl font-bold text-gray-900">
-                      Sem informações pedagógicas processadas
+                      {t("noPedagogicalInfo")}
                     </p>
                   </div>
                 </div>
@@ -311,24 +306,22 @@ export default function Indicators({ id }: IndicatorsProps) {
                     <div className="bg-[#D83C8C] rounded-full flex items-center justify-center w-8 h-8">
                       <Image
                         src={alunoIcon5}
-                        alt="Ícone aluno-professor"
+                        alt={t("indicatorIconAlt")}
                         width={21}
                         height={28}
                         className="object-cover"
                       />
                     </div>
                     <p className="text-2xl font-bold text-gray-900">
-                      {data.percentage_give_up.toLocaleString("pt-BR")}%
+                      {data.percentage_give_up.toLocaleString(locale)}%
                     </p>
                   </div>
 
                   <div className="ml-17 flex text-left">
                     <div className="flex flex-col leading-snug">
-                      <p className={styles.textoPersonalizado2}>de alunos</p>
+                      <p className={styles.textoPersonalizado2}>{t("studentsPrefix")}</p>
                       <p className={styles.textoPersonalizado}>
-                        com baixo
-                        <br />
-                        índice de desistência
+                        {t("dropout")}
                       </p>
                     </div>
                   </div>
@@ -337,7 +330,7 @@ export default function Indicators({ id }: IndicatorsProps) {
                 <div className="flex flex-col w-full justify-between ">
                   <div className="ml-5 flex justify-start space-x-3">
                     <p className="text-2xl font-bold text-gray-900">
-                      Sem informações de desistência processadas
+                      {t("noDropoutInfo")}
                     </p>
                   </div>
                 </div>
@@ -353,7 +346,7 @@ export default function Indicators({ id }: IndicatorsProps) {
         <div className="m-13">{error.renderError()}</div>
       ) : (
         <div className="m-13">
-          <Loading>Buscando dados</Loading>
+          <Loading>{t("loading")}</Loading>
         </div>
       )}
     </div>

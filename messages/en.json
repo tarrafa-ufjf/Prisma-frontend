@@ -101,6 +101,27 @@
       "approvalRate": "Course approval rate",
       "loading": "Fetching data",
       "fetchError": "Error loading general data"
+    },
+    "indicators": {
+      "title": "Indicators",
+      "subtitle": "calculated",
+      "seeMore": "See more",
+      "studentsPrefix": "of students",
+      "evaluativeInteraction": "with an excellent evaluative interaction rate",
+      "nonEvaluativeInteraction": "with a good non-evaluative interaction rate",
+      "performance": "with good performance",
+      "cognitiveDepth": "with level 3 cognitive depth",
+      "studentTeacherRelationship": "with a good student-teacher relationship",
+      "dropout": "with a low dropout rate",
+      "noEngagementInfo": "No processed engagement information",
+      "noMotivationInfo": "No processed motivation information",
+      "noPerformanceInfo": "No processed performance information",
+      "noCognitiveInfo": "No processed cognitive information",
+      "noPedagogicalInfo": "No processed pedagogical information",
+      "noDropoutInfo": "No processed dropout information",
+      "indicatorIconAlt": "Student-teacher icon",
+      "loading": "Fetching data",
+      "fetchError": "Error loading indicators"
     }
   },
   "Login": {
