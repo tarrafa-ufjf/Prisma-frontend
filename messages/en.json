@@ -125,7 +125,12 @@
     },
     "charts": {
       "loading": "Loading charts",
-      "fetchError": "Error loading chart data"
+      "fetchError": "Error loading chart data",
+      "approvalStatus": {
+        "title": "Approval Status",
+        "subtitle": "of Course Students",
+        "empty": "No values found"
+      }
     }
   },
   "Login": {

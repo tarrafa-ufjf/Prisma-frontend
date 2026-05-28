@@ -1,4 +1,5 @@
 import { useError } from '@/hooks/useError';
+import { useTranslations } from 'next-intl';
 import { useEffect, useMemo } from 'react';
 import Grafico, { ItemLegenda } from './Grafico';
 
@@ -7,6 +8,7 @@ interface NumAbsoProps {
 }
 
 export default function NumAbso({ situations }: NumAbsoProps) {
+    const t = useTranslations('Courses.charts.approvalStatus')
     const error = useError()
 
     const legenda: ItemLegenda[] = useMemo(() => {
@@ -22,18 +24,18 @@ export default function NumAbso({ situations }: NumAbsoProps) {
 
     useEffect(() => {
         if (!is_valid) {
-            error.setError("Sem valores encontrados")
+            error.setError(t('empty'))
         } else {
             error.clear()
         }
-    }, [is_valid, error.setError, error.clear])
+    }, [is_valid, error.setError, error.clear, t])
 
     return (
         <div className="Box my-10">
             <div className="Boxcursopequeno">
                 <div className="mt-10 ml-10 mb-5">
-                    <h1 className="text-xl font-poppins font-semibold text-left">Status de Aprovação</h1>
-                    <p style={{ color: "#9291A5" }}>dos Alunos da Disciplina</p>
+                    <h1 className="text-xl font-poppins font-semibold text-left">{t('title')}</h1>
+                    <p style={{ color: "#9291A5" }}>{t('subtitle')}</p>
                 </div>
             </div>
 

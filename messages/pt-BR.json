@@ -125,7 +125,12 @@
     },
     "charts": {
       "loading": "Carregando graficos",
-      "fetchError": "Erro ao buscar dados dos graficos"
+      "fetchError": "Erro ao buscar dados dos graficos",
+      "approvalStatus": {
+        "title": "Status de Aprovacao",
+        "subtitle": "dos Alunos da Disciplina",
+        "empty": "Sem valores encontrados"
+      }
     }
   },
   "Login": {
