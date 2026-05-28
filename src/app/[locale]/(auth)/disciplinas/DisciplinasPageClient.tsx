@@ -5,9 +5,11 @@ import Sidebar from '@/components/ui/sidebar';
 import { useError } from '@/hooks/useError';
 import { DisciplinaType } from '@/types/disciplina';
 import { api } from '@/utils/api';
+import { useTranslations } from 'next-intl';
 import { useEffect, useState } from 'react';
 
 export default function DisciplinasPageClient() {
+  const t = useTranslations('Subjects');
   const [disciplinas, setDisciplinas] = useState<DisciplinaType[] | null>(null);
   const error = useError();
 
@@ -51,7 +53,7 @@ export default function DisciplinasPageClient() {
       <div className="flex-1">
         <main>
           {disciplinas === null ? (
-            <p>Carregando disciplinas...</p>
+            <p>{t('loading')}</p>
           ) : (
             <Disciplinas disciplinas={disciplinas} />
           )}

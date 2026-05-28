@@ -155,7 +155,8 @@
     }
   },
   "Subjects": {
-    "loadingData": "Loading subject data..."
+    "loadingData": "Loading subject data...",
+    "loading": "Loading subjects..."
   },
   "Login": {
     "subtitle": "Sign in to your account",
