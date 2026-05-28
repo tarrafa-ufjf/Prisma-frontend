@@ -15,21 +15,18 @@ function ColumnText({ id }: { id: string }) {
 function HeaderWithTooltip({
   id,
   tooltip,
-  rightClassName = "right-2",
 }: {
   id: string;
   tooltip?: string;
   rightClassName?: string;
 }) {
   return (
-    <div className="flex flex-row relative">
-      <div className="w-[90%]">
-        <p>
-          <ColumnText id={id} />
-        </p>
-      </div>
+    <div className="flex items-start gap-1">
+      <p className="min-w-0 flex-1 leading-tight">
+        <ColumnText id={id} />
+      </p>
       {tooltip && (
-        <div className={`absolute inset-y-0 ${rightClassName} flex items-center w-[10%] pt-1 pr-1`}>
+        <div className="flex shrink-0 pt-0.5">
           <Tooltip message={tooltip} />
         </div>
       )}
