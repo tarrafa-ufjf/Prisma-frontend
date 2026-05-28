@@ -2,6 +2,7 @@
 
 import React from 'react';
 import dynamic from 'next/dynamic';
+import { useTranslations } from 'next-intl';
 
 const ResponsivePie = dynamic(
   () => import('@nivo/pie').then(mod => mod.ResponsivePie),
@@ -20,6 +21,7 @@ interface GraficoNivoProps {
 }
 
 const GraficoComp: React.FC<GraficoNivoProps> = ({ legenda }) => {
+  const t = useTranslations('Courses.charts.activities');
   const total = legenda.reduce((acc, cur) => acc + cur.value, 0);
 
   return (
@@ -50,7 +52,7 @@ const GraficoComp: React.FC<GraficoNivoProps> = ({ legenda }) => {
       />
       
       ) : (
-        <p>Carregando gráfico...</p>
+        <p>{t('loadingChart')}</p>
       )}
     </div>
   );

@@ -1,4 +1,5 @@
 import GraficoComp from './GraficoComp'
+import { useTranslations } from 'next-intl'
 interface GraficoProps {
     graph_data: UsageByModule[]
 }
@@ -29,6 +30,7 @@ function generateExtraColor(index: number) {
 }
 
 export default function Grafico({ graph_data }: GraficoProps) {
+    const t = useTranslations('Courses.charts.activities')
     const legenda: ItemLegenda[] = []
     graph_data.forEach((data, index) => {
     const color =
@@ -45,8 +47,8 @@ export default function Grafico({ graph_data }: GraficoProps) {
         <div className="Box my-10 p-1.5">
             <div className="Boxcursopequeno">
                 <div className="mt-10 ml-10 mb-5">
-                    <h1 className="text-xl font-poppins font-semibold text-left">Atividades</h1>
-                    <p style={{ color: "#9291A5" }}>da Disciplina</p>
+                    <h1 className="text-xl font-poppins font-semibold text-left">{t('title')}</h1>
+                    <p style={{ color: "#9291A5" }}>{t('subtitle')}</p>
                 </div>
             </div>
             <div className="relative after:absolute after:bottom-0 after:left-1/2 after:translate-x-[-50%] after:w-[90%] after:h-[1px] after:bg-gray-200 bg-white" />

@@ -130,6 +130,11 @@
         "title": "Approval Status",
         "subtitle": "of Course Students",
         "empty": "No values found"
+      },
+      "activities": {
+        "title": "Activities",
+        "subtitle": "of the Course",
+        "loadingChart": "Loading chart..."
       }
     }
   },

@@ -130,6 +130,11 @@
         "title": "Status de Aprovacao",
         "subtitle": "dos Alunos da Disciplina",
         "empty": "Sem valores encontrados"
+      },
+      "activities": {
+        "title": "Atividades",
+        "subtitle": "da Disciplina",
+        "loadingChart": "Carregando grafico..."
       }
     }
   },
