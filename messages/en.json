@@ -92,7 +92,16 @@
   },
   "Courses": {
     "course": "Course",
-    "notFound": "Course {courseId} not found! Please use the menu in the upper-left corner, or try again later!"
+    "notFound": "Course {courseId} not found! Please use the menu in the upper-left corner, or try again later!",
+    "generalData": {
+      "title": "General Data",
+      "subtitle": "of the Course",
+      "totalEnrolled": "Total enrolled students",
+      "averageFinalGrades": "Average final grades of the course",
+      "approvalRate": "Course approval rate",
+      "loading": "Fetching data",
+      "fetchError": "Error loading general data"
+    }
   },
   "Login": {
     "subtitle": "Sign in to your account",

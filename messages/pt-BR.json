@@ -92,7 +92,16 @@
   },
   "Courses": {
     "course": "Disciplina",
-    "notFound": "Curso {courseId} nao encontrado! Por favor, use o menu no canto superior esquerdo, ou tente novamente mais tarde!"
+    "notFound": "Curso {courseId} nao encontrado! Por favor, use o menu no canto superior esquerdo, ou tente novamente mais tarde!",
+    "generalData": {
+      "title": "Dados Gerais",
+      "subtitle": "da Disciplina",
+      "totalEnrolled": "Total de estudantes matriculados",
+      "averageFinalGrades": "Media das notas finais da disciplina",
+      "approvalRate": "Taxa de aprovacao da disciplina",
+      "loading": "Buscando dados",
+      "fetchError": "Erro ao buscar dados gerais"
+    }
   },
   "Login": {
     "subtitle": "Faca login em sua conta",
