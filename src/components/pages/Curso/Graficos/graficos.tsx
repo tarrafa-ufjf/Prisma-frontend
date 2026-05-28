@@ -6,12 +6,14 @@ import Grafico from "./Atividades/Atividades";
 import NumAbso from "./NumAbso/NumAbso";
 import Loading from "@/components/ui/loading";
 import { useError } from "@/hooks/useError";
+import { useTranslations } from "next-intl";
 
 interface GraficosProps {
     id: number
 }
 
 export default function Graficos({ id }: GraficosProps) {
+    const t = useTranslations("Courses.charts")
     const [data, setData] = useState<GraphInfo | null>(null)
     const error = useError()
 
@@ -22,12 +24,12 @@ export default function Graficos({ id }: GraficosProps) {
                 const response = await api.get(`analysis/subject/${id}/info_graphs`)
                 setData(response.data.data.subject)
             } catch (err) {
-                error.setError("Erro ao buscar dados dos gráficos")
+                error.setError(t("fetchError"))
                 console.error("Erro ao buscar dados dos gráficos: ", err)
             }
         };
         fetch();
-    }, [id, error.clear, error.setError]);
+    }, [id, error.clear, error.setError, t]);
     if (error.hasError) {
         return (
             <div className="w-full mt-5 mb-5 h-24 Box flex items-center justify-center">
@@ -47,7 +49,7 @@ export default function Graficos({ id }: GraficosProps) {
 
     return (
         <div className="w-full mt-5 mb-5 h-24 Box flex items-center justify-center">
-            <Loading>Carregando gráficos</Loading>
+            <Loading>{t("loading")}</Loading>
         </div>
     )
 

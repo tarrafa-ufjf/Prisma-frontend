@@ -122,6 +122,10 @@
       "indicatorIconAlt": "Icone aluno-professor",
       "loading": "Buscando dados",
       "fetchError": "Erro ao buscar indicadores"
+    },
+    "charts": {
+      "loading": "Carregando graficos",
+      "fetchError": "Erro ao buscar dados dos graficos"
     }
   },
   "Login": {

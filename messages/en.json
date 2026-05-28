@@ -122,6 +122,10 @@
       "indicatorIconAlt": "Student-teacher icon",
       "loading": "Fetching data",
       "fetchError": "Error loading indicators"
+    },
+    "charts": {
+      "loading": "Loading charts",
+      "fetchError": "Error loading chart data"
     }
   },
   "Login": {
