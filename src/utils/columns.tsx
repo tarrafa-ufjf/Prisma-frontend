@@ -1,15 +1,79 @@
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 import { DisciplinaType } from "../types/disciplina";
 import { FaPlus } from "react-icons/fa";
 import { Tooltip } from "@/components/template/tooltip";
 import { getIndicatorsInfo } from "./indicatorsInfo";
 import { Tutor as TutorType } from "@/types/tutor";
-import { get } from "http";
 import { Aluno as AlunoType } from "@/types/aluno";
+
+function ColumnText({ id }: { id: string }) {
+  const t = useTranslations("Columns");
+  return <>{t(id)}</>;
+}
+
+function HeaderWithTooltip({
+  id,
+  tooltip,
+  rightClassName = "right-2",
+}: {
+  id: string;
+  tooltip?: string;
+  rightClassName?: string;
+}) {
+  return (
+    <div className="flex flex-row relative">
+      <div className="w-[90%]">
+        <p>
+          <ColumnText id={id} />
+        </p>
+      </div>
+      {tooltip && (
+        <div className={`absolute inset-y-0 ${rightClassName} flex items-center w-[10%] pt-1 pr-1`}>
+          <Tooltip message={tooltip} />
+        </div>
+      )}
+    </div>
+  );
+}
+
+function UndefinedLabel() {
+  return <ColumnText id="undefined" />;
+}
+
+function MoreTeachers({ count }: { count: number }) {
+  const t = useTranslations("Columns");
+  return <>{t("moreTeachers", { count })}</>;
+}
+
+const getNivelKey = (flag: string) => {
+  if (flag == null || typeof flag !== "string") return "undefined";
+  const normalized = flag
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, "_")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+  switch (normalized) {
+    case "muito_baixo":
+      return "levels.veryLow";
+    case "baixo":
+      return "levels.low";
+    case "normal":
+    case "medio":
+      return "levels.medium";
+    case "alto":
+      return "levels.high";
+    case "muito_alto":
+      return "levels.veryHigh";
+    default:
+      return "undefined";
+  }
+};
 
 const getProfessores = (teachers?: { full_name: string; tutor_id: number }[]) => {
   if (!teachers || teachers.length === 0) {
-    return <span>Não definido</span>;
+    return <span><UndefinedLabel /></span>;
   }
 
   const max = 1;
@@ -26,7 +90,7 @@ const getProfessores = (teachers?: { full_name: string; tutor_id: number }[]) =>
 
       {remaining > 0 && (
         <span className="text-xs text-gray-500">
-          +{remaining} outros
+          <MoreTeachers count={remaining} />
         </span>
       )}
     </div>
@@ -36,7 +100,7 @@ const getProfessores = (teachers?: { full_name: string; tutor_id: number }[]) =>
 const getMatriculados = (total_enrolled?: number) => {
   if (total_enrolled == null) {
     return (
-      <span>Não definido</span>
+      <span><UndefinedLabel /></span>
     );
   }
 
@@ -47,36 +111,14 @@ const getMatriculados = (total_enrolled?: number) => {
 
 const getNotaMedia = (mean_subject?: number) => {
   if (mean_subject == null || mean_subject === 0) {
-    return <span>Não definido</span>;
+    return <span><UndefinedLabel /></span>;
   }
 
   return <span>{mean_subject.toFixed(3)}</span>;
 };
 
 export const getNivel = (flag: string) => {
-  if (flag == null || typeof flag !== "string") return "Não definido";
-  const normalized = flag
-    .trim()
-    .toLowerCase()
-    .replace(/\s+/g, "_")
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "");
-  switch (normalized) {
-    case "muito_baixo":
-      return "Muito Baixo";
-    case "baixo":
-      return "Baixo";
-    case "normal":
-      return "Normal";
-    case "medio":
-      return "Médio";
-    case "alto":
-      return "Alto";
-    case "muito_alto":
-      return "Muito Alto";
-    default:
-      return "Não definido";
-  }
+  return <ColumnText id={getNivelKey(flag)} />;
 };
 
 export const getFlagCor = (flag: string, reverse?: boolean) => {
@@ -125,7 +167,7 @@ export const getFlagCor = (flag: string, reverse?: boolean) => {
 // };
 
 export const getDesistencia = (flag: boolean) =>
-  flag ? "Positiva" : "Negativa";
+  flag ? <ColumnText id="levels.positive" /> : <ColumnText id="levels.negative" />;
 
 export const getFlagDesistenciaCor = (flag: boolean) =>
   flag ? "bg-red-100 text-red-700" : "bg-emerald-100 text-emerald-700";
@@ -135,7 +177,7 @@ export const getColumns = (
   cursoSelecionado: number | null,
 ) => {
   const detalhesColumnAlunos = {
-    label: "Detalhes",
+    label: <ColumnText id="details" />,
     name: "detalhes",
     cell: (row: AlunoType) => (
       <Link
@@ -148,7 +190,7 @@ export const getColumns = (
   };
 
   const detalhesColumnTutor = {
-    label: "Detalhes",
+    label: <ColumnText id="details" />,
     name: "detalhes",
     cell: (row: TutorType) => (
       <Link
@@ -162,7 +204,7 @@ export const getColumns = (
 
   const responseColumns = [
     {
-      label: "Tutor",
+      label: <ColumnText id="tutor" />,
       name: "full_name",
       options: {
         sticky: true,
@@ -172,19 +214,10 @@ export const getColumns = (
       },
     },
     {
-      label: (
-        <div className="flex flex-row relative">
-          <div className="w-[90%]">
-            <p>Índice de Respostas em fóruns</p>
-          </div>
-          <div className="absolute inset-y-0 right-2 flex items-center w-[10%] pr-1">
-            <Tooltip message={getIndicatorsInfo.responseInfo} />
-          </div>
-        </div>
-      ),
+      label: <HeaderWithTooltip id="forumResponseIndex" tooltip={getIndicatorsInfo.responseInfo} />,
       name: "label_forums_response",
       cell: (row: TutorType) => {
-        const value = row.label_forums_response?.toString() ?? "Não definido";
+        const value = row.label_forums_response?.toString() ?? "";
         return (
           <div
             className={`max-w-27 py-1 rounded-md text-xs font-medium border text-center mx-auto ${getFlagCor(value)}`}
@@ -195,21 +228,15 @@ export const getColumns = (
       },
     },
     {
-      label: "Média de resposta em fóruns por hora",
+      label: <ColumnText id="meanForumResponseHours" />,
       name: "mean_forums_response_hours",
     },
     {
-      label: (
-        <div className="flex flex-row relative">
-          <div className="w-[90%]">
-            <p>Índice da média de respostas em fóruns por hora</p>
-          </div>
-        </div>
-      ),
+      label: <HeaderWithTooltip id="meanForumResponseHoursIndex" />,
       name: "mean_forums_response_hours_label",
       cell: (row: TutorType) => {
         const value =
-          row.mean_forums_response_hours_label?.toString() ?? "Não definido";
+          row.mean_forums_response_hours_label?.toString() ?? "";
         return (
           <div
             className={`max-w-27 py-1 rounded-md text-xs font-medium border text-center mx-auto ${getFlagCor(value)}`}
@@ -220,21 +247,15 @@ export const getColumns = (
       },
     },
     {
-      label: "Mediana de resposta em fóruns por hora",
+      label: <ColumnText id="medianForumResponseHours" />,
       name: "median_forums_response_hours",
     },
     {
-      label: (
-        <div className="flex flex-row relative">
-          <div className="w-[90%]">
-            <p>Índice da mediana de respostas em fóruns por hora</p>
-          </div>
-        </div>
-      ),
+      label: <HeaderWithTooltip id="medianForumResponseHoursIndex" />,
       name: "label_feedback",
       cell: (row: TutorType) => {
         const value =
-          row.median_forums_response_hours_label?.toString() ?? "Não definido";
+          row.median_forums_response_hours_label?.toString() ?? "";
         return (
           <div
             className={`max-w-27 py-1 rounded-md text-xs font-medium border text-center mx-auto ${getFlagCor(value)}`}
@@ -245,40 +266,34 @@ export const getColumns = (
       },
     },
     {
-      label: "Nº de Respostas Rápidas em fóruns",
+      label: <ColumnText id="fastForumResponses" />,
       name: "num_response_fast_forum",
     },
     {
-      label: "Nº de Respostas Lentas em fóruns",
+      label: <ColumnText id="lateForumResponses" />,
       name: "num_response_late_forum",
     },
     {
-      label: "Nº de Respostas com tempo normal em fóruns",
+      label: <ColumnText id="normalForumResponses" />,
       name: "num_response_normal_forum",
     },
     {
-      label: "Pontuação de acesso",
+      label: <ColumnText id="accessScore" />,
       name: "score_access",
     },
     {
-      label: (
-        <div className="flex flex-row relative">
-          <div className="w-[90%]">
-            <p>Índice de pontuação de acesso</p>
-          </div>
-        </div>
-      ),
+      label: <HeaderWithTooltip id="accessScoreIndex" />,
       name: "score_access_label",
       cell: (row: TutorType) => (
         <div
-          className={`max-w-27 py-1 rounded-md text-xs font-medium border text-center mx-auto ${getFlagCor(row.score_access_label.toString() ?? "Não definido")}`}
+          className={`max-w-27 py-1 rounded-md text-xs font-medium border text-center mx-auto ${getFlagCor(row.score_access_label.toString() ?? "")}`}
         >
-          {getNivel(row.score_access_label.toString() ?? "Não definido")}
+          {getNivel(row.score_access_label.toString() ?? "")}
         </div>
       ),
     },
     {
-      label: "Número total de repostas em fóruns",
+      label: <ColumnText id="totalForumResponses" />,
       name: "total_response_forum",
     },
     detalhesColumnTutor,
@@ -286,7 +301,7 @@ export const getColumns = (
 
   const feedbackColumns = [
     {
-      label: "Tutor",
+      label: <ColumnText id="tutor" />,
       name: "full_name",
       options: {
         sticky: true,
@@ -296,132 +311,93 @@ export const getColumns = (
       },
     },
     {
-      label: (
-        <div className="flex flex-row relative">
-          <div className="w-[90%]">
-            <p>Índice de Feedback</p>
-          </div>
-          <div className="absolute inset-y-0 right-2 flex items-center w-[10%] pr-1">
-            <Tooltip message={getIndicatorsInfo.feedbackInfo} />
-          </div>
-        </div>
-      ),
+      label: <HeaderWithTooltip id="feedbackIndex" tooltip={getIndicatorsInfo.feedbackInfo} />,
       name: "label_feedback",
       cell: (row: TutorType) => (
         console.log(row.label_feedback.toString()),
         (
           <div
-            className={`max-w-27 py-1 rounded-md text-xs font-medium border text-center mx-auto ${getFlagCor(row.label_feedback.toString() ?? "Não definido")}`}
+            className={`max-w-27 py-1 rounded-md text-xs font-medium border text-center mx-auto ${getFlagCor(row.label_feedback.toString() ?? "")}`}
           >
-            {getNivel(row.label_feedback.toString() ?? "Não definido")}
+            {getNivel(row.label_feedback.toString() ?? "")}
           </div>
         )
       ),
     },
     {
-      label: "Nº de Correções",
+      label: <ColumnText id="corrections" />,
       name: "n_corrections",
     },
     {
-      label: (
-        <div className="flex flex-row relative">
-          <div className="w-[90%]">
-            <p>Índice de Correções</p>
-          </div>
-        </div>
-      ),
+      label: <HeaderWithTooltip id="correctionsIndex" />,
       name: "n_corrections_label",
       cell: (row: TutorType) => (
         <div
-          className={`max-w-27 py-1 rounded-md text-xs font-medium border text-center mx-auto ${getFlagCor(row.n_corrections_label.toString() ?? "Não definido")}`}
+          className={`max-w-27 py-1 rounded-md text-xs font-medium border text-center mx-auto ${getFlagCor(row.n_corrections_label.toString() ?? "")}`}
         >
-          {getNivel(row.n_corrections_label.toString() ?? "Não definido")}
+          {getNivel(row.n_corrections_label.toString() ?? "")}
         </div>
       ),
     },
     {
-      label: "Nº de Correções com feedback",
+      label: <ColumnText id="correctionsWithFeedback" />,
       name: "n_corrections_with_feedback",
     },
     {
-      label: (
-        <div className="flex flex-row relative">
-          <div className="w-[90%]">
-            <p>Índice de Correções com feedback</p>
-          </div>
-        </div>
-      ),
+      label: <HeaderWithTooltip id="correctionsWithFeedbackIndex" />,
       name: "n_corrections_with_feedback_label",
       cell: (row: TutorType) => (
         <div
-          className={`max-w-27 py-1 rounded-md text-xs font-medium border text-center mx-auto ${getFlagCor(row.n_corrections_with_feedback_label.toString() ?? "Não definido")}`}
+          className={`max-w-27 py-1 rounded-md text-xs font-medium border text-center mx-auto ${getFlagCor(row.n_corrections_with_feedback_label.toString() ?? "")}`}
         >
           {getNivel(
-            row.n_corrections_with_feedback_label.toString() ?? "Não definido",
+            row.n_corrections_with_feedback_label.toString() ?? "",
           )}
         </div>
       ),
     },
     {
-      label: "Nº de feedbacks em PDFs",
+      label: <ColumnText id="pdfFeedbacks" />,
       name: "n_feedback_pdf",
     },
     {
-      label: (
-        <div className="flex flex-row relative">
-          <div className="w-[90%]">
-            <p>Índice de feedbacks em PDFs </p>
-          </div>
-        </div>
-      ),
+      label: <HeaderWithTooltip id="pdfFeedbacksIndex" />,
       name: "n_feedback_pdf_label",
       cell: (row: TutorType) => (
         <div
-          className={`max-w-27 py-1 rounded-md text-xs font-medium border text-center mx-auto ${getFlagCor(row.n_feedback_pdf_label.toString() ?? "Não definido")}`}
+          className={`max-w-27 py-1 rounded-md text-xs font-medium border text-center mx-auto ${getFlagCor(row.n_feedback_pdf_label.toString() ?? "")}`}
         >
-          {getNivel(row.n_feedback_pdf_label.toString() ?? "Não definido")}
+          {getNivel(row.n_feedback_pdf_label.toString() ?? "")}
         </div>
       ),
     },
     {
-      label: "Nº de feedbacks textuais",
+      label: <ColumnText id="textFeedbacks" />,
       name: "n_textual_feedback",
     },
     {
-      label: (
-        <div className="flex flex-row relative">
-          <div className="w-[90%]">
-            <p>Índice de feedback textual</p>
-          </div>
-        </div>
-      ),
+      label: <HeaderWithTooltip id="textFeedbacksIndex" />,
       name: "n_textual_feedback_label",
       cell: (row: TutorType) => (
         <div
-          className={`max-w-27 py-1 rounded-md text-xs font-medium border text-center mx-auto ${getFlagCor(row.n_textual_feedback_label.toString() ?? "Não definido")}`}
+          className={`max-w-27 py-1 rounded-md text-xs font-medium border text-center mx-auto ${getFlagCor(row.n_textual_feedback_label.toString() ?? "")}`}
         >
-          {getNivel(row.n_textual_feedback_label.toString() ?? "Não definido")}
+          {getNivel(row.n_textual_feedback_label.toString() ?? "")}
         </div>
       ),
     },
     {
-      label: "Porcentagem de feedbacks",
+      label: <ColumnText id="feedbackPercentage" />,
       name: "percentage_feedback",
     },
     {
-      label: (
-        <div className="flex flex-row relative">
-          <div className="w-[90%]">
-            <p>Índice da porcentagem de feedbacks</p>
-          </div>
-        </div>
-      ),
+      label: <HeaderWithTooltip id="feedbackPercentageIndex" />,
       name: "percentage_feedback_label",
       cell: (row: TutorType) => (
         <div
-          className={`max-w-27 py-1 rounded-md text-xs font-medium border text-center mx-auto ${getFlagCor(row.percentage_feedback_label.toString() ?? "Não definido")}`}
+          className={`max-w-27 py-1 rounded-md text-xs font-medium border text-center mx-auto ${getFlagCor(row.percentage_feedback_label.toString() ?? "")}`}
         >
-          {getNivel(row.percentage_feedback_label.toString() ?? "Não definido")}
+          {getNivel(row.percentage_feedback_label.toString() ?? "")}
         </div>
       ),
     },
@@ -430,7 +406,7 @@ export const getColumns = (
 
   const accessColumns = [
     {
-      label: "Tutor",
+      label: <ColumnText id="tutor" />,
       name: "full_name",
       options: {
         sticky: true,
@@ -440,91 +416,64 @@ export const getColumns = (
       },
     },
     {
-      label: (
-        <div className="flex flex-row relative">
-          <div className="w-[90%]">
-            <p>Índice de Acessos à Plataforma</p>
-          </div>
-          <div className="absolute inset-y-0 right-0 flex items-center w-[10%] pr-1">
-            <Tooltip message={getIndicatorsInfo.accessInfo} />
-          </div>
-        </div>
-      ),
+      label: <HeaderWithTooltip id="platformAccessIndex" tooltip={getIndicatorsInfo.accessInfo} rightClassName="right-0" />,
       name: "label_access",
       cell: (row: TutorType) => (
         <div
-          className={`max-w-27 py-1 rounded-md text-xs font-medium border text-center mx-auto ${getFlagCor(row.label_access.toString() ?? "Não definido")}`}
+          className={`max-w-27 py-1 rounded-md text-xs font-medium border text-center mx-auto ${getFlagCor(row.label_access.toString() ?? "")}`}
         >
-          {getNivel(row.label_access.toString() ?? "Não definido")}
+          {getNivel(row.label_access.toString() ?? "")}
         </div>
       ),
     },
     {
-      label: "Quantidade máxima de dias inativos",
+      label: <ColumnText id="maximumInactiveDays" />,
       name: "maximum_inactivity_days",
     },
     {
-      label: (
-        <div className="flex flex-row relative">
-          <div className="w-[90%]">
-            <p>Índice de Quantidade de Dias Inativos</p>
-          </div>
-        </div>
-      ),
+      label: <HeaderWithTooltip id="inactiveDaysIndex" />,
       name: "maximum_inactivity_days_label",
       cell: (row: TutorType) => (
         <div
-          className={`max-w-27 py-1 rounded-md text-xs font-medium border text-center mx-auto ${getFlagCor(row.maximum_inactivity_days_label.toString() ?? "Não definido", true)}`}
+          className={`max-w-27 py-1 rounded-md text-xs font-medium border text-center mx-auto ${getFlagCor(row.maximum_inactivity_days_label.toString() ?? "", true)}`}
         >
           {getNivel(
-            row.maximum_inactivity_days_label.toString() ?? "Não definido",
+            row.maximum_inactivity_days_label.toString() ?? "",
           )}
         </div>
       ),
     },
     {
-      label: "Quantidade de logins realizados",
+      label: <ColumnText id="logins" />,
       name: "n_login",
     },
     {
-      label: (
-        <div className="flex flex-row relative">
-          <div className="w-[90%]">
-            <p>Índice de quantidade de logins realizados</p>
-          </div>
-        </div>
-      ),
+      label: <HeaderWithTooltip id="loginsIndex" />,
       name: "n_login_label",
       cell: (row: TutorType) => (
         <div
-          className={`max-w-27 py-1 rounded-md text-xs font-medium border text-center mx-auto ${getFlagCor(row.n_login_label.toString() ?? "Não definido")}`}
+          className={`max-w-27 py-1 rounded-md text-xs font-medium border text-center mx-auto ${getFlagCor(row.n_login_label.toString() ?? "")}`}
         >
-          {getNivel(row.n_login_label.toString() ?? "Não definido")}
+          {getNivel(row.n_login_label.toString() ?? "")}
         </div>
       ),
     },
     {
-      label: "Quantidade de logins realizados na turma",
+      label: <ColumnText id="subjectLogins" />,
       name: "n_login_subject",
     },
     {
-      label: "Quantidade de logins semanais",
+      label: <ColumnText id="weeklyLogins" />,
       name: "n_login_weekly",
     },
     {
-      label: (
-        <div className="flex flex-row relative">
-          <div className="w-[90%]">
-            <p>Índice de quantidade de logins semanais</p>
-          </div>
-        </div>
-      ),
+      label: <HeaderWithTooltip id="weeklyLoginsIndex" />,
       name: "n_login_weekly_label",
       cell: (row: TutorType) => (
         <div
-          className={`max-w-27 py-1 rounded-md text-xs font-medium border text-center mx-auto ${getFlagCor(row.n_login_weekly_label.toString() ?? "Não definido")}`}
+          className={`max-w-27 py-1 rounded-md text-xs font-medium border text-center mx-auto ${getFlagCor(row.n_login_weekly_label.toString() ?? "")}`}
         >
-          {getNivel(row.n_login_weekly_label.toString() ?? "Não definido")}
+          {getNivel(row.n_login_weekly_label.toString() ?? "")}
         </div>
       ),
     },
@@ -533,7 +482,7 @@ export const getColumns = (
 
   const engajamentoColumns = [
     {
-      label: "Aluno",
+      label: <ColumnText id="student" />,
       name: "full_name",
       options: {
         sticky: true,
@@ -543,27 +492,18 @@ export const getColumns = (
       },
     },
     {
-      label: (
-        <div className="flex flex-row relative">
-          <div className="w-[90%]">
-            <p>Índice de Interação Avaliativa</p>
-          </div>
-          <div className="absolute inset-y-0 right-4 flex items-center w-[10%] pt-1 pr-1">
-            <Tooltip message={getIndicatorsInfo.interacaoAvaliativaInfo} />
-          </div>
-        </div>
-      ),
+      label: <HeaderWithTooltip id="evaluativeInteractionIndex" tooltip={getIndicatorsInfo.interacaoAvaliativaInfo} rightClassName="right-4" />,
       name: "posts_required_label",
       cell: (row: AlunoType) => (
         <div
-          className={`max-w-27 py-1 rounded-md text-xs font-medium border text-center mx-auto ${getFlagCor(row.posts_required_label ?? "Não definido")}`}
+          className={`max-w-27 py-1 rounded-md text-xs font-medium border text-center mx-auto ${getFlagCor(row.posts_required_label ?? "")}`}
         >
-          {getNivel(row.posts_required_label ?? "Não definido")}
+          {getNivel(row.posts_required_label ?? "")}
         </div>
       ),
     },
     {
-      label: "Nº de Posts em Fóruns Avaliativos",
+      label: <ColumnText id="evaluativeForumPosts" />,
       name: "num_posts_required",
     },
     detalhesColumnAlunos,
@@ -571,7 +511,7 @@ export const getColumns = (
 
   const desempenhoColumns = [
     {
-      label: "Aluno",
+      label: <ColumnText id="student" />,
       name: "full_name",
       options: {
         sticky: true,
@@ -581,31 +521,22 @@ export const getColumns = (
       },
     },
     {
-      label: (
-        <div className="flex flex-row relative">
-          <div className="w-[90%]">
-            <p>Desempenho</p>
-          </div>
-          <div className="absolute inset-y-0 right-2 flex items-center w-[10%] pr-1">
-            <Tooltip message={getIndicatorsInfo.desempenhoInfo} />
-          </div>
-        </div>
-      ),
+      label: <HeaderWithTooltip id="performance" tooltip={getIndicatorsInfo.desempenhoInfo} />,
       name: "performance_label",
       cell: (row: AlunoType) => (
         <div
-          className={`max-w-27 py-1 rounded-md text-xs font-medium border text-center mx-auto ${getFlagCor(row.performance_label ?? "Não definido")}`}
+          className={`max-w-27 py-1 rounded-md text-xs font-medium border text-center mx-auto ${getFlagCor(row.performance_label ?? "")}`}
         >
-          {getNivel(row.performance_label ?? "Não definido")}
+          {getNivel(row.performance_label ?? "")}
         </div>
       ),
     },
     {
-      label: "Nota",
+      label: <ColumnText id="grade" />,
       name: "media_percentual",
     },
     {
-      label: "Comparação com a Média da Turma",
+      label: <ColumnText id="classAverageComparison" />,
       name: "comparative",
     },
     detalhesColumnAlunos,
@@ -613,7 +544,7 @@ export const getColumns = (
 
   const motivacaoColumns = [
     {
-      label: "Aluno",
+      label: <ColumnText id="student" />,
       name: "full_name",
       options: {
         sticky: true,
@@ -623,29 +554,18 @@ export const getColumns = (
       },
     },
     {
-      label: (
-        <div className="flex flex-row relative">
-          <div className="w-[90%]">
-            <p>
-              Índice de Interação <br /> Não Avaliativa
-            </p>
-          </div>
-          <div className="absolute inset-y-0 right-4 flex items-center w-[10%] pt-1 pr-1">
-            <Tooltip message={getIndicatorsInfo.interacaoNaoAvaliativaInfo} />
-          </div>
-        </div>
-      ),
+      label: <HeaderWithTooltip id="nonEvaluativeInteractionIndex" tooltip={getIndicatorsInfo.interacaoNaoAvaliativaInfo} rightClassName="right-4" />,
       name: "posts_unrequired_label",
       cell: (row: AlunoType) => (
         <div
-          className={`max-w-27 py-1 rounded-md text-xs font-medium border text-center mx-auto ${getFlagCor(row.posts_unrequired_label ?? "Não definido")}`}
+          className={`max-w-27 py-1 rounded-md text-xs font-medium border text-center mx-auto ${getFlagCor(row.posts_unrequired_label ?? "")}`}
         >
-          {getNivel(row.posts_unrequired_label ?? "Não definido")}
+          {getNivel(row.posts_unrequired_label ?? "")}
         </div>
       ),
     },
     {
-      label: "Nº de Participações em Fóruns Não Obrigatórios",
+      label: <ColumnText id="nonRequiredForumPosts" />,
       name: "num_posts_unrequired",
     },
     detalhesColumnAlunos,
@@ -653,7 +573,7 @@ export const getColumns = (
 
   const profCognitivaColumns = [
     {
-      label: "Aluno",
+      label: <ColumnText id="student" />,
       name: "full_name",
       options: {
         sticky: true,
@@ -663,35 +583,26 @@ export const getColumns = (
       },
     },
     {
-      label: (
-        <div className="flex flex-row relative">
-          <div className="w-[90%]">
-            <p>Nível Médio de Profundidade Cognitiva</p>
-          </div>
-          <div className="absolute inset-y-0 right-1 flex items-center w-[10%] pt-1 pr-1">
-            <Tooltip message={getIndicatorsInfo.profCogInfo} />
-          </div>
-        </div>
-      ),
+      label: <HeaderWithTooltip id="averageCognitiveDepth" tooltip={getIndicatorsInfo.profCogInfo} rightClassName="right-1" />,
       name: "label",
       cell: (row: AlunoType) => (
         <div
-          className={`max-w-27 py-1 rounded-md text-xs font-medium border text-center mx-auto ${getFlagCor(row.label ?? "Não definido")}`}
+          className={`max-w-27 py-1 rounded-md text-xs font-medium border text-center mx-auto ${getFlagCor(row.label ?? "")}`}
         >
-          {getNivel(row.label ?? "Não definido")}
+          {getNivel(row.label ?? "")}
         </div>
       ),
     },
     {
-      label: "Nível Médio de Profundidade Cognitiva em Fóruns",
+      label: <ColumnText id="forumAverageCognitiveDepth" />,
       name: "forum_mean_level",
     },
     {
-      label: "Nível Médio de Profundidade Cognitiva em Quizzes",
+      label: <ColumnText id="quizAverageCognitiveDepth" />,
       name: "quiz_mean_level",
     },
     {
-      label: "Nível Médio de Profundidade Cognitiva em Tarefas",
+      label: <ColumnText id="assignmentAverageCognitiveDepth" />,
       name: "assign_mean_level",
     },
     detalhesColumnAlunos,
@@ -728,7 +639,7 @@ export const getColumns = (
 
   const desistenciaColumns = [
     {
-      label: "Aluno",
+      label: <ColumnText id="student" />,
       name: "full_name",
       options: {
         sticky: true,
@@ -738,16 +649,7 @@ export const getColumns = (
       },
     },
     {
-      label: (
-        <div className="flex flex-row relative">
-          <div className="w-[90%]">
-            <p>Índice de Desistência</p>
-          </div>
-          <div className="absolute inset-y-0 right-3 flex items-center w-[10%] pt-1 pr-1">
-            <Tooltip message={getIndicatorsInfo.desistenciaInfo} />
-          </div>
-        </div>
-      ),
+      label: <HeaderWithTooltip id="dropoutIndex" tooltip={getIndicatorsInfo.desistenciaInfo} rightClassName="right-3" />,
       name: "give_up",
       cell: (row: AlunoType) => (
         <div
@@ -758,46 +660,46 @@ export const getColumns = (
       ),
     },
     {
-      label: "Índice de Interação Avaliativa",
+      label: <ColumnText id="evaluativeInteractionIndex" />,
       name: "engagement_label",
       cell: (row: AlunoType) => (
         <div
           className={`max-w-27 py-1 rounded-md text-xs font-medium text-center mx-auto`}
         >
-          {getNivel(row.engagement_label ?? "Não definido")}
+          {getNivel(row.engagement_label ?? "")}
         </div>
       ),
     },
     {
-      label: "Índice de Interação Não Avaliativa",
+      label: <ColumnText id="nonEvaluativeInteractionIndex" />,
       name: "motivation_label",
       cell: (row: AlunoType) => (
         <div
           className={`max-w-27 py-1 rounded-md text-xs font-medium text-center mx-auto`}
         >
-          {getNivel(row.motivation_label ?? "Não definido")}
+          {getNivel(row.motivation_label ?? "")}
         </div>
       ),
     },
     {
-      label: "Índice de Desempenho",
+      label: <ColumnText id="performanceIndex" />,
       name: "performance_label",
       cell: (row: AlunoType) => (
         <div
           className={`max-w-27 py-1 rounded-md text-xs font-medium text-center mx-auto`}
         >
-          {getNivel(row.performance_label ?? "Não definido")}
+          {getNivel(row.performance_label ?? "")}
         </div>
       ),
     },
     {
-      label: "Nível de Profundidade Cognitiva",
+      label: <ColumnText id="cognitiveDepthLevel" />,
       name: "cognitive_label",
       cell: (row: AlunoType) => (
         <div
           className={`max-w-27 py-1 rounded-md text-xs font-medium text-center mx-auto`}
         >
-          {getNivel(row.cognitive_label ?? "Não definido")}
+          {getNivel(row.cognitive_label ?? "")}
         </div>
       ),
     },
@@ -815,7 +717,7 @@ export const getColumns = (
 
   const allSubjectsColumns = [
     {
-      label: "Disciplina",
+      label: <ColumnText id="subject" />,
       name: "fullname",
       options: {
         sticky: true,
@@ -825,118 +727,62 @@ export const getColumns = (
       },
     },
     {
-      label: (
-        <div className="flex flex-row relative">
-          <div className="w-[90%]">
-            <p>Índice de Interação Avaliativa</p>
-          </div>
-          <div className="absolute inset-y-0 right-4 flex items-center w-[10%] pt-1 pr-1">
-            <Tooltip message={getIndicatorsInfo.interacaoAvaliativaInfo} />
-          </div>
-        </div>
-      ),
+      label: <HeaderWithTooltip id="evaluativeInteractionIndex" tooltip={getIndicatorsInfo.interacaoAvaliativaInfo} rightClassName="right-4" />,
       name: "flagEngajamento",
       cell: (row: DisciplinaType) => (
         <div
-          className={`py-1 rounded-md text-xs font-medium border-[1.5px] ${getFlagCor(row.flagMotivacao ?? "Não definido")}`}
+          className={`py-1 rounded-md text-xs font-medium border-[1.5px] ${getFlagCor(row.flagMotivacao ?? "")}`}
         >
-          {getNivel(row.flagMotivacao ?? "Não definido")}
+          {getNivel(row.flagMotivacao ?? "")}
         </div>
       ),
     },
     {
-      label: (
-        <div className="flex flex-row relative">
-          <div className="w-[90%]">
-            <p>
-              Índice de Interação <br /> Não Avaliativa
-            </p>
-          </div>
-          <div className="absolute inset-y-0 right-4 flex items-center w-[10%] pt-1 pr-1">
-            <Tooltip message={getIndicatorsInfo.interacaoNaoAvaliativaInfo} />
-          </div>
-        </div>
-      ),
+      label: <HeaderWithTooltip id="nonEvaluativeInteractionIndex" tooltip={getIndicatorsInfo.interacaoNaoAvaliativaInfo} rightClassName="right-4" />,
       name: "flagMotivacao",
       cell: (row: DisciplinaType) => (
         <div
-          className={`py-1 rounded-md text-xs font-medium border-[1.5px] ${getFlagCor(row.flagEngajamento ?? "Não definido")}`}
+          className={`py-1 rounded-md text-xs font-medium border-[1.5px] ${getFlagCor(row.flagEngajamento ?? "")}`}
         >
-          {getNivel(row.flagEngajamento ?? "Não definido")}
+          {getNivel(row.flagEngajamento ?? "")}
         </div>
       ),
     },
     {
-      label: (
-        <div className="flex flex-row relative">
-          <div className="w-[90%]">
-            <p>Desempenho</p>
-          </div>
-          <div className="absolute inset-y-0 right-2 flex items-center w-[10%] pr-1">
-            <Tooltip message={getIndicatorsInfo.desempenhoInfo} />
-          </div>
-        </div>
-      ),
+      label: <HeaderWithTooltip id="performance" tooltip={getIndicatorsInfo.desempenhoInfo} />,
       name: "flagDesempenho",
       cell: (row: DisciplinaType) => (
         <div
-          className={`py-1 rounded-md text-xs font-medium border-[1.5px] ${getFlagCor(row.flagDesempenho ?? "Não definido")}`}
+          className={`py-1 rounded-md text-xs font-medium border-[1.5px] ${getFlagCor(row.flagDesempenho ?? "")}`}
         >
-          {getNivel(row.flagDesempenho ?? "Não definido")}
+          {getNivel(row.flagDesempenho ?? "")}
         </div>
       ),
     },
     {
-      label: (
-        <div className="flex flex-row relative">
-          <div className="w-[90%]">
-            <p>Profundidade Cognitiva</p>
-          </div>
-          <div className="absolute inset-y-0 right-2 flex items-center w-[10%] pt-1 pr-1">
-            <Tooltip message={getIndicatorsInfo.profCogInfo} />
-          </div>
-        </div>
-      ),
+      label: <HeaderWithTooltip id="cognitiveDepth" tooltip={getIndicatorsInfo.profCogInfo} />,
       name: "flagProfCog",
       cell: (row: DisciplinaType) => (
         <div
-          className={`py-1 rounded-md text-xs font-medium border-[1.5px] ${getFlagCor(row.flagProfCog ?? "Não definido")}`}
+          className={`py-1 rounded-md text-xs font-medium border-[1.5px] ${getFlagCor(row.flagProfCog ?? "")}`}
         >
-          {getNivel(row.flagProfCog ?? "Não definido")}
+          {getNivel(row.flagProfCog ?? "")}
         </div>
       ),
     },
     {
-      label: (
-        <div className="flex flex-row">
-          <div className="w-[90%]">
-            <p>Relação Aluno-Professor</p>
-          </div>
-          <div className="flex items-center w-[10%] pt-1 pr-1">
-            <Tooltip message={getIndicatorsInfo.relacaoAlunoProfInfo} />
-          </div>
-        </div>
-      ),
+      label: <HeaderWithTooltip id="studentTeacherRelationship" tooltip={getIndicatorsInfo.relacaoAlunoProfInfo} />,
       name: "flagRelAlunoProf",
       cell: (row: DisciplinaType) => (
         <div
-          className={`py-1 rounded-md text-xs font-medium border-[1.5px] ${getFlagCor(row.flagRelAlunoProf ?? "Não definido")}`}
+          className={`py-1 rounded-md text-xs font-medium border-[1.5px] ${getFlagCor(row.flagRelAlunoProf ?? "")}`}
         >
-          {getNivel(row.flagRelAlunoProf ?? "Não definido")}
+          {getNivel(row.flagRelAlunoProf ?? "")}
         </div>
       ),
     },
     {
-      label: (
-        <div className="flex flex-row relative">
-          <div className="w-[90%]">
-            <p>Índice de Desistência</p>
-          </div>
-          <div className="absolute inset-y-0 right-4 flex items-center w-[10%] pt-1 pr-1">
-            <Tooltip message={getIndicatorsInfo.desistenciaInfo} />
-          </div>
-        </div>
-      ),
+      label: <HeaderWithTooltip id="dropoutIndex" tooltip={getIndicatorsInfo.desistenciaInfo} rightClassName="right-4" />,
       name: "flagDesistencia",
       cell: (row: DisciplinaType) => (
         <div
@@ -947,7 +793,7 @@ export const getColumns = (
       ),
     },
     {
-      label: "Nº de Alunos Matriculados",
+      label: <ColumnText id="enrolledStudents" />,
       name: "total_enrolled",
       cell: (row: DisciplinaType) => getMatriculados(row.total_enrolled),
     },
@@ -962,7 +808,7 @@ export const getColumns = (
     //   cell: () => Math.floor(Math.random() * 20),
     // },
     {
-      label: "Média de Notas da Turma",
+      label: <ColumnText id="classGradeAverage" />,
       name: "mean_subject",
       cell: (row: DisciplinaType) => getNotaMedia(row.mean_subject),
     },
@@ -972,7 +818,7 @@ export const getColumns = (
     //   cell: () => "Graduação",
     // },
     {
-      label: "Professor",
+      label: <ColumnText id="teacher" />,
       name: "teachers",
       options: {
         headerClassName: "min-w-64",
@@ -986,7 +832,7 @@ export const getColumns = (
     //   cell: (row: DisciplinaType) => row.data,
     // },
     {
-      label: "Detalhes",
+      label: <ColumnText id="details" />,
       name: "detalhes",
       cell: (row: DisciplinaType) => (
         <Link
