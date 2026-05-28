@@ -185,6 +185,16 @@
       }
     }
   },
+  "SelectCourses": {
+    "courses": "Courses",
+    "tutors": "Tutors",
+    "chooseCourse": "Choose a course",
+    "searchPlaceholder": "Search subject",
+    "emptyTitle": "No courses found",
+    "emptySearch": "No courses matching \"{searchTerm}\" were found.",
+    "empty": "No courses available at the moment.",
+    "clearSearch": "Clear search"
+  },
   "Login": {
     "subtitle": "Sign in to your account",
     "email": "Email",

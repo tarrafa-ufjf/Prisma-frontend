@@ -3,6 +3,7 @@ import CourseCard from "./course-card";
 import SearchInput from "@/components/template/searchInput";
 import Pagination from "@/components/template/pagination";
 import { MdLibraryBooks } from "react-icons/md";
+import { useTranslations } from "next-intl";
 
 interface CoursesDisplayProps {
     path: string
@@ -25,11 +26,9 @@ export default function CoursesDisplay({
     onPageChange,
     totalItems
 }: CoursesDisplayProps) {
-    const pageName =
-        path
-            .split("/")
-            .filter(segment => segment !== "")[0]
-            ?.replace(/^./, char => char.toUpperCase()) || "Disciplina";
+    const t = useTranslations("SelectCourses");
+    const firstPathSegment = path.split("/").filter(segment => segment !== "")[0];
+    const pageName = firstPathSegment === "tutores" ? t("tutors") : t("courses");
 
     const itemsPerPage = 10;
 
@@ -40,11 +39,11 @@ export default function CoursesDisplay({
                     <div className="flex flex-col items-start">
                         <h1 className="text-xl font-poppins font-semibold text-left">{pageName}</h1>
                         <p style={{ color: '#374DAA' }} className="text-left text-xl font-semibold">
-                            Escolha um curso
+                            {t("chooseCourse")}
                         </p>
                     </div>
                     <div className="flex flex-col items-end">
-                        <SearchInput searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder="Buscar disciplina" />
+                        <SearchInput searchTerm={searchTerm} setSearchTerm={setSearchTerm} placeholder={t("searchPlaceholder")} />
                     </div>
                 </div>
                 <div>
@@ -68,12 +67,12 @@ export default function CoursesDisplay({
                         <div className="flex flex-col items-center justify-center py-12">
                             <div className="text-gray-900 text-4xl mb-2"><MdLibraryBooks /></div>
                             <h3 className="text-lg font-medium text-gray-900 mb-2">
-                                Nenhum curso encontrado
+                                {t("emptyTitle")}
                             </h3>
                             <p className="text-gray-500 text-center">
                                 {searchTerm ?
-                                    `Não foram encontrados cursos que correspondam à busca "${searchTerm}".` :
-                                    'Nenhum curso disponível no momento.'
+                                    t("emptySearch", { searchTerm }) :
+                                    t("empty")
                                 }
                             </p>
                             {searchTerm && (
@@ -81,7 +80,7 @@ export default function CoursesDisplay({
                                     onClick={() => setSearchTerm('')}
                                     className="mt-4 px-4 py-2 text-sm font-medium text-white bg-[#374DAA] rounded-lg hover:bg-[#2a3a85] transition-colors"
                                 >
-                                    Limpar busca
+                                    {t("clearSearch")}
                                 </button>
                             )}
                         </div>

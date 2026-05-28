@@ -185,6 +185,16 @@
       }
     }
   },
+  "SelectCourses": {
+    "courses": "Cursos",
+    "tutors": "Tutores",
+    "chooseCourse": "Escolha um curso",
+    "searchPlaceholder": "Buscar disciplina",
+    "emptyTitle": "Nenhum curso encontrado",
+    "emptySearch": "Nao foram encontrados cursos que correspondam a busca \"{searchTerm}\".",
+    "empty": "Nenhum curso disponivel no momento.",
+    "clearSearch": "Limpar busca"
+  },
   "Login": {
     "subtitle": "Faca login em sua conta",
     "email": "Email",
