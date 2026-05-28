@@ -193,7 +193,8 @@
     "emptyTitle": "Nenhum curso encontrado",
     "emptySearch": "Nao foram encontrados cursos que correspondam a busca \"{searchTerm}\".",
     "empty": "Nenhum curso disponivel no momento.",
-    "clearSearch": "Limpar busca"
+    "clearSearch": "Limpar busca",
+    "processing": "Em processamento"
   },
   "Login": {
     "subtitle": "Faca login em sua conta",

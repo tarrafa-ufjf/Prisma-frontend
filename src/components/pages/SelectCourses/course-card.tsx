@@ -1,5 +1,6 @@
 import { Curso } from "@/types/curso";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 
 interface CourseCardProps {
     course: Curso
@@ -7,6 +8,7 @@ interface CourseCardProps {
 }
 
 export default function CourseCard({ course, path }: CourseCardProps) {
+    const t = useTranslations("SelectCourses");
     const isProcessed = course.status === "D";
 
     const cardClasses = isProcessed
@@ -18,7 +20,7 @@ export default function CourseCard({ course, path }: CourseCardProps) {
         <Link href={`${path}${course.id}`} className={cardClasses}>
             {!isProcessed && (
                 <span className="absolute top-2 right-2 text-xs font-semibold bg-gray-300 text-gray-700 px-2 py-0.5 rounded-full">
-                    Em processamento
+                    {t("processing")}
                 </span>
             )}
 

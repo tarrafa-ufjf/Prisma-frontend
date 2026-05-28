@@ -193,7 +193,8 @@
     "emptyTitle": "No courses found",
     "emptySearch": "No courses matching \"{searchTerm}\" were found.",
     "empty": "No courses available at the moment.",
-    "clearSearch": "Clear search"
+    "clearSearch": "Clear search",
+    "processing": "Processing"
   },
   "Login": {
     "subtitle": "Sign in to your account",
