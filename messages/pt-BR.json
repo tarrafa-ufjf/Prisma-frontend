@@ -230,7 +230,8 @@
       "noStudentSelected": "Nenhum aluno foi selecionado ainda.",
       "finalGrade": "Nota final",
       "grades": "Notas",
-      "courseSubtitle": "da disciplina"
+      "courseSubtitle": "da disciplina",
+      "loading": "Carregando..."
     }
   },
   "Subjects": {

@@ -230,7 +230,8 @@
       "noStudentSelected": "No student has been selected yet.",
       "finalGrade": "Final grade",
       "grades": "Grades",
-      "courseSubtitle": "of the course"
+      "courseSubtitle": "of the course",
+      "loading": "Loading..."
     }
   },
   "Subjects": {

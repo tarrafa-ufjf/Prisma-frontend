@@ -3,6 +3,7 @@
 import Aluno from '@/components/pages/Aluno/Aluno';
 import { useEffect, useState } from 'react';
 import { api } from '@/utils/api';
+import { useTranslations } from 'next-intl';
 
 interface Props {
   curso: any;
@@ -10,6 +11,7 @@ interface Props {
 }
 
 export default function AlunoPageClient({ curso, alunoId }: Props) {
+  const t = useTranslations('Students.details');
   const [alunos, setAlunos] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -39,7 +41,7 @@ export default function AlunoPageClient({ curso, alunoId }: Props) {
   }, [curso.id]);
 
   if (loading) {
-    return <div>Carregando...</div>;
+    return <div>{t('loading')}</div>;
   }
 
   return (
