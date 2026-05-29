@@ -17,6 +17,7 @@ import {
     getPerformanceData, 
     getMotivationData 
 } from '@/utils/alunoService';
+import { useTranslations } from 'next-intl';
 
 interface AlunoRowProps {
     aluno: AlunoType;
@@ -25,6 +26,7 @@ interface AlunoRowProps {
 };
 
 const AlunoRow: React.FC<AlunoRowProps> = ({ aluno, activeTab, cursoSelecionado }) => {
+    const t = useTranslations("Students.details.indicatorDetails");
 
     const [extraData, setExtraData] = React.useState<any>(null);
     const [loadingExtra, setLoadingExtra] = React.useState(false);
@@ -112,37 +114,37 @@ const AlunoRow: React.FC<AlunoRowProps> = ({ aluno, activeTab, cursoSelecionado 
         switch (activeTab) {
             case "Interação Avaliativa":
                 return [
-                    { label: "Nº de Posts em Fóruns Avaliativos", name: "num_posts_required" },
-                    { label: "Percentual de Quizzes Realizados", name: "quizzesRealiz" },
-                    { label: "Percentual de Tarefas Enviadas", name: "tarefasEnv" },
+                    { label: t("evaluativeForumPosts"), name: "num_posts_required" },
+                    { label: t("completedQuizzesPercentage"), name: "quizzesRealiz" },
+                    { label: t("submittedAssignmentsPercentage"), name: "tarefasEnv" },
                 ];
 
             case "Desempenho":
                 return [
-                    { label: "Média Geral das Notas Avaliativas", name: "media_percentual" },
-                    { label: "Comparação com a Média da Turma", name: "compMedia" },
-                    { label: "Nº de Atividades Abaixo da Média", name: "ativAbaixoMedia" },
+                    { label: t("averageEvaluativeGrades"), name: "media_percentual" },
+                    { label: t("classAverageComparison"), name: "compMedia" },
+                    { label: t("activitiesBelowAverage"), name: "ativAbaixoMedia" },
                 ];
 
             case "Interação Não Avaliativa":
                 return [
-                    { label: "Percentual de Participação em Fóruns Não Obrigatórios", name: "partForunsNaoObrig" },
-                    { label: "Nº de Visualizações em Materiais Complementares", name: "nVisuCompl" },
-                    { label: "Nº de Interações na Última Semana", name: "nInter" },
+                    { label: t("nonRequiredForumParticipation"), name: "partForunsNaoObrig" },
+                    { label: t("complementaryMaterialViews"), name: "nVisuCompl" },
+                    { label: t("lastWeekInteractions"), name: "nInter" },
                 ];
 
             case "Profundidade Cognitiva":
                 return [
-                    { label: "Nível Médio de Profundidade Cognitiva em Fóruns", name: "profCogForuns" },
-                    { label: "Nível Médio de Profundidade Cognitiva em Quizzes", name: "profCogQuizzes" },
-                    { label: "Nível Médio de Profundidade Cognitiva em Tarefas", name: "profCogTarefas" },
+                    { label: t("forumAverageCognitiveDepth"), name: "profCogForuns" },
+                    { label: t("quizAverageCognitiveDepth"), name: "profCogQuizzes" },
+                    { label: t("assignmentAverageCognitiveDepth"), name: "profCogTarefas" },
                 ];
 
             case "Relação Aluno-Professor":
                 return [
-                    { label: "Nº de Mensagens Trocadas com o Professor", name: "nMsgsAlunoProf" },
-                    { label: "Percentual de Participação em Fóruns Mediados pelo Docente", name: "partForunsDocente" },
-                    { label: "Frequência de Contato Aluno-Professor", name: "freqContAlunoProf" },
+                    { label: t("teacherMessages"), name: "nMsgsAlunoProf" },
+                    { label: t("teacherMediatedForumParticipation"), name: "partForunsDocente" },
+                    { label: t("studentTeacherContactFrequency"), name: "freqContAlunoProf" },
                 ];
 
             default:
@@ -153,13 +155,13 @@ const AlunoRow: React.FC<AlunoRowProps> = ({ aluno, activeTab, cursoSelecionado 
     const columns = getColumns();
 
     if (loadingExtra) {
-        return <Loading>Carregando Dados</Loading>;
+        return <Loading>{t("loading")}</Loading>;
     }
 
     if (!extraData && (activeTab === "Profundidade Cognitiva" || activeTab === "Desempenho" || activeTab === "Interação Não Avaliativa" || activeTab === "Relação Aluno-Professor")) {
         return (
             <div className="flex justify-center items-center h-full min-h-[200px]">
-                <ErrorMessage>Erro ao carregar dados</ErrorMessage>
+                <ErrorMessage>{t("fetchError")}</ErrorMessage>
             </div>
         );
     }

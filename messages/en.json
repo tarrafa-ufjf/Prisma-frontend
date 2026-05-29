@@ -277,6 +277,25 @@
       "activitiesChart": {
         "loading": "Loading...",
         "empty": "No activity found."
+      },
+      "indicatorDetails": {
+        "loading": "Loading data",
+        "fetchError": "Error loading data",
+        "evaluativeForumPosts": "No. of posts in graded forums",
+        "completedQuizzesPercentage": "Completed quizzes percentage",
+        "submittedAssignmentsPercentage": "Submitted assignments percentage",
+        "averageEvaluativeGrades": "Overall average of evaluative grades",
+        "classAverageComparison": "Comparison with class average",
+        "activitiesBelowAverage": "No. of activities below average",
+        "nonRequiredForumParticipation": "Participation percentage in non-required forums",
+        "complementaryMaterialViews": "No. of views in complementary materials",
+        "lastWeekInteractions": "No. of interactions in the last week",
+        "forumAverageCognitiveDepth": "Average Cognitive Depth Level in Forums",
+        "quizAverageCognitiveDepth": "Average Cognitive Depth Level in Quizzes",
+        "assignmentAverageCognitiveDepth": "Average Cognitive Depth Level in Assignments",
+        "teacherMessages": "No. of messages exchanged with the teacher",
+        "teacherMediatedForumParticipation": "Participation percentage in teacher-mediated forums",
+        "studentTeacherContactFrequency": "Student-teacher contact frequency"
       }
     }
   },

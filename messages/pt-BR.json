@@ -277,6 +277,25 @@
       "activitiesChart": {
         "loading": "Carregando...",
         "empty": "Nenhuma atividade encontrada."
+      },
+      "indicatorDetails": {
+        "loading": "Carregando Dados",
+        "fetchError": "Erro ao carregar dados",
+        "evaluativeForumPosts": "No. de Posts em Foruns Avaliativos",
+        "completedQuizzesPercentage": "Percentual de Quizzes Realizados",
+        "submittedAssignmentsPercentage": "Percentual de Tarefas Enviadas",
+        "averageEvaluativeGrades": "Media Geral das Notas Avaliativas",
+        "classAverageComparison": "Comparacao com a Media da Turma",
+        "activitiesBelowAverage": "No. de Atividades Abaixo da Media",
+        "nonRequiredForumParticipation": "Percentual de Participacao em Foruns Nao Obrigatorios",
+        "complementaryMaterialViews": "No. de Visualizacoes em Materiais Complementares",
+        "lastWeekInteractions": "No. de Interacoes na Ultima Semana",
+        "forumAverageCognitiveDepth": "Nivel Medio de Profundidade Cognitiva em Foruns",
+        "quizAverageCognitiveDepth": "Nivel Medio de Profundidade Cognitiva em Quizzes",
+        "assignmentAverageCognitiveDepth": "Nivel Medio de Profundidade Cognitiva em Tarefas",
+        "teacherMessages": "No. de Mensagens Trocadas com o Professor",
+        "teacherMediatedForumParticipation": "Percentual de Participacao em Foruns Mediados pelo Docente",
+        "studentTeacherContactFrequency": "Frequencia de Contato Aluno-Professor"
       }
     }
   },
