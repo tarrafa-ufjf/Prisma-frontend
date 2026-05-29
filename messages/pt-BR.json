@@ -231,7 +231,18 @@
       "finalGrade": "Nota final",
       "grades": "Notas",
       "courseSubtitle": "da disciplina",
-      "loading": "Carregando..."
+      "loading": "Carregando...",
+      "personalData": {
+        "title": "Dados Pessoais",
+        "loading": "Carregando Dados",
+        "fetchError": "Erro ao carregar dados pessoais.",
+        "email": "E-mail",
+        "course": "Curso",
+        "city": "Cidade",
+        "studentGroup": "Polo",
+        "firstAccess": "Primeiro Acesso",
+        "lastAccess": "Ultimo Acesso"
+      }
     }
   },
   "Subjects": {

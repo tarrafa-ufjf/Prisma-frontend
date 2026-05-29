@@ -231,7 +231,18 @@
       "finalGrade": "Final grade",
       "grades": "Grades",
       "courseSubtitle": "of the course",
-      "loading": "Loading..."
+      "loading": "Loading...",
+      "personalData": {
+        "title": "Personal Data",
+        "loading": "Loading data",
+        "fetchError": "Error loading personal data.",
+        "email": "Email",
+        "course": "Course",
+        "city": "City",
+        "studentGroup": "Campus",
+        "firstAccess": "First Access",
+        "lastAccess": "Last Access"
+      }
     }
   },
   "Subjects": {

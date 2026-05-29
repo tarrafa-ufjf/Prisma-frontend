@@ -4,6 +4,7 @@ import { api } from "@/utils/api";
 import React from "react";
 import Loading from "@/components/ui/loading";
 import ErrorMessage from "@/components/ui/error-message";
+import { useTranslations } from "next-intl";
 
 interface DadosPessoaisProps {
     aluno: AlunoType;
@@ -11,6 +12,7 @@ interface DadosPessoaisProps {
 };
 
 export default function DadosPessoais({ aluno, curso }: DadosPessoaisProps) {
+    const t = useTranslations("Students.details.personalData");
     const [summary, setSummary] = React.useState<any>(null);
     const [loading, setLoading] = React.useState(false);
 
@@ -42,34 +44,34 @@ export default function DadosPessoais({ aluno, curso }: DadosPessoaisProps) {
     }, [curso, aluno]);
 
     if (loading) {
-        return <Loading>Carregando Dados</Loading>;
+        return <Loading>{t("loading")}</Loading>;
     }
 
     if (!summary) {
-        return <ErrorMessage>Erro ao carregar dados pessoais.</ErrorMessage>;
+        return <ErrorMessage>{t("fetchError")}</ErrorMessage>;
     }
     console.log("summary: ", summary);
     return (
         <div className="Box3 p-6 rounded-lg border border-gray-200 shadow-sm">
             <h1 className="text-2xl font-semibold text-left mb-6 pb-4 border-b border-gray-200">
-                Dados Pessoais
+                {t("title")}
             </h1>
             <div className="grid grid-cols-2 gap-8">
                 <div className="flex flex-col ml-4 mr-4">
                     <div className="flex items-center mb-4">
-                        <p className="text-sm font-medium w-24">E-mail</p>
+                        <p className="text-sm font-medium w-24">{t("email")}</p>
                         <p className="text-sm bg-gray-100 rounded-md py-2 px-4 flex-1">
                             {summary.email ?? `-`}
                         </p>
                     </div>
                     <div className="flex items-center mb-4">
-                        <p className="text-sm font-medium w-24">Curso</p>
+                        <p className="text-sm font-medium w-24">{t("course")}</p>
                         <p className="text-sm bg-gray-100 rounded-md py-2 px-4 flex-1">
                             {summary.degree_program ?? `-`}
                         </p>
                     </div>
                     <div className="flex items-center">
-                        <p className="text-sm font-medium w-24">Cidade</p>
+                        <p className="text-sm font-medium w-24">{t("city")}</p>
                         <p className="text-sm bg-gray-100 rounded-md py-2 px-4 flex-1">
                             {summary.city ?? `-`}
                         </p>
@@ -77,19 +79,19 @@ export default function DadosPessoais({ aluno, curso }: DadosPessoaisProps) {
                 </div>
                 <div className="flex flex-col mr-4">
                     <div className="flex items-center mb-4">
-                        <p className="text-sm font-medium w-32">Polo</p>
+                        <p className="text-sm font-medium w-32">{t("studentGroup")}</p>
                         <p className="text-sm bg-gray-100 rounded-md py-2 px-4 flex-1">
                             {summary.student_groups ?? `-`}
                         </p>
                     </div>
                     <div className="flex items-center mb-4">
-                        <p className="text-sm font-medium w-32">Primeiro Acesso</p>
+                        <p className="text-sm font-medium w-32">{t("firstAccess")}</p>
                         <p className="text-sm bg-gray-100 rounded-md py-2 px-4 flex-1">
                             {summary.first_access_moodle ?? `-`}
                         </p>
                     </div>
                     <div className="flex items-center">
-                        <p className="text-sm font-medium w-32">Último Acesso</p>
+                        <p className="text-sm font-medium w-32">{t("lastAccess")}</p>
                         <p className="text-sm bg-gray-100 rounded-md py-2 px-4 flex-1">
                             {summary.last_access_subject ?? `-`}
                         </p>
