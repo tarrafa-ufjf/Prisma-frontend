@@ -76,6 +76,7 @@
     "levels": {
       "veryLow": "Muito Baixo",
       "low": "Baixo",
+      "normal": "Normal",
       "medium": "Medio",
       "high": "Alto",
       "veryHigh": "Muito Alto",

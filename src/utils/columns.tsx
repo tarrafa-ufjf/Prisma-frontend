@@ -18,7 +18,6 @@ function HeaderWithTooltip({
 }: {
   id: string;
   tooltip?: string;
-  rightClassName?: string;
 }) {
   return (
     <div className="flex items-start gap-1">
@@ -57,6 +56,7 @@ const getNivelKey = (flag: string) => {
     case "baixo":
       return "levels.low";
     case "normal":
+      return "levels.normal";
     case "medio":
       return "levels.medium";
     case "alto":
@@ -152,16 +152,6 @@ export const getFlagCor = (flag: string, reverse?: boolean) => {
       return "bg-gray-100 text-gray-600";
   }
 };
-
-// export const getProfCogCor = (nivel: number) => {
-// 	switch (nivel) {
-// 		case 0: return "bg-red-100 text-red-700";
-// 		case 1: return "bg-orange-100 text-orange-700";
-// 		case 2: return "bg-indigo-100 text-indigo-700";
-// 		case 3: return "bg-emerald-100 text-emerald-700";
-// 		default: return "bg-gray-100 text-gray-600";
-// 	}
-// };
 
 export const getDesistencia = (flag: boolean) =>
   flag ? <ColumnText id="levels.positive" /> : <ColumnText id="levels.negative" />;
@@ -311,14 +301,11 @@ export const getColumns = (
       label: <HeaderWithTooltip id="feedbackIndex" tooltip={getIndicatorsInfo.feedbackInfo} />,
       name: "label_feedback",
       cell: (row: TutorType) => (
-        console.log(row.label_feedback.toString()),
-        (
-          <div
-            className={`max-w-27 py-1 rounded-md text-xs font-medium border text-center mx-auto ${getFlagCor(row.label_feedback.toString() ?? "")}`}
-          >
-            {getNivel(row.label_feedback.toString() ?? "")}
-          </div>
-        )
+        <div
+          className={`max-w-27 py-1 rounded-md text-xs font-medium border text-center mx-auto ${getFlagCor(row.label_feedback.toString() ?? "")}`}
+        >
+          {getNivel(row.label_feedback.toString() ?? "")}
+        </div>
       ),
     },
     {
@@ -413,7 +400,7 @@ export const getColumns = (
       },
     },
     {
-      label: <HeaderWithTooltip id="platformAccessIndex" tooltip={getIndicatorsInfo.accessInfo} rightClassName="right-0" />,
+      label: <HeaderWithTooltip id="platformAccessIndex" tooltip={getIndicatorsInfo.accessInfo} />,
       name: "label_access",
       cell: (row: TutorType) => (
         <div
@@ -489,7 +476,7 @@ export const getColumns = (
       },
     },
     {
-      label: <HeaderWithTooltip id="evaluativeInteractionIndex" tooltip={getIndicatorsInfo.interacaoAvaliativaInfo} rightClassName="right-4" />,
+      label: <HeaderWithTooltip id="evaluativeInteractionIndex" tooltip={getIndicatorsInfo.interacaoAvaliativaInfo} />,
       name: "posts_required_label",
       cell: (row: AlunoType) => (
         <div
@@ -551,7 +538,7 @@ export const getColumns = (
       },
     },
     {
-      label: <HeaderWithTooltip id="nonEvaluativeInteractionIndex" tooltip={getIndicatorsInfo.interacaoNaoAvaliativaInfo} rightClassName="right-4" />,
+      label: <HeaderWithTooltip id="nonEvaluativeInteractionIndex" tooltip={getIndicatorsInfo.interacaoNaoAvaliativaInfo} />,
       name: "posts_unrequired_label",
       cell: (row: AlunoType) => (
         <div
@@ -580,7 +567,7 @@ export const getColumns = (
       },
     },
     {
-      label: <HeaderWithTooltip id="averageCognitiveDepth" tooltip={getIndicatorsInfo.profCogInfo} rightClassName="right-1" />,
+      label: <HeaderWithTooltip id="averageCognitiveDepth" tooltip={getIndicatorsInfo.profCogInfo} />,
       name: "label",
       cell: (row: AlunoType) => (
         <div
@@ -605,35 +592,6 @@ export const getColumns = (
     detalhesColumnAlunos,
   ];
 
-  // const relacaoAlunoProfColumns = [
-  // 	{
-  // 		label: "Aluno",
-  // 		name: "full_name",
-  // 		options: {
-  // 			sticky: true,
-  // 			headerClassName: "min-w-96",
-  // 			cellClassName: "truncate overflow-hidden whitespace-nowrap font-medium text-left max-w-xs"
-  // 		}
-  // 	},
-  // 	{
-  // 		label: "Relação Aluno-Professor",
-  // 		name: "full_name",
-  // 	},
-  // 	{
-  // 		label: "Nº de Mensagens Trocadas com o Professor",
-  // 		name: "full_name"
-  // 	},
-  // 	{
-  // 		label: "Percentual de Participação em Fóruns Mediados pelo Docente",
-  // 		name: "full_name"
-  // 	},
-  // 	{
-  // 		label: "Frequência de Contato Aluno-Professor",
-  // 		name: "full_name"
-  // 	},
-  // 	detalhesColumnAlunos
-  // ];
-
   const desistenciaColumns = [
     {
       label: <ColumnText id="student" />,
@@ -646,7 +604,7 @@ export const getColumns = (
       },
     },
     {
-      label: <HeaderWithTooltip id="dropoutIndex" tooltip={getIndicatorsInfo.desistenciaInfo} rightClassName="right-3" />,
+      label: <HeaderWithTooltip id="dropoutIndex" tooltip={getIndicatorsInfo.desistenciaInfo} />,
       name: "give_up",
       cell: (row: AlunoType) => (
         <div
@@ -700,15 +658,6 @@ export const getColumns = (
         </div>
       ),
     },
-    // {
-    // 	label: "Índice de Relação Aluno-Professor",
-    // 	name: "flagRelAlunoProf",
-    // 	cell: (row: AlunoType) => (
-    // 		<div className={`py-1 rounded-md text-xs font-medium border-[1.5px] ${getFlagCor(row.flagRelAlunoProf ?? 0)}`}>
-    // 			{getNivel(row.flagRelAlunoProf ?? 0)}
-    // 		</div>
-    // 	)
-    // },
     detalhesColumnAlunos,
   ];
 
@@ -724,7 +673,7 @@ export const getColumns = (
       },
     },
     {
-      label: <HeaderWithTooltip id="evaluativeInteractionIndex" tooltip={getIndicatorsInfo.interacaoAvaliativaInfo} rightClassName="right-4" />,
+      label: <HeaderWithTooltip id="evaluativeInteractionIndex" tooltip={getIndicatorsInfo.interacaoAvaliativaInfo} />,
       name: "flagEngajamento",
       cell: (row: DisciplinaType) => (
         <div
@@ -735,7 +684,7 @@ export const getColumns = (
       ),
     },
     {
-      label: <HeaderWithTooltip id="nonEvaluativeInteractionIndex" tooltip={getIndicatorsInfo.interacaoNaoAvaliativaInfo} rightClassName="right-4" />,
+      label: <HeaderWithTooltip id="nonEvaluativeInteractionIndex" tooltip={getIndicatorsInfo.interacaoNaoAvaliativaInfo} />,
       name: "flagMotivacao",
       cell: (row: DisciplinaType) => (
         <div
@@ -779,7 +728,7 @@ export const getColumns = (
       ),
     },
     {
-      label: <HeaderWithTooltip id="dropoutIndex" tooltip={getIndicatorsInfo.desistenciaInfo} rightClassName="right-4" />,
+      label: <HeaderWithTooltip id="dropoutIndex" tooltip={getIndicatorsInfo.desistenciaInfo} />,
       name: "flagDesistencia",
       cell: (row: DisciplinaType) => (
         <div
@@ -794,26 +743,11 @@ export const getColumns = (
       name: "total_enrolled",
       cell: (row: DisciplinaType) => getMatriculados(row.total_enrolled),
     },
-    // {
-    //   label: "Nº de Alunos Aprovados",
-    //   name: "numAlunosAprovados",
-    //   cell: () => Math.floor(Math.random() * 70) + 30,
-    // },
-    // {
-    //   label: "Nº de Alunos Reprovados",
-    //   name: "numAlunosReprovados",
-    //   cell: () => Math.floor(Math.random() * 20),
-    // },
     {
       label: <ColumnText id="classGradeAverage" />,
       name: "mean_subject",
       cell: (row: DisciplinaType) => getNotaMedia(row.mean_subject),
     },
-    // {
-    //   label: "Curso",
-    //   name: "cursoGrad",
-    //   cell: () => "Graduação",
-    // },
     {
       label: <ColumnText id="teacher" />,
       name: "teachers",
@@ -823,11 +757,6 @@ export const getColumns = (
       },
       cell: (row: DisciplinaType) => getProfessores(row.teachers),
     },
-    // {
-    //   label: "Semestre",
-    //   name: "period",
-    //   cell: (row: DisciplinaType) => row.data,
-    // },
     {
       label: <ColumnText id="details" />,
       name: "detalhes",
@@ -851,8 +780,6 @@ export const getColumns = (
       return motivacaoColumns;
     case "Profundidade Cognitiva":
       return profCognitivaColumns;
-    // case "Relação Aluno-Professor":
-    // 	return relacaoAlunoProfColumns;
     case "Desistência":
       return desistenciaColumns;
     case "allSubjects":
