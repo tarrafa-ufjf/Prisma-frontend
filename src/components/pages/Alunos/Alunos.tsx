@@ -9,6 +9,7 @@ import { Curso as CursoType } from "@/types/curso";
 import { useEffect, useState } from "react";
 import { api } from "@/utils/api";
 import { useError } from "@/hooks/useError";
+import { useTranslations } from "next-intl";
 
 interface AlunosProps {
   curso: CursoType;
@@ -34,6 +35,7 @@ const tabMapping: Record<Tab, string> = {
 };
 
 export default function Alunos({ curso }: AlunosProps) {
+  const t = useTranslations("Students");
   const [searchTerm, setSearchTerm] = useState("");
   const [alunos, setAlunos] = useState<AlunoType[]>([]);
   const [activeTab, setActiveTab] = useState<Tab>("Interação Avaliativa");
@@ -50,12 +52,12 @@ export default function Alunos({ curso }: AlunosProps) {
         console.log(response.data.data);
         setAlunos(response.data.data);
       } catch (err) {
-        error.setError("Erro ao buscar dados dos alunos");
+        error.setError(t("fetchError"));
         console.error("Erro ao buscar dados dos alunos: ", err);
       }
     };
     fetch();
-  }, [curso, activeTab, error.clear, error.setError]);
+  }, [curso, activeTab, error.clear, error.setError, t]);
 
   const columns = getColumns(activeTab, curso.id);
 
@@ -66,7 +68,7 @@ export default function Alunos({ curso }: AlunosProps) {
         <div className="flex flex-row justify-between items-start w-full mb-4">
           <div className="flex flex-col items-start">
             <h1 className="text-xl font-poppins font-semibold text-left">
-              Alunos
+              {t("title")}
             </h1>
             {curso ? (
               <p
@@ -77,7 +79,7 @@ export default function Alunos({ curso }: AlunosProps) {
               </p>
             ) : (
               <p className="text-left">
-                Nenhuma disciplina foi selecionada ainda.
+                {t("noCourseSelected")}
               </p>
             )}
           </div>
@@ -109,7 +111,7 @@ export default function Alunos({ curso }: AlunosProps) {
                 <SearchInput
                   searchTerm={searchTerm}
                   setSearchTerm={setSearchTerm}
-                  placeholder="Aluno"
+                  placeholder={t("searchPlaceholder")}
                 />
               </div>
             </div>

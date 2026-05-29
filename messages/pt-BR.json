@@ -220,6 +220,12 @@
       }
     }
   },
+  "Students": {
+    "title": "Alunos",
+    "searchPlaceholder": "Aluno",
+    "noCourseSelected": "Nenhuma disciplina foi selecionada ainda.",
+    "fetchError": "Erro ao buscar dados dos alunos"
+  },
   "Subjects": {
     "loadingData": "Carregando dados das disciplinas...",
     "loading": "Carregando disciplinas...",

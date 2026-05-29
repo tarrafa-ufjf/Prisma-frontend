@@ -220,6 +220,12 @@
       }
     }
   },
+  "Students": {
+    "title": "Students",
+    "searchPlaceholder": "Student",
+    "noCourseSelected": "No course has been selected yet.",
+    "fetchError": "Error loading student data"
+  },
   "Subjects": {
     "loadingData": "Loading subject data...",
     "loading": "Loading subjects...",
