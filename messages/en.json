@@ -273,6 +273,10 @@
       "finalGradeChart": {
         "loading": "Loading...",
         "empty": "Final grade not found."
+      },
+      "activitiesChart": {
+        "loading": "Loading...",
+        "empty": "No activity found."
       }
     }
   },

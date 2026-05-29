@@ -4,6 +4,7 @@ import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 import { api } from '@/utils/api';
+import { useTranslations } from 'next-intl';
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 25,
@@ -28,6 +29,7 @@ type Props = {
 };
 
 export default function AtividadesChart({ curso, aluno }: Props) {
+  const t = useTranslations("Students.details.activitiesChart");
   const [atividades, setAtividades] = React.useState<any[]>([]);
   const [loading, setLoading] = React.useState(false);
 
@@ -57,11 +59,11 @@ export default function AtividadesChart({ curso, aluno }: Props) {
   }, [curso, aluno]);
 
   if (loading) {
-    return <p className="text-sm">Carregando...</p>;
+    return <p className="text-sm">{t("loading")}</p>;
   }
 
   if (!atividades.length) {
-    return <p className="text-sm">Nenhuma atividade encontrada.</p>;
+    return <p className="text-sm">{t("empty")}</p>;
   }
   console.log("Atividades: ", atividades);
   
