@@ -242,6 +242,33 @@
         "studentGroup": "Campus",
         "firstAccess": "First Access",
         "lastAccess": "Last Access"
+      },
+      "indicators": {
+        "title": "Indicators",
+        "subtitle": "calculated",
+        "loading": "Loading indicators",
+        "empty": "Indicators not found.",
+        "studentTeacherIconAlt": "Student-teacher icon",
+        "performanceIconAlt": "Performance icon",
+        "cognitiveDepthIconAlt": "Cognitive depth icon",
+        "dropoutIconAlt": "Dropout icon",
+        "yes": "Yes",
+        "no": "No",
+        "cards": {
+          "evaluativeInteraction": "Evaluative Interaction Index",
+          "nonEvaluativeInteraction": "Non-Evaluative Interaction Index",
+          "performance": "Performance",
+          "cognitiveDepth": "Cognitive Depth",
+          "dropout": "Dropout"
+        },
+        "levels": {
+          "veryLow": "Very Low",
+          "low": "Low",
+          "medium": "Medium",
+          "high": "High",
+          "veryHigh": "Very High",
+          "undefined": "Not defined"
+        }
       }
     }
   },

@@ -242,6 +242,33 @@
         "studentGroup": "Polo",
         "firstAccess": "Primeiro Acesso",
         "lastAccess": "Ultimo Acesso"
+      },
+      "indicators": {
+        "title": "Indicadores",
+        "subtitle": "calculados",
+        "loading": "Carregando Indicadores",
+        "empty": "Indicadores nao encontrados.",
+        "studentTeacherIconAlt": "Icone aluno-professor",
+        "performanceIconAlt": "Icone desempenho",
+        "cognitiveDepthIconAlt": "Icone profundidade cognitiva",
+        "dropoutIconAlt": "Icone desistencia",
+        "yes": "Sim",
+        "no": "Nao",
+        "cards": {
+          "evaluativeInteraction": "Indice de Interacao Avaliativa",
+          "nonEvaluativeInteraction": "Indice de Interacao Nao Avaliativa",
+          "performance": "Desempenho",
+          "cognitiveDepth": "Profundidade Cognitiva",
+          "dropout": "Desistencia"
+        },
+        "levels": {
+          "veryLow": "Muito Baixo",
+          "low": "Baixo",
+          "medium": "Medio",
+          "high": "Alto",
+          "veryHigh": "Muito Alto",
+          "undefined": "Nao definido"
+        }
       }
     }
   },
