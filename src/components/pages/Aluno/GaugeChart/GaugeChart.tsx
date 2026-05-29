@@ -3,6 +3,7 @@ import Stack from '@mui/material/Stack';
 import { Gauge } from '@mui/x-charts/Gauge';
 import { api } from "@/utils/api";
 import { Aluno as AlunoType } from "@/types/aluno";
+import { useTranslations } from "next-intl";
 
 type CursoType = {
   id: number;
@@ -25,6 +26,7 @@ type FinalGrade = {
 };
 
 export default function GaugeChart({ curso, aluno }: Props) {
+  const t = useTranslations("Students.details.finalGradeChart");
   const [finalGrade, setFinalGrade] = React.useState<FinalGrade | null>(null);
   const [loading, setLoading] = React.useState(false);
 
@@ -57,11 +59,11 @@ export default function GaugeChart({ curso, aluno }: Props) {
   }, [curso?.id, aluno?.id]); 
 
   if (loading) {
-    return <p className="text-sm">Carregando...</p>;
+    return <p className="text-sm">{t("loading")}</p>;
   }
 
   if (!finalGrade) {
-    return <p className="text-sm">Nota final não encontrada.</p>;
+    return <p className="text-sm">{t("empty")}</p>;
   }
 
   const gaugeValue = (finalGrade.grade / finalGrade.max) * 100;

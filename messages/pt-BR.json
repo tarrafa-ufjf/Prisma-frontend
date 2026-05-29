@@ -269,6 +269,10 @@
           "veryHigh": "Muito Alto",
           "undefined": "Nao definido"
         }
+      },
+      "finalGradeChart": {
+        "loading": "Carregando...",
+        "empty": "Nota final nao encontrada."
       }
     }
   },
