@@ -224,7 +224,14 @@
     "title": "Alunos",
     "searchPlaceholder": "Aluno",
     "noCourseSelected": "Nenhuma disciplina foi selecionada ainda.",
-    "fetchError": "Erro ao buscar dados dos alunos"
+    "fetchError": "Erro ao buscar dados dos alunos",
+    "details": {
+      "title": "Aluno",
+      "noStudentSelected": "Nenhum aluno foi selecionado ainda.",
+      "finalGrade": "Nota final",
+      "grades": "Notas",
+      "courseSubtitle": "da disciplina"
+    }
   },
   "Subjects": {
     "loadingData": "Carregando dados das disciplinas...",

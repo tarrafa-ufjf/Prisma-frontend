@@ -4,6 +4,7 @@ import Indicators from "./Indicator/Indicators";
 import GaugeChart from "./GaugeChart/GaugeChart";
 import AtividadesChart from "./AtividadesChart/AtividadesChart";
 import DadosPessoais from "./DadosPessoais/DadosPessoais";
+import { useTranslations } from "next-intl";
 
 type CursoType = {
   id: number;
@@ -23,6 +24,7 @@ interface AlunoProps {
 }
 
 export default function Aluno({ cursos, cursoSelecionado, alunos, alunoSelecionado }: AlunoProps) {
+  const t = useTranslations("Students.details");
   const curso = cursos.find(c => c.id === cursoSelecionado);
   const aluno = alunos.find(a => a.id === alunoSelecionado);
 
@@ -33,8 +35,8 @@ export default function Aluno({ cursos, cursoSelecionado, alunos, alunoSeleciona
           <div className="flex flex-col items-start">
             {!aluno || !curso ? (
               <div>
-                <h1 className="text-xl font-poppins font-semibold text-left">Aluno</h1>
-                <p className="text-left">Nenhum aluno foi selecionado ainda.</p>
+                <h1 className="text-xl font-poppins font-semibold text-left">{t("title")}</h1>
+                <p className="text-left">{t("noStudentSelected")}</p>
               </div>
             ) : (
               <div>
@@ -69,17 +71,17 @@ export default function Aluno({ cursos, cursoSelecionado, alunos, alunoSeleciona
             <div className="flex gap-4 mb-8 justify-between">
               <div className="Box4 flex-1 p-6">
                 <h1 className="text-xl font-poppins font-semibold text-left">
-                  Nota final
+                  {t("finalGrade")}
                 </h1>
-                <p className="text-[#9291A5] mb-6 pb-4 border-b border-gray-200">da disciplina</p>
+                <p className="text-[#9291A5] mb-6 pb-4 border-b border-gray-200">{t("courseSubtitle")}</p>
                 <div className="flex p-2 justify-center"><GaugeChart curso={curso} aluno={aluno}/></div>
               </div>
 
               <div className="Box4 flex-1 p-6">
                 <h1 className="text-xl font-poppins font-semibold text-left">
-                  Notas
+                  {t("grades")}
                 </h1>
-                <p className="text-[#9291A5] mb-4 pb-4 border-b border-gray-200">da disciplina</p>
+                <p className="text-[#9291A5] mb-4 pb-4 border-b border-gray-200">{t("courseSubtitle")}</p>
                 <div className="overflow-auto">
                   <AtividadesChart curso={curso} aluno={aluno}/>
                 </div>

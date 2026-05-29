@@ -224,7 +224,14 @@
     "title": "Students",
     "searchPlaceholder": "Student",
     "noCourseSelected": "No course has been selected yet.",
-    "fetchError": "Error loading student data"
+    "fetchError": "Error loading student data",
+    "details": {
+      "title": "Student",
+      "noStudentSelected": "No student has been selected yet.",
+      "finalGrade": "Final grade",
+      "grades": "Grades",
+      "courseSubtitle": "of the course"
+    }
   },
   "Subjects": {
     "loadingData": "Loading subject data...",
