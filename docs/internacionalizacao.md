@@ -18,13 +18,13 @@ Arquivos principais:
 
 Idiomas configurados inicialmente:
 
-- `pt-BR`: idioma padrao. (Mudar futuramente para ingles)
-- `en`: ingles.
+- `en`: idioma padrao.
+- `pt-BR`: portugues do Brasil.
 
 O projeto usa `localePrefix: "as-needed"`. Na pratica: 
 
-- Portugues usa URLs sem prefixo: `/login`, `/cursos`. (No final sera o contrario, ingles como default)
-- Ingles usa prefixo: `/en/login`, `/en/cursos`.
+- Ingles usa URLs sem prefixo: `/login`, `/cursos`.
+- Portugues usa prefixo: `/pt-BR/login`, `/pt-BR/cursos`.
 
 ## O que deve ser traduzido
 
@@ -350,4 +350,3 @@ return <p>{t("notFound", { courseId: id })}</p>;
 Isso permite que cada idioma controle a ordem da frase.
 
 Tambem evite duplicar a mesma traducao em varios namespaces. Se o texto for realmente compartilhado, coloque em `Common`, `Errors`, `Tables` ou outro namespace comum.
-
