@@ -28,10 +28,40 @@ interface IndicatorsProps {
   id_tutor: number
 }
 
+const getLevelTranslationKey = (value: string) => {
+  const normalized = value
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/\s+/g, "_");
+
+  switch (normalized) {
+    case "muito_baixo":
+      return "levels.veryLow";
+    case "baixo":
+      return "levels.low";
+    case "normal":
+      return "levels.normal";
+    case "medio":
+      return "levels.medium";
+    case "alto":
+      return "levels.high";
+    case "muito_alto":
+      return "levels.veryHigh";
+    default:
+      return null;
+  }
+};
+
 export default function Indicators({ id_course, id_tutor }: IndicatorsProps) {
   const t = useTranslations("Tutors.detail.indicators");
+  const tColumns = useTranslations("Columns");
   const [indicatorsData, setIndicatorsData] = useState<IndicatorsInfo | null>(null)
   const error = useError()
+  const translateLevel = (value: string) => {
+    const key = getLevelTranslationKey(value);
+    return key ? tColumns(key) : value;
+  };
 
   useEffect(() => {
     async function fetch() {
@@ -80,7 +110,7 @@ export default function Indicators({ id_course, id_tutor }: IndicatorsProps) {
               </div>
               <div className="ml-17 flex text-left">
                 <div className="flex flex-col leading-snug">
-                  <p className="text-xl font-bold text-gray-900">{indicatorsData.indicators.response_foruns}</p>
+                  <p className="text-xl font-bold text-gray-900">{translateLevel(indicatorsData.indicators.response_foruns)}</p>
                 </div>
               </div>
             </div>
@@ -105,7 +135,7 @@ export default function Indicators({ id_course, id_tutor }: IndicatorsProps) {
               </div>
               <div className="ml-17 flex text-left">
                 <div className="flex flex-col leading-snug">
-                  <p className="text-xl font-bold text-gray-900">{indicatorsData.indicators.access}</p>
+                  <p className="text-xl font-bold text-gray-900">{translateLevel(indicatorsData.indicators.access)}</p>
                 </div>
               </div>
             </div>
@@ -130,7 +160,7 @@ export default function Indicators({ id_course, id_tutor }: IndicatorsProps) {
               </div>
               <div className="ml-17 flex text-left">
                 <div className="flex flex-col leading-snug">
-                  <p className="text-2xl font-bold text-gray-900">{indicatorsData.indicators.feedback}</p>
+                  <p className="text-2xl font-bold text-gray-900">{translateLevel(indicatorsData.indicators.feedback)}</p>
                 </div>
               </div>
             </div>
