@@ -70,6 +70,15 @@
         "tutorMessages": "Mensagens de tutores",
         "totalMessages": "Mensagens totais"
       }
+    },
+    "rankings": {
+      "performance": {
+        "title": "Ranking",
+        "subtitle": "Tutores mais ativos",
+        "loading": "Carregando ranking",
+        "notEnoughTutors": "A turma nao possui tutores o suficiente para criar um ranking",
+        "fetchError": "Erro ao buscar ranking de desempenho"
+      }
     }
   },
   "Tables": {

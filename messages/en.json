@@ -70,6 +70,15 @@
         "tutorMessages": "Tutor messages",
         "totalMessages": "Total messages"
       }
+    },
+    "rankings": {
+      "performance": {
+        "title": "Ranking",
+        "subtitle": "Most active tutors",
+        "loading": "Loading ranking",
+        "notEnoughTutors": "The class does not have enough tutors to create a ranking",
+        "fetchError": "Error loading performance ranking"
+      }
     }
   },
   "Tables": {

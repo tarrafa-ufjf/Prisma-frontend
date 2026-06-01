@@ -5,6 +5,7 @@ import { useError } from "@/hooks/useError";
 import { api } from "@/utils/api";
 import { UserRoundSearch } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
 
 interface PerformanceRankingProps {
     id: number;
@@ -17,6 +18,7 @@ type TutorRankingContent = {
 }
 
 export default function PerformanceRanking({ id }: PerformanceRankingProps) {
+    const t = useTranslations("Tutors.rankings.performance");
     const [ranking, setRanking] = useState<TutorRankingContent[]>([]);
     const error = useError()
 
@@ -28,24 +30,24 @@ export default function PerformanceRanking({ id }: PerformanceRankingProps) {
                 const ranking_vector = response.data.data
                 setRanking(ranking_vector)
                 if (ranking_vector.length < 1)
-                    error.setError("A turma não possui alunos o suficiente para criar um ranking")
+                    error.setError(t("notEnoughTutors"))
             } catch (err) {
-                error.setError("Erro ao buscar ranking de desempenho")
+                error.setError(t("fetchError"))
                 console.error("Erro ao buscar ranking de desempenho: ", err)
             }
         }
         fetch()
-    }, [id, error.clear, error.setError]);
+    }, [id, error.clear, error.setError, t]);
 
     return (
         <BoxTemplate
-            title='Ranking'
-            sub_title="Tutores mais ativos"
+            title={t("title")}
+            sub_title={t("subtitle")}
         >
             {error.hasError ? (
                 error.renderError()
             ) : ranking.length <= 0 && (
-                <Loading>Carregando ranking</Loading>
+                <Loading>{t("loading")}</Loading>
             )}
             {ranking.map((item, index) => (
                 <RankingItem
