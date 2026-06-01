@@ -156,6 +156,36 @@
       "loading": "Loading ranking",
       "notEnoughTutors": "Not enough tutors to create a ranking",
       "fetchError": "Error loading performance ranking"
+    },
+    "overviewGeneralData": {
+      "title": "General Data",
+      "subtitle": "of Institution Tutors",
+      "totalTutorsLine1": "Total",
+      "totalTutorsLine2": "institution",
+      "totalTutorsLine3": "tutors",
+      "tutorsPerCourseLine1": "Average",
+      "tutorsPerCourseLine2": "tutors per",
+      "tutorsPerCourseLine3": "course",
+      "studentsPerTutorLine1": "Average",
+      "studentsPerTutorLine2": "students per",
+      "studentsPerTutorLine3": "tutor",
+      "loading": "Loading general data",
+      "fetchError": "Error loading general data"
+    },
+    "overviewIndicators": {
+      "title": "Pedagogical Indicators",
+      "subtitle": "calculated",
+      "seeMore": "See more",
+      "subjectsPrefix": "of courses",
+      "forumResponses": "with an excellent forum response index",
+      "courseAccess": "with a good platform access index",
+      "feedback": "with a good feedback index",
+      "noResponseInfo": "No processed message information",
+      "noAccessInfo": "No processed access information",
+      "noFeedbackInfo": "No processed feedback information",
+      "indicatorIconAlt": "Student-teacher icon",
+      "loading": "Fetching data",
+      "fetchError": "Error loading indicators"
     }
   },
   "Tables": {

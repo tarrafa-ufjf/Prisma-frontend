@@ -156,6 +156,36 @@
       "loading": "Carregando ranking",
       "notEnoughTutors": "Sem tutores o suficiente para criar um ranking",
       "fetchError": "Erro ao buscar ranking de desempenho"
+    },
+    "overviewGeneralData": {
+      "title": "Dados Gerais",
+      "subtitle": "dos Tutores da Instituicao",
+      "totalTutorsLine1": "Total de",
+      "totalTutorsLine2": "tutores da",
+      "totalTutorsLine3": "instituicao",
+      "tutorsPerCourseLine1": "Media de",
+      "tutorsPerCourseLine2": "tutores por",
+      "tutorsPerCourseLine3": "curso",
+      "studentsPerTutorLine1": "Media de",
+      "studentsPerTutorLine2": "alunos por",
+      "studentsPerTutorLine3": "tutor",
+      "loading": "Carregando dados gerais",
+      "fetchError": "Erro ao buscar dados gerais"
+    },
+    "overviewIndicators": {
+      "title": "Indicadores Pedagogicos",
+      "subtitle": "calculados",
+      "seeMore": "Ver mais",
+      "subjectsPrefix": "de disciplinas",
+      "forumResponses": "com otimo indice de respostas em foruns",
+      "courseAccess": "com bom indice de acesso a plataforma",
+      "feedback": "com bom indice de feedback",
+      "noResponseInfo": "Sem informacoes de mensagens processadas",
+      "noAccessInfo": "Sem informacoes de acesso processadas",
+      "noFeedbackInfo": "Sem informacoes de feedback processadas",
+      "indicatorIconAlt": "Icone aluno-professor",
+      "loading": "Buscando dados",
+      "fetchError": "Erro ao buscar indicadores"
     }
   },
   "Tables": {
