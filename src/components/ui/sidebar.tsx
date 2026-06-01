@@ -1,6 +1,7 @@
 'use client';
 
 import LogoutButton from '@/components/auth/LogoutButton';
+import LanguageSwitcher from '@/components/ui/language-switcher';
 import { Link, usePathname } from '@/i18n/navigation';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
@@ -77,7 +78,8 @@ export default function Sidebar() {
             </ul>
           </nav>
         </div>
-        <div className="flex justify-end p-2">
+        <div className="flex justify-between p-2">
+          <LanguageSwitcher />
           <LogoutButton />
         </div>
       </aside>

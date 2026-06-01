@@ -5,7 +5,8 @@
   },
   "Common": {
     "appName": "Prisma Project",
-    "logout": "Log out"
+    "logout": "Log out",
+    "changeLanguage": "Change language"
   },
   "Sidebar": {
     "menu": "MENU",

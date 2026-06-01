@@ -5,7 +5,8 @@
   },
   "Common": {
     "appName": "Projeto Prisma",
-    "logout": "Sair"
+    "logout": "Sair",
+    "changeLanguage": "Trocar idioma"
   },
   "Sidebar": {
     "menu": "MENU",
