@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from "react";
+import { useTranslations } from 'next-intl';
 
 import PageTemplate from "@/components/template/page-template";
 import Button from "@/components/ui/button";
@@ -13,6 +14,8 @@ import {
 import { api } from "@/utils/api";
 
 export default function GerenciarMoodlePage() {
+
+    const t = useTranslations('Admin.ManageMoodle');
 
     const [host, setHost] = useState('');
     const [port, setPort] = useState('');
@@ -101,7 +104,7 @@ export default function GerenciarMoodlePage() {
             setSuccessModal(true);
 
             setModalMessage(
-                `Conexão realizada com sucesso! Moodle versão ${response.data.version}`
+                t('testSuccess', { version: response.data.version })
             );
 
             setShowModal(true);
@@ -115,9 +118,7 @@ export default function GerenciarMoodlePage() {
 
             setSuccessModal(false);
 
-            setModalMessage(
-                "Falha ao conectar com o Moodle. Verifique as informações."
-            );
+            setModalMessage(t('testError'));
 
             setShowModal(true);
 
@@ -150,8 +151,8 @@ export default function GerenciarMoodlePage() {
 
             setModalMessage(
                 hasConfig
-                    ? "Configuração atualizada com sucesso!"
-                    : "Configuração salva com sucesso!"
+                    ? t('saveSuccessUpdate')
+                    : t('saveSuccessCreate')
             );
 
             setShowModal(true);
@@ -169,9 +170,7 @@ export default function GerenciarMoodlePage() {
 
             setSuccessModal(false);
 
-            setModalMessage(
-                "Erro ao salvar configuração."
-            );
+            setModalMessage(t('saveError'));
 
             setShowModal(true);
 
@@ -183,8 +182,8 @@ export default function GerenciarMoodlePage() {
 
     return (
         <PageTemplate
-            title="Gerenciar"
-            subTitle="Moodle"
+            title={t('templateTitle')}
+            subTitle={t('templateSubtitle')}
         >
             <div className="Box pb-10 mt-4">
 
@@ -193,11 +192,11 @@ export default function GerenciarMoodlePage() {
                     <div className="mt-10 ml-10 mb-5">
 
                         <h1 className="text-xl font-poppins font-semibold text-left">
-                            Integração Moodle
+                            {t('title')}
                         </h1>
 
                         <p style={{ color: "#9291A5" }}>
-                            gerenciamento de informações
+                            {t('subtitle')}
                         </p>
 
                     </div>
@@ -212,12 +211,12 @@ export default function GerenciarMoodlePage() {
                     <div className="flex flex-col gap-2">
 
                         <label className="text-sm text-gray-700">
-                            Host
+                            {t('host')}
                         </label>
 
                         <input
                             type="text"
-                            placeholder="Digite o host"
+                            placeholder={t('hostPlaceholder')}
                             value={host}
                             onChange={(e) => setHost(e.target.value)}
                             disabled={hasConfig && !isEditing}
@@ -230,12 +229,12 @@ export default function GerenciarMoodlePage() {
                     <div className="flex flex-col gap-2">
 
                         <label className="text-sm text-gray-700">
-                            Porta
+                            {t('port')}
                         </label>
 
                         <input
                             type="number"
-                            placeholder="Digite a porta"
+                            placeholder={t('portPlaceholder')}
                             value={port}
                             onChange={(e) => setPort(e.target.value)}
                             disabled={hasConfig && !isEditing}
@@ -248,12 +247,12 @@ export default function GerenciarMoodlePage() {
                     <div className="flex flex-col gap-2">
 
                         <label className="text-sm text-gray-700">
-                            Database
+                            {t('database')}
                         </label>
 
                         <input
                             type="text"
-                            placeholder="Digite database"
+                            placeholder={t('databasePlaceholder')}
                             value={database}
                             onChange={(e) => setDatabase(e.target.value)}
                             disabled={hasConfig && !isEditing}
@@ -266,12 +265,12 @@ export default function GerenciarMoodlePage() {
                     <div className="flex flex-col gap-2">
 
                         <label className="text-sm text-gray-700">
-                            Usuário
+                            {t('user')}
                         </label>
 
                         <input
                             type="text"
-                            placeholder="Digite o usuário"
+                            placeholder={t('userPlaceholder')}
                             value={user}
                             onChange={(e) => setUser(e.target.value)}
                             disabled={hasConfig && !isEditing}
@@ -284,15 +283,15 @@ export default function GerenciarMoodlePage() {
                     <div className="flex flex-col gap-2">
 
                         <label className="text-sm text-gray-700">
-                            Senha
+                            {t('password')}
                         </label>
 
                         <input
                             type="password"
                             placeholder={
                                 hasConfig && !isEditing
-                                    ? "Senha protegida"
-                                    : "Digite a senha"
+                                    ? t('passwordProtected')
+                                    : t('passwordPlaceholder')
                             }
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
@@ -309,16 +308,16 @@ export default function GerenciarMoodlePage() {
                             <>
                                 <Button onClick={handleTestConnection}>
                                     {loadingTest
-                                        ? "Testando..."
-                                        : "Testar conexão"}
+                                        ? t('testing')
+                                        : t('testConnection')}
                                 </Button>
 
                                 <Button onClick={handleSave}>
                                     {loadingSave
-                                        ? "Salvando..."
+                                        ? t('saving')
                                         : hasConfig
-                                            ? "Salvar alterações"
-                                            : "Cadastrar moodle"}
+                                            ? t('saveChanges')
+                                            : t('registerMoodle')}
                                 </Button>
                             </>
                         )}
@@ -329,7 +328,7 @@ export default function GerenciarMoodlePage() {
                                 className="text-[#374DAA] flex items-center gap-2"
                             >
                                 <Pencil size={18} />
-                                Editar
+                                {t('edit')}
                             </button>
                         )}
 
@@ -339,7 +338,7 @@ export default function GerenciarMoodlePage() {
                                 className="text-gray-500 flex items-center gap-2"
                             >
                                 <X size={18} />
-                                Cancelar
+                                {t('cancel')}
                             </button>
                         )}
 
@@ -357,8 +356,8 @@ export default function GerenciarMoodlePage() {
 
                         <h2 className="text-lg font-semibold mb-2">
                             {successModal
-                                ? "Sucesso"
-                                : "Erro"}
+                                ? t('success')
+                                : t('error')}
                         </h2>
 
                         <p className="text-sm text-gray-500 mb-6">
@@ -376,8 +375,8 @@ export default function GerenciarMoodlePage() {
                                 }`}
                             >
                                 {successModal
-                                    ? "OK"
-                                    : "Entendi"}
+                                    ? t('ok')
+                                    : t('understand')}
                             </button>
 
                         </div>

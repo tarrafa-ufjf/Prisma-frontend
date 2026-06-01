@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from "react";
+import { useTranslations } from 'next-intl';
 
 import PageTemplate from "@/components/template/page-template";
 import DataTable from "@/components/template/dataTable";
@@ -18,6 +19,8 @@ import {
 } from "lucide-react";
 
 export default function UsuariosPage() {
+
+    const t = useTranslations('Admin.ManageUsers');
 
     const [searchTerm] = useState("");
 
@@ -86,9 +89,7 @@ export default function UsuariosPage() {
 
             if (!emailValido(email)) {
 
-                setError(
-                    "E-mail inválido. Verifique o formato."
-                );
+                setError(t('emailInvalidError'));
 
                 setLoading(false);
 
@@ -114,9 +115,7 @@ export default function UsuariosPage() {
                 ]);
             }
 
-            setSuccess(
-                "Usuário cadastrado com sucesso!"
-            );
+            setSuccess(t('registerSuccess'));
 
             setEmail("");
             setSenha("");
@@ -130,7 +129,7 @@ export default function UsuariosPage() {
 
             setError(
                 error?.response?.data?.detail ||
-                "Erro ao cadastrar usuário."
+                t('registerError')
             );
 
         } finally {
@@ -165,9 +164,7 @@ export default function UsuariosPage() {
                 )
             );
 
-            setSuccess(
-                "Usuário deletado com sucesso!"
-            );
+            setSuccess(t('deleteSuccess'));
 
         } catch (error) {
 
@@ -176,9 +173,7 @@ export default function UsuariosPage() {
                 error
             );
 
-            setError(
-                "Erro ao deletar usuário."
-            );
+            setError(t('deleteError'));
 
         } finally {
 
@@ -206,9 +201,7 @@ export default function UsuariosPage() {
 
             if (!emailValido(user.email)) {
 
-                setError(
-                    "Digite um e-mail válido antes de salvar."
-                );
+                setError(t('emailInvalid'));
 
                 return;
             }
@@ -222,9 +215,7 @@ export default function UsuariosPage() {
                 }
             );
 
-            setSuccess(
-                "Usuário atualizado com sucesso!"
-            );
+            setSuccess(t('updateSuccess'));
 
             setEditingUserId(null);
 
@@ -237,7 +228,7 @@ export default function UsuariosPage() {
 
             setError(
                 error?.response?.data?.detail ||
-                "Erro ao atualizar usuário."
+                t('updateError')
             );
         }
     };
@@ -263,7 +254,7 @@ export default function UsuariosPage() {
     const columns = [
 
         {
-            label: "E-mail",
+            label: t('email'),
             name: "email",
 
             options: {
@@ -308,13 +299,13 @@ export default function UsuariosPage() {
                             emailValido(row.email) ? (
 
                                 <p className="text-xs text-green-600 ml-1">
-                                    ✔ E-mail válido
+                                    {t('emailValid')}
                                 </p>
 
                             ) : (
 
                                 <p className="text-xs text-red-500 ml-1">
-                                    Digite um e-mail válido
+                                    {t('emailInvalid')}
                                 </p>
 
                             )
@@ -368,7 +359,7 @@ export default function UsuariosPage() {
                                     "
                                 >
                                     <Save size={18} />
-                                    Salvar
+                                    {t('save')}
                                 </button>
 
                                 <button
@@ -384,7 +375,7 @@ export default function UsuariosPage() {
                                     "
                                 >
                                     <X size={18} />
-                                    Cancelar
+                                    {t('cancel')}
                                 </button>
                             </>
                         ) : (
@@ -404,7 +395,7 @@ export default function UsuariosPage() {
                                     "
                                 >
                                     <Pencil size={18} />
-                                    Editar
+                                    {t('edit')}
                                 </button>
 
                                 <button
@@ -422,7 +413,7 @@ export default function UsuariosPage() {
                                     "
                                 >
                                     <Trash2 size={18} />
-                                    Deletar
+                                    {t('delete')}
                                 </button>
                             </>
                         )}
@@ -435,8 +426,8 @@ export default function UsuariosPage() {
 
     return (
         <PageTemplate
-            title="Gerenciamento"
-            subTitle="de usuários"
+            title={t('templateTitle')}
+            subTitle={t('templateSubtitle')}
         >
 
             <div className="Box pb-10 mt-4">
@@ -446,11 +437,11 @@ export default function UsuariosPage() {
                     <div className="mt-10 ml-10 mb-5">
 
                         <h1 className="text-xl font-poppins font-semibold text-left">
-                            Gerenciamento de Usuários
+                            {t('title')}
                         </h1>
 
                         <p style={{ color: "#9291A5" }}>
-                            cadastro e gerenciamento de acessos
+                            {t('subtitle')}
                         </p>
 
                     </div>
@@ -466,12 +457,12 @@ export default function UsuariosPage() {
                     <div className="flex flex-col gap-2">
 
                         <label className="text-sm text-gray-700">
-                            E-mail
+                            {t('email')}
                         </label>
 
                         <input
                             type="email"
-                            placeholder="Digite o e-mail"
+                            placeholder={t('emailPlaceholder')}
                             value={email}
                             onChange={(e) =>
                                 setEmail(e.target.value)
@@ -489,14 +480,13 @@ export default function UsuariosPage() {
                             emailEhValido ? (
 
                                 <p className="text-xs text-green-600 ml-1">
-                                    ✔ E-mail válido
+                                    {t('emailValid')}
                                 </p>
 
                             ) : (
 
                                 <p className="text-xs text-red-500 ml-1">
-                                    Digite um e-mail válido
-                                    (ex: nome@dominio.com)
+                                    {t('emailInvalidFormat')}
                                 </p>
 
                             )
@@ -508,12 +498,12 @@ export default function UsuariosPage() {
                     <div className="flex flex-col gap-2">
 
                         <label className="text-sm text-gray-700">
-                            Senha
+                            {t('password')}
                         </label>
 
                         <input
                             type="password"
-                            placeholder="Digite a senha"
+                            placeholder={t('passwordPlaceholder')}
                             value={senha}
                             onChange={(e) =>
                                 setSenha(e.target.value)
@@ -535,7 +525,7 @@ export default function UsuariosPage() {
                             onClick={cadastrarUsuario}
                             disabled={!emailEhValido}
                         >
-                            Cadastrar usuário
+                            {t('registerButton')}
                         </Button>
 
                     </div>
@@ -544,7 +534,7 @@ export default function UsuariosPage() {
                     {loading && (
                         <div className="mt-2">
                             <Loading>
-                                Cadastrando usuário...
+                                {t('loadingRegister')}
                             </Loading>
                         </div>
                     )}
@@ -629,7 +619,7 @@ export default function UsuariosPage() {
                             font-semibold
                             mb-2
                         ">
-                            Confirmar exclusão
+                            {t('confirmDeleteTitle')}
                         </h2>
 
                         <p className="
@@ -637,7 +627,7 @@ export default function UsuariosPage() {
                             text-gray-500
                             mb-6
                         ">
-                            Tem certeza que deseja deletar este usuário?
+                            {t('confirmDeleteText')}
                         </p>
 
                         <div className="
@@ -656,7 +646,7 @@ export default function UsuariosPage() {
                                     text-gray-600
                                 "
                             >
-                                Cancelar
+                                {t('cancel')}
                             </button>
 
                             <button
@@ -669,7 +659,7 @@ export default function UsuariosPage() {
                                     rounded-lg
                                 "
                             >
-                                Confirmar
+                                {t('confirm')}
                             </button>
 
                         </div>
