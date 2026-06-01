@@ -29,6 +29,36 @@
       "searchPlaceholder": "Tutor",
       "noCourseSelected": "Nenhuma disciplina foi selecionada ainda.",
       "fetchError": "Erro ao buscar dados dos tutores"
+    },
+    "generalData": {
+      "title": "Dados Gerais",
+      "subtitle": "da Disciplina",
+      "averageLogsLine1": "Total de logs",
+      "averageLogsLine2": "medios por",
+      "averageLogsLine3": "dia por tutor",
+      "studentsPerTutorLine1": "Quantidade",
+      "studentsPerTutorLine2": "de alunos",
+      "studentsPerTutorLine3": "por tutor",
+      "totalTutorsLine1": "Quantidade",
+      "totalTutorsLine2": "total de",
+      "totalTutorsLine3": "acessos de tutores",
+      "loading": "Buscando dados",
+      "fetchError": "Erro ao buscar dados gerais"
+    },
+    "indicators": {
+      "title": "Indicadores",
+      "subtitle": "calculados",
+      "seeMore": "Ver mais",
+      "tutorsPrefix": "de tutores",
+      "forumResponses": "com bom indice de respostas em foruns",
+      "courseAccess": "com bom indice de acesso a pagina da disciplina",
+      "feedback": "com bom indice de feedback",
+      "noResponseInfo": "Sem informacoes de mensagens processadas",
+      "noAccessInfo": "Sem informacoes de acesso processadas",
+      "noFeedbackInfo": "Sem informacoes de feedback processadas",
+      "indicatorIconAlt": "Icone aluno-professor",
+      "loading": "Buscando dados",
+      "fetchError": "Erro ao buscar indicadores"
     }
   },
   "Tables": {

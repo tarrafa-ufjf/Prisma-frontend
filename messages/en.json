@@ -29,6 +29,36 @@
       "searchPlaceholder": "Tutor",
       "noCourseSelected": "No course has been selected yet.",
       "fetchError": "Error loading tutor data"
+    },
+    "generalData": {
+      "title": "General Data",
+      "subtitle": "of the Course",
+      "averageLogsLine1": "Total average",
+      "averageLogsLine2": "logs per day",
+      "averageLogsLine3": "per tutor",
+      "studentsPerTutorLine1": "Number",
+      "studentsPerTutorLine2": "of students",
+      "studentsPerTutorLine3": "per tutor",
+      "totalTutorsLine1": "Total",
+      "totalTutorsLine2": "accesses",
+      "totalTutorsLine3": "by tutors",
+      "loading": "Fetching data",
+      "fetchError": "Error loading general data"
+    },
+    "indicators": {
+      "title": "Indicators",
+      "subtitle": "calculated",
+      "seeMore": "See more",
+      "tutorsPrefix": "of tutors",
+      "forumResponses": "with a good forum response index",
+      "courseAccess": "with a good course page access index",
+      "feedback": "with a good feedback index",
+      "noResponseInfo": "No processed message information",
+      "noAccessInfo": "No processed access information",
+      "noFeedbackInfo": "No processed feedback information",
+      "indicatorIconAlt": "Student-teacher icon",
+      "loading": "Fetching data",
+      "fetchError": "Error loading indicators"
     }
   },
   "Tables": {
