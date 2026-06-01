@@ -22,7 +22,34 @@
       "linkLabel": "clicando aqui",
       "notFoundEnd": ", ou tente novamente mais tarde!",
       "courseNotFoundStart": "Curso {courseId} nao encontrado! Por favor, selecione um curso",
-      "tutorNotFoundStart": "Tutor {tutorId} nao encontrado ou nao pertence ao curso desejado! Por favor, volte para a pagina de tutores do curso"
+      "tutorNotFoundStart": "Tutor {tutorId} nao encontrado ou nao pertence ao curso desejado! Por favor, volte para a pagina de tutores do curso",
+      "statsBar": {
+        "loading": "Carregando Indicadores...",
+        "fetchError": "Erro ao buscar indicadores",
+        "metrics": {
+          "fastForumResponses": "No. Total de Respostas Rapidas em Foruns",
+          "normalForumResponses": "No. Total de Respostas Normais em Foruns",
+          "lateForumResponses": "No. Total de Respostas Lentas em Foruns",
+          "meanForumResponseHours": "Media de Horas para Responder Mensagens em Foruns",
+          "medianForumResponseHours": "Mediana de Horas para Responder Mensagens em Foruns",
+          "totalLogins": "No. Total de Logins",
+          "weeklyCourseViews": "Media de Visualizacoes ao Curso por Semana",
+          "totalCorrections": "No. Total de Correcoes",
+          "correctionsWithFeedback": "No. Total de Correcoes com Feedback",
+          "feedbackPercentage": "Porcentagem de Correcoes com Feedbacks"
+        },
+        "unavailable": {
+          "fastForumResponses": "No. Total de Respostas Rapidas em Foruns nao disponivel",
+          "normalForumResponses": "No. Total de Respostas Normais em Foruns nao disponivel",
+          "lateForumResponses": "No. Total de Respostas Lentas em Foruns nao disponivel",
+          "mean": "Media nao disponivel",
+          "median": "Mediana nao disponivel",
+          "totalLogins": "No. Total de Logins nao disponivel",
+          "totalCorrections": "No. Total de Correcoes nao disponivel",
+          "correctionsWithFeedback": "No. Total de Correcoes com Feedback nao disponivel",
+          "feedbackPercentage": "Porcentagem de Correcoes com Feedbacks nao disponivel"
+        }
+      }
     },
     "list": {
       "title": "Tutores",
@@ -75,6 +102,13 @@
       "performance": {
         "title": "Ranking",
         "subtitle": "Tutores mais ativos",
+        "loading": "Carregando ranking",
+        "notEnoughTutors": "A turma nao possui tutores o suficiente para criar um ranking",
+        "fetchError": "Erro ao buscar ranking de desempenho"
+      },
+      "badPerformance": {
+        "title": "Ranking",
+        "subtitle": "Tutores menos ativos",
         "loading": "Carregando ranking",
         "notEnoughTutors": "A turma nao possui tutores o suficiente para criar um ranking",
         "fetchError": "Erro ao buscar ranking de desempenho"

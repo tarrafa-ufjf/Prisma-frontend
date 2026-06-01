@@ -5,6 +5,7 @@ import { useError } from "@/hooks/useError";
 import { api } from "@/utils/api";
 import ScrollableTabs from "@/components/template/indicadoresTabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/tabela';
+import { useTranslations } from "next-intl";
 
 interface StatsBarProps {
     id_course: number;
@@ -16,14 +17,15 @@ type Metric = {
     value: number | string;
 };
 
-type TutorTab = 'Respostas em Fóruns' | 'Acessos ao Moodle' | 'Feedbacks';
+type TutorTab = 'Respostas em Fóruns' | 'Acesso à Disciplina' | 'Feedback';
 
 export default function StatsBar({ id_course, id_tutor }: StatsBarProps) {
+    const t = useTranslations("Tutors.detail.statsBar");
     const [accessStats, setAccessStats] = useState<any>(null);
     const [forumStats, setForumStats] = useState<any>(null);
     const [feedbackStats, setFeedbackStats] = useState<any>(null);
     const [activeTab, setActiveTab] = useState<TutorTab>("Respostas em Fóruns");
-    const tabs: TutorTab[] = ["Respostas em Fóruns", "Acessos ao Moodle", "Feedbacks"];
+    const tabs: TutorTab[] = ["Respostas em Fóruns", "Acesso à Disciplina", "Feedback"];
     const error = useError();
 
     useEffect(() => {
@@ -52,47 +54,51 @@ export default function StatsBar({ id_course, id_tutor }: StatsBarProps) {
                 console.log("Feedbacks: ", feedbackResponse.data.data);
 
             } catch (err) {
-                error.setError("Erro ao buscar indicadores");
+                error.setError(t("fetchError"));
                 console.error(err);
             }
         }
 
         fetch();
-    }, [id_course, id_tutor]);
+    }, [id_course, id_tutor, error.clear, error.setError, t]);
 
     if (!accessStats || !forumStats || !feedbackStats) {
-        return <div className="text-gray-500">Carregando Indicadores...</div>;
+        return <div className="text-gray-500">{t("loading")}</div>;
     }
+
+    const formatFixed = (value: number | undefined, digits: number, fallback: string) => (
+        typeof value === "number" ? value.toFixed(digits) : fallback
+    );
     
     // FORUM 
     const forumMetrics: Metric[] = forumStats
         ? [
-            { label: "N° Total de Respostas Rápidas em Fóruns", value: forumStats.num_response_fast_forum ?? "N° Total de Respostas Rápidas em Fóruns não disponível"},
-            { label: "N° Total de Respostas Normais em Fóruns", value: forumStats.num_response_normal_forum ?? "N° Total de Respostas Normais em Fóruns não disponível" },
-            { label: "N° Total de Respostas Lentas em Fóruns", value: forumStats.num_response_late_forum ?? "N° Total de Respostas Lentas em Fóruns não disponível" },
-            { label: "Média de Horas para Responder Mensagens em Fóruns", value: forumStats.mean_forums_response_hours.toFixed(2) ?? "Média não disponível" },
-            { label: "Mediana de Horas para Responder Mensagens em Fóruns", value: forumStats.median_forums_response_hours.toFixed(2) ?? "Mediana não disponível" },
+            { label: t("metrics.fastForumResponses"), value: forumStats.num_response_fast_forum ?? t("unavailable.fastForumResponses")},
+            { label: t("metrics.normalForumResponses"), value: forumStats.num_response_normal_forum ?? t("unavailable.normalForumResponses") },
+            { label: t("metrics.lateForumResponses"), value: forumStats.num_response_late_forum ?? t("unavailable.lateForumResponses") },
+            { label: t("metrics.meanForumResponseHours"), value: formatFixed(forumStats.mean_forums_response_hours, 2, t("unavailable.mean")) },
+            { label: t("metrics.medianForumResponseHours"), value: formatFixed(forumStats.median_forums_response_hours, 2, t("unavailable.median")) },
         ]
         : [];
 
     // ACESSOS AO MOODLE
     const accessMetrics: Metric[] = [
-        { label: "N° Total de Logins", value: accessStats?.n_login_subject ?? "N° Total de Logins não disponível" },
-        { label: "Média de Visualizações ao Curso por Semana", value: accessStats?.n_login_weekly.toFixed(1) ?? "Média não disponível" },
+        { label: t("metrics.totalLogins"), value: accessStats?.n_login_subject ?? t("unavailable.totalLogins") },
+        { label: t("metrics.weeklyCourseViews"), value: formatFixed(accessStats?.n_login_weekly, 1, t("unavailable.mean")) },
     ];
 
     // FEEDBACK
     const feedbackMetrics: Metric[] = [
-        { label: "N° Total de Correções", value: feedbackStats?.n_corrections ?? "N° Total de Correções não disponível" },
-        { label: "N° Total de Correções com Feedback", value: feedbackStats?.n_corrections_with_feedback ?? "N° Total de Correções com Feedback não disponível" },
-        { label: "Porcentagem de Correções com Feedbacks", value: feedbackStats?.percentage_feedback ?? "Porcentagem de Correções com Feedbacks não disponível" },
+        { label: t("metrics.totalCorrections"), value: feedbackStats?.n_corrections ?? t("unavailable.totalCorrections") },
+        { label: t("metrics.correctionsWithFeedback"), value: feedbackStats?.n_corrections_with_feedback ?? t("unavailable.correctionsWithFeedback") },
+        { label: t("metrics.feedbackPercentage"), value: feedbackStats?.percentage_feedback ?? t("unavailable.feedbackPercentage") },
     ];
 
     // Determina quais métricas mostrar com base na aba ativa (fórum, acessos ou feedback)
     const metricsToShow =
         activeTab === "Respostas em Fóruns"
             ? forumMetrics
-            : activeTab === "Feedbacks"
+            : activeTab === "Feedback"
                 ? feedbackMetrics
                 : accessMetrics;              
         

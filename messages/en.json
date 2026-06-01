@@ -22,7 +22,34 @@
       "linkLabel": "by clicking here",
       "notFoundEnd": ", or try again later!",
       "courseNotFoundStart": "Course {courseId} not found! Please select a course",
-      "tutorNotFoundStart": "Tutor {tutorId} was not found or does not belong to the selected course! Please return to the course tutors page"
+      "tutorNotFoundStart": "Tutor {tutorId} was not found or does not belong to the selected course! Please return to the course tutors page",
+      "statsBar": {
+        "loading": "Loading indicators...",
+        "fetchError": "Error loading indicators",
+        "metrics": {
+          "fastForumResponses": "Total fast forum responses",
+          "normalForumResponses": "Total normal forum responses",
+          "lateForumResponses": "Total late forum responses",
+          "meanForumResponseHours": "Average hours to answer forum messages",
+          "medianForumResponseHours": "Median hours to answer forum messages",
+          "totalLogins": "Total logins",
+          "weeklyCourseViews": "Average course views per week",
+          "totalCorrections": "Total corrections",
+          "correctionsWithFeedback": "Total corrections with feedback",
+          "feedbackPercentage": "Percentage of corrections with feedback"
+        },
+        "unavailable": {
+          "fastForumResponses": "Total fast forum responses unavailable",
+          "normalForumResponses": "Total normal forum responses unavailable",
+          "lateForumResponses": "Total late forum responses unavailable",
+          "mean": "Average unavailable",
+          "median": "Median unavailable",
+          "totalLogins": "Total logins unavailable",
+          "totalCorrections": "Total corrections unavailable",
+          "correctionsWithFeedback": "Total corrections with feedback unavailable",
+          "feedbackPercentage": "Percentage of corrections with feedback unavailable"
+        }
+      }
     },
     "list": {
       "title": "Tutors",
@@ -75,6 +102,13 @@
       "performance": {
         "title": "Ranking",
         "subtitle": "Most active tutors",
+        "loading": "Loading ranking",
+        "notEnoughTutors": "The class does not have enough tutors to create a ranking",
+        "fetchError": "Error loading performance ranking"
+      },
+      "badPerformance": {
+        "title": "Ranking",
+        "subtitle": "Least active tutors",
         "loading": "Loading ranking",
         "notEnoughTutors": "The class does not have enough tutors to create a ranking",
         "fetchError": "Error loading performance ranking"
