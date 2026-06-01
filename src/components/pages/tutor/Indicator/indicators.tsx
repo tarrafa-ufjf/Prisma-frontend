@@ -160,7 +160,7 @@ export default function Indicators({ id_course, id_tutor }: IndicatorsProps) {
               </div>
               <div className="ml-17 flex text-left">
                 <div className="flex flex-col leading-snug">
-                  <p className="text-2xl font-bold text-gray-900">{translateLevel(indicatorsData.indicators.feedback)}</p>
+                  <p className="text-xl font-bold text-gray-900">{translateLevel(indicatorsData.indicators.feedback)}</p>
                 </div>
               </div>
             </div>
