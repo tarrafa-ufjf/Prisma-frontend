@@ -6,7 +6,8 @@ import PageTemplate from "@/components/template/page-template"
 import ErrorMessage from "@/components/ui/error-message"
 import NotFound from "@/components/ui/not-found"
 import { api, getCourses } from "@/utils/api-server"
-import Link from "next/link"
+import { Link } from "@/i18n/navigation"
+import { getTranslations } from "next-intl/server"
 
 interface PageProps {
     params: Promise<{
@@ -18,6 +19,7 @@ interface PageProps {
 
 export default async function Page({ params }: PageProps) {
     const page_params = await params
+    const t = await getTranslations("Tutors.detail")
     const cursos = await getCourses()
     const curso = cursos.filter(curso => curso.id == Number(page_params.id_course))[0]
 
@@ -44,7 +46,11 @@ export default async function Page({ params }: PageProps) {
         return (
             <NotFound>
                 <div className="flex-1 flex justify-center items-center pt-4 pl-[240px]">
-                    <p>Curso {page_params.id_course} não encontrado! Por favor, selecione um <Link href='/tutores/curso' className="underline" >Clicando aqui!</Link>, ou tente novamente mais tarde!</p>
+                    <p>
+                        {t("courseNotFoundStart", { courseId: page_params.id_course })}{" "}
+                        <Link href='/tutores/curso' className="underline" >{t("linkLabel")}</Link>
+                        {t("notFoundEnd")}
+                    </p>
                 </div>
             </NotFound>
         )
@@ -54,7 +60,7 @@ export default async function Page({ params }: PageProps) {
         return (
             <NotFound>
                 <ErrorMessage>
-                    Erro ao buscar dados
+                    {t("fetchError")}
                 </ErrorMessage>
             </NotFound>
         )
@@ -64,14 +70,18 @@ export default async function Page({ params }: PageProps) {
         return (
             <NotFound>
                 <div className="flex-1 flex justify-center items-center pt-4 pl-[240px]">
-                    <p>Tutor {page_params.id_tutor} não encontrado ou não pertence ao curso desejado! Por favor, volte para a página de tutores do curso <Link href={`/tutores/curso/${page_params.id_course}/global`} className="underline" >Clicando aqui!</Link>, ou tente novamente mais tarde!</p>
+                    <p>
+                        {t("tutorNotFoundStart", { tutorId: page_params.id_tutor })}{" "}
+                        <Link href={`/tutores/curso/${page_params.id_course}/details`} className="underline" >{t("linkLabel")}</Link>
+                        {t("notFoundEnd")}
+                    </p>
                 </div>
             </NotFound>
         )
     }
     return (
         <PageTemplate
-            title="Tutor(a)"
+            title={t("title")}
             subTitle={data.name}
             courseInfo={{
                 period: curso.period,
