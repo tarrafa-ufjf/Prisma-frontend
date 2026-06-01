@@ -59,6 +59,17 @@
       "indicatorIconAlt": "Student-teacher icon",
       "loading": "Fetching data",
       "fetchError": "Error loading indicators"
+    },
+    "interactionChannels": {
+      "title": "Interaction Channels",
+      "subtitle": "of the course",
+      "fetchError": "Error loading indicators",
+      "headers": {
+        "channel": "Interaction Channel",
+        "studentMessages": "Student messages",
+        "tutorMessages": "Tutor messages",
+        "totalMessages": "Total messages"
+      }
     }
   },
   "Tables": {

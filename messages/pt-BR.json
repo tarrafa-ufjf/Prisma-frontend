@@ -59,6 +59,17 @@
       "indicatorIconAlt": "Icone aluno-professor",
       "loading": "Buscando dados",
       "fetchError": "Erro ao buscar indicadores"
+    },
+    "interactionChannels": {
+      "title": "Canais de Interacao",
+      "subtitle": "da disciplina",
+      "fetchError": "Erro ao buscar indicadores",
+      "headers": {
+        "channel": "Canal de Interacao",
+        "studentMessages": "Mensagens de alunos",
+        "tutorMessages": "Mensagens de tutores",
+        "totalMessages": "Mensagens totais"
+      }
     }
   },
   "Tables": {

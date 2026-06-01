@@ -1,11 +1,11 @@
 "use client";
 
 import { api } from "@/utils/api";
-import { error } from "console";
 import { useEffect, useState } from "react";
 import Table from "./table";
 import { useError } from "@/hooks/useError";
 import type { BaseEntity } from "@/components/template/table-types";
+import { useTranslations } from "next-intl";
 
 interface Props {
   id: number;
@@ -18,6 +18,7 @@ interface DataTable {
 }
 
 export default function TableComponent({ id }: Props) {
+  const t = useTranslations("Tutors.interactionChannels");
   const [data, setData] = useState<DataTable | null>(null);
   const error = useError();
 
@@ -30,12 +31,12 @@ export default function TableComponent({ id }: Props) {
         );
         setData(response.data.data.subject);
       } catch (err) {
-        error.setError("Erro ao buscar indicadores");
+        error.setError(t("fetchError"));
         console.error("Erro ao buscar indicadores: ", err);
       }
     }
     fetch();
-  }, [id, error.clear, error.setError]);
+  }, [id, error.clear, error.setError, t]);
 
   const filter_forum_name = (texto: string): string => {
     const regex = new RegExp(`[${"-"}]`, "g");
@@ -65,9 +66,9 @@ export default function TableComponent({ id }: Props) {
         <div className="maincurso">
           <div className="mt-10 ml-10 mb-5">
             <h1 className="text-xl font-poppins font-semibold text-left">
-              Canais de Interação
+              {t("title")}
             </h1>
-            <p style={{ color: "#9291A5" }}>da disciplina</p>
+            <p style={{ color: "#9291A5" }}>{t("subtitle")}</p>
           </div>
         </div>
       </div>
@@ -83,10 +84,10 @@ export default function TableComponent({ id }: Props) {
               "mensagens_total",
             ],
             headers: [
-              "Canal de Interação",
-              "Mensagens de alunos",
-              "Mensagens de tutores",
-              "Mensagens totais",
+              t("headers.channel"),
+              t("headers.studentMessages"),
+              t("headers.tutorMessages"),
+              t("headers.totalMessages"),
             ],
           }}
           actions={[]}
