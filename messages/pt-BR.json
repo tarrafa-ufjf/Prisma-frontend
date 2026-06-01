@@ -136,6 +136,14 @@
         "notEnoughTutors": "A turma nao possui tutores o suficiente para criar um ranking",
         "fetchError": "Erro ao buscar ranking de desempenho"
       }
+    },
+    "ranking": {
+      "title": "Ranking",
+      "bestPerformanceSubtitle": "Tutores com melhor desempenho",
+      "atRiskSubtitle": "Tutores com pior desempenho",
+      "loading": "Carregando ranking",
+      "notEnoughTutors": "Sem tutores o suficiente para criar um ranking",
+      "fetchError": "Erro ao buscar ranking de desempenho"
     }
   },
   "Tables": {

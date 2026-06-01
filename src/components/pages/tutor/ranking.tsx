@@ -5,12 +5,14 @@ import BoxTemplate from '@/components/ui/box-template';
 import Loading from '@/components/ui/loading';
 import RankingItem from '@/components/ui/rank-item';
 import { Search } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 interface HomeRankingProps {
     type: 'at-risk' | 'best-performance'
 }
 
 export default function HomeRanking({ type }: HomeRankingProps) {
+    const t = useTranslations("Tutors.ranking");
     const [ranking, setRanking] = useState<any[]>([])
     const error = useError()
 
@@ -22,24 +24,24 @@ export default function HomeRanking({ type }: HomeRankingProps) {
                 const ranking_vector = response.data.data.ranking
                 setRanking(ranking_vector)
                 if (ranking_vector.length < 1)
-                    error.setError("Sem tutores o suficiente para criar um ranking")
+                    error.setError(t("notEnoughTutors"))
             } catch (err) {
-                error.setError("Erro ao buscar ranking desempenho")
+                error.setError(t("fetchError"))
                 console.error("Erro ao buscar ranking desempenho: ", err)
             }
         }
         fetch()
-    }, [error.clear, error.setError])
+    }, [type, error.clear, error.setError, t])
 
     return (
         <BoxTemplate
-            title='Ranking'
-            sub_title={type == 'best-performance' ? "Tutores com Melhores Desempenho" : "Tutores com Piores Desempenho"}
+            title={t("title")}
+            sub_title={type == 'best-performance' ? t("bestPerformanceSubtitle") : t("atRiskSubtitle")}
         >
             {error.hasError ? (
                 error.renderError()
             ) : ranking.length <= 0 && (
-                <Loading>Carregando ranking</Loading>
+                <Loading>{t("loading")}</Loading>
             )}
             {ranking.map((item, index) => (
                 <RankingItem

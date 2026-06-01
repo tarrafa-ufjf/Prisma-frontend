@@ -136,6 +136,14 @@
         "notEnoughTutors": "The class does not have enough tutors to create a ranking",
         "fetchError": "Error loading performance ranking"
       }
+    },
+    "ranking": {
+      "title": "Ranking",
+      "bestPerformanceSubtitle": "Tutors with best performance",
+      "atRiskSubtitle": "Tutors with worst performance",
+      "loading": "Loading ranking",
+      "notEnoughTutors": "Not enough tutors to create a ranking",
+      "fetchError": "Error loading performance ranking"
     }
   },
   "Tables": {
