@@ -13,6 +13,10 @@
     "courses": "Courses Dashboard",
     "tutors": "Tutors Dashboard"
   },
+  "Tutors": {
+    "overview": "Overview",
+    "institution": "of the Institution"
+  },
   "Tables": {
     "loadingData": "Loading data...",
     "showingEntries": "Showing {range} of {total} entries"

@@ -4,12 +4,15 @@ import GeneralData from "@/components/pages/tutores/general-data";
 import Indicators from "@/components/pages/tutores/Indicator/indicators";
 import HomeRanking from "@/components/pages/tutores/ranking";
 import PageTemplate from "@/components/template/page-template";
+import { useTranslations } from "next-intl";
 
 export default function Page() {
+    const t = useTranslations("Tutors");
+
     return (
         <PageTemplate
-            title="Visão Geral"
-            subTitle="da Instituição"
+            title={t("overview")}
+            subTitle={t("institution")}
         >
             <GeneralData />
             <Indicators />

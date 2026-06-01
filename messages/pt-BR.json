@@ -13,6 +13,10 @@
     "courses": "Painel das Disciplinas",
     "tutors": "Painel dos Tutores"
   },
+  "Tutors": {
+    "overview": "Visao Geral",
+    "institution": "da Instituicao"
+  },
   "Tables": {
     "loadingData": "Carregando dados...",
     "showingEntries": "Mostrando {range} de {total} entradas"
