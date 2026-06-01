@@ -11,6 +11,7 @@ import { useError } from "@/hooks/useError";
 import { api } from "@/utils/api";
 import Loading from "@/components/ui/loading";
 import Button from "@/components/ui/button";
+import { useTranslations } from "next-intl";
 
 type IndicatorsInfo = {
   indicators: {
@@ -28,6 +29,7 @@ interface IndicatorsProps {
 }
 
 export default function Indicators({ id_course, id_tutor }: IndicatorsProps) {
+  const t = useTranslations("Tutors.detail.indicators");
   const [indicatorsData, setIndicatorsData] = useState<IndicatorsInfo | null>(null)
   const error = useError()
 
@@ -38,23 +40,23 @@ export default function Indicators({ id_course, id_tutor }: IndicatorsProps) {
         const response = await api.get(`analysis/tutors/subject/${id_course}/tutor/${id_tutor}/indicators`)
         setIndicatorsData(response.data.data)
       } catch (err) {
-        error.setError("Erro ao buscar indicadores")
+        error.setError(t("fetchError"))
         console.error("Erro ao buscar indicadores: ", err)
       }
     };
     fetch();
-  }, [error.clear, error.setError]);
+  }, [id_course, id_tutor, error.clear, error.setError, t]);
 
   return (
     <div className="Box pb-5">
       <div className="maincurso">
         <div className="mt-10 ml-10 mb-5">
-          <h1 className="text-xl font-poppins font-semibold text-left">Indicadores Pedagógicos</h1>
-          <p style={{ color: "#9291A5" }}>calculados</p>
+          <h1 className="text-xl font-poppins font-semibold text-left">{t("title")}</h1>
+          <p style={{ color: "#9291A5" }}>{t("subtitle")}</p>
         </div>
         <div className="m-10 flex gap-2">
-          <Button href='/#'>Detalhes</Button>
-          <Button href='/tutores/curso'>Ver mais</Button>
+          <Button href='/#'>{t("details")}</Button>
+          <Button href='/tutores/curso'>{t("seeMore")}</Button>
         </div>
       </div>
 
@@ -68,13 +70,13 @@ export default function Indicators({ id_course, id_tutor }: IndicatorsProps) {
                 <div className="bg-[#3CD856] rounded-full flex items-center justify-center w-8 h-8 min-w-8">
                   <Image
                     src={responseIcon}
-                    alt="Ícone aluno-professor"
+                    alt={t("indicatorIconAlt")}
                     width={15}
                     height={20}
                     className="object-cover"
                   />
                 </div>
-                <p className="text-xl font-bold text-[#3CD856]">Respostas em Fóruns</p>
+                <p className="text-xl font-bold text-[#3CD856]">{t("forumResponses")}</p>
               </div>
               <div className="ml-17 flex text-left">
                 <div className="flex flex-col leading-snug">
@@ -93,13 +95,13 @@ export default function Indicators({ id_course, id_tutor }: IndicatorsProps) {
                 <div className="bg-[#5C3CD8] rounded-full flex items-center justify-center w-8 h-8">
                   <Image
                     src={clickIcon}
-                    alt="Ícone aluno-professor"
+                    alt={t("indicatorIconAlt")}
                     width={21}
                     height={28}
                     className="mr-0.5 object-cover"
                   />
                 </div>
-                <p className="text-xl font-bold text-[#5C3CD8]">Acessos à disciplina</p>
+                <p className="text-xl font-bold text-[#5C3CD8]">{t("courseAccess")}</p>
               </div>
               <div className="ml-17 flex text-left">
                 <div className="flex flex-col leading-snug">
@@ -118,13 +120,13 @@ export default function Indicators({ id_course, id_tutor }: IndicatorsProps) {
                 <div className="bg-[#D83C8C] rounded-full flex items-center justify-center w-8 h-8">
                   <Image
                     src={chatIcon}
-                    alt="Ícone aluno-professor"
+                    alt={t("indicatorIconAlt")}
                     width={21}
                     height={28}
                     className="object-cover"
                   />
                 </div>
-                <p className="text-xl font-bold text-[#D83C8C]">Feedback</p>
+                <p className="text-xl font-bold text-[#D83C8C]">{t("feedback")}</p>
               </div>
               <div className="ml-17 flex text-left">
                 <div className="flex flex-col leading-snug">
@@ -138,7 +140,7 @@ export default function Indicators({ id_course, id_tutor }: IndicatorsProps) {
           </div>
         </div>
       ) : (
-        <Loading>Carregando Dados</Loading>
+        <Loading>{t("loading")}</Loading>
       )}
     </div>
   );

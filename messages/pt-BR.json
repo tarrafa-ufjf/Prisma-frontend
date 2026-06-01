@@ -72,6 +72,18 @@
         "firstAccess": "Primeiro Acesso",
         "lastAccess": "Ultimo Acesso",
         "notInformed": "Nao informado"
+      },
+      "indicators": {
+        "title": "Indicadores Pedagogicos",
+        "subtitle": "calculados",
+        "details": "Detalhes",
+        "seeMore": "Ver mais",
+        "forumResponses": "Respostas em Foruns",
+        "courseAccess": "Acessos a disciplina",
+        "feedback": "Feedback",
+        "indicatorIconAlt": "Icone aluno-professor",
+        "loading": "Carregando Dados",
+        "fetchError": "Erro ao buscar indicadores"
       }
     },
     "list": {

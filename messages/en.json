@@ -72,6 +72,18 @@
         "firstAccess": "First Access",
         "lastAccess": "Last Access",
         "notInformed": "Not informed"
+      },
+      "indicators": {
+        "title": "Pedagogical Indicators",
+        "subtitle": "calculated",
+        "details": "Details",
+        "seeMore": "See more",
+        "forumResponses": "Forum Responses",
+        "courseAccess": "Course access",
+        "feedback": "Feedback",
+        "indicatorIconAlt": "Student-teacher icon",
+        "loading": "Loading data",
+        "fetchError": "Error loading indicators"
       }
     },
     "list": {
