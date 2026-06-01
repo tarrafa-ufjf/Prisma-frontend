@@ -10,6 +10,7 @@ import { api } from "@/utils/api";
 import { getColumns } from "@/utils/columns";
 import { Curso as CursoType } from "@/types/curso";
 import { useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
 
 interface TutoresProps {
   curso: CursoType;
@@ -29,6 +30,7 @@ const tabMapping: Record<Tab, string> = {
 };
 
 export default function Tutores({ curso }: TutoresProps) {
+  const t = useTranslations("Tutors.list");
   const [searchTerm, setSearchTerm] = useState("");
   const [tutores, setTutores] = useState<TutorType[]>([]);
   const [activeTab, setActiveTab] = useState<Tab>("Respostas em Fóruns");
@@ -45,12 +47,12 @@ export default function Tutores({ curso }: TutoresProps) {
         console.log(response.data.data);
         setTutores(response.data.data);
       } catch (err) {
-        error.setError("Erro ao buscar dados dos tutores");
+        error.setError(t("fetchError"));
         console.error("Erro ao buscar dados dos tutores: ", err);
       }
     };
     fetch();
-  }, [curso, activeTab]);
+  }, [curso, activeTab, error.clear, error.setError, t]);
 
   const columns = getColumns(activeTab, curso.id);
 
@@ -61,7 +63,7 @@ export default function Tutores({ curso }: TutoresProps) {
         <div className="flex flex-row justify-between items-start w-full mb-4">
           <div className="flex flex-col items-start">
             <h1 className="text-xl font-poppins font-semibold text-left">
-              Tutores
+              {t("title")}
             </h1>
             {curso ? (
               <p
@@ -72,7 +74,7 @@ export default function Tutores({ curso }: TutoresProps) {
               </p>
             ) : (
               <p className="text-left">
-                Nenhuma disciplina foi selecionada ainda.
+                {t("noCourseSelected")}
               </p>
             )}
           </div>
@@ -104,7 +106,7 @@ export default function Tutores({ curso }: TutoresProps) {
                 <SearchInput
                   searchTerm={searchTerm}
                   setSearchTerm={setSearchTerm}
-                  placeholder="Tutor"
+                  placeholder={t("searchPlaceholder")}
                 />
               </div>
             </div>

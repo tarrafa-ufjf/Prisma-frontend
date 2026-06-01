@@ -23,6 +23,12 @@
       "notFoundEnd": ", ou tente novamente mais tarde!",
       "courseNotFoundStart": "Curso {courseId} nao encontrado! Por favor, selecione um curso",
       "tutorNotFoundStart": "Tutor {tutorId} nao encontrado ou nao pertence ao curso desejado! Por favor, volte para a pagina de tutores do curso"
+    },
+    "list": {
+      "title": "Tutores",
+      "searchPlaceholder": "Tutor",
+      "noCourseSelected": "Nenhuma disciplina foi selecionada ainda.",
+      "fetchError": "Erro ao buscar dados dos tutores"
     }
   },
   "Tables": {

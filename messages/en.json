@@ -23,6 +23,12 @@
       "notFoundEnd": ", or try again later!",
       "courseNotFoundStart": "Course {courseId} not found! Please select a course",
       "tutorNotFoundStart": "Tutor {tutorId} was not found or does not belong to the selected course! Please return to the course tutors page"
+    },
+    "list": {
+      "title": "Tutors",
+      "searchPlaceholder": "Tutor",
+      "noCourseSelected": "No course has been selected yet.",
+      "fetchError": "Error loading tutor data"
     }
   },
   "Tables": {
