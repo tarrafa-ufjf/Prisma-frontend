@@ -2,6 +2,7 @@
 
 import { useError } from "@/hooks/useError"
 import { api } from "@/utils/api"
+import { useTranslations } from "next-intl"
 import { useEffect, useState } from "react"
 
 type PointsInfo = {
@@ -26,6 +27,7 @@ interface GraphsProps {
 }
 
 export default function Graphs({ id_course, id_tutor }: GraphsProps) {
+    const t = useTranslations("Tutors.detail.graphs")
     const [indicatorsData, setIndicatorsData] = useState<GraphsInfo | null>(null)
     const error = useError()
 
@@ -37,30 +39,30 @@ export default function Graphs({ id_course, id_tutor }: GraphsProps) {
                 setIndicatorsData(response.data.data)
                 console.log(response.data.data)
             } catch (err) {
-                error.setError("Erro ao buscar indicadores")
+                error.setError(t("fetchError"))
                 console.error("Erro ao buscar indicadores: ", err)
             }
         };
         fetch();
-    }, [error.clear, error.setError]);
+    }, [id_course, id_tutor, error.clear, error.setError, t]);
 
     if (!indicatorsData) {
-        return <div className="text-gray-500">Carregando gráficos...</div>
+        return <div className="text-gray-500">{t("loading")}</div>
     }
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full">
             <DotPlotChart
-                title="Comparativo de interações"
-                subtitle="dos tutores da disciplina"
+                title={t("interactionsTitle")}
+                subtitle={t("subtitle")}
                 data={indicatorsData.interactions}
-                xLabel="Interações"
+                xLabel={t("interactionsLabel")}
             />
             <DotPlotChart
-                title="Comparativo de tempo de resposta"
-                subtitle="dos tutores da disciplina"
+                title={t("responseTimeTitle")}
+                subtitle={t("subtitle")}
                 data={indicatorsData.response_time_hours}
-                xLabel="Tempo de resposta (h)"
+                xLabel={t("responseTimeLabel")}
             />
         </div>
     );
@@ -74,6 +76,7 @@ interface DotPlotChartProps {
 }
 
 function DotPlotChart({ title, subtitle, data, xLabel }: DotPlotChartProps) {
+    const t = useTranslations("Tutors.detail.graphs")
     const chartWidth = 500
     const chartHeight = 200
     const padding = { top: 20, right: 30, bottom: 60, left: 50 }
@@ -188,7 +191,7 @@ function DotPlotChart({ title, subtitle, data, xLabel }: DotPlotChartProps) {
                         className="transition-all hover:opacity-100"
                     >
                         <title>
-                            {point.is_current ? "Tutor atual" : `Tutor ${point.tutor_id}`}: {point.value.toFixed(2)}
+                            {point.is_current ? t("currentTutor") : t("tutorWithId", { id: point.tutor_id })}: {point.value.toFixed(2)}
                         </title>
                     </circle>
                 ))}
@@ -198,19 +201,19 @@ function DotPlotChart({ title, subtitle, data, xLabel }: DotPlotChartProps) {
             <div className="flex flex-wrap items-center justify-center gap-4 mt-4 text-sm">
                 <div className="flex items-center gap-2">
                     <div className="w-3 h-3 rounded-full bg-[#8b5cf6]"></div>
-                    <span className="text-gray-700">Tutor atual</span>
+                    <span className="text-gray-700">{t("currentTutor")}</span>
                 </div>
                 <div className="flex items-center gap-2">
                     <div className="w-3 h-3 rounded-full bg-gray-300"></div>
-                    <span className="text-gray-700">Outros tutores</span>
+                    <span className="text-gray-700">{t("otherTutors")}</span>
                 </div>
                 <div className="flex items-center gap-2">
                     <div className="w-8 h-0.5 bg-[#8b5cf6]"></div>
-                    <span className="text-gray-700">Média</span>
+                    <span className="text-gray-700">{t("mean")}</span>
                 </div>
                 <div className="flex items-center gap-2">
                     <div className="w-8 h-0.5 bg-[#8b5cf6] border-dashed" style={{ borderTop: '2px dashed #8b5cf6', background: 'transparent' }}></div>
-                    <span className="text-gray-700">Mediana</span>
+                    <span className="text-gray-700">{t("median")}</span>
                 </div>
             </div>
         </div>

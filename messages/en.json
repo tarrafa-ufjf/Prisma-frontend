@@ -49,6 +49,29 @@
           "correctionsWithFeedback": "Total corrections with feedback unavailable",
           "feedbackPercentage": "Percentage of corrections with feedback unavailable"
         }
+      },
+      "graphs": {
+        "loading": "Loading charts...",
+        "fetchError": "Error loading indicators",
+        "interactionsTitle": "Interaction comparison",
+        "responseTimeTitle": "Response time comparison",
+        "subtitle": "for course tutors",
+        "interactionsLabel": "Interactions",
+        "responseTimeLabel": "Response time (h)",
+        "currentTutor": "Current tutor",
+        "otherTutors": "Other tutors",
+        "mean": "Average",
+        "median": "Median",
+        "tutorWithId": "Tutor {id}"
+      },
+      "generalData": {
+        "title": "Personal Data",
+        "course": "Course",
+        "city": "City",
+        "group": "Campus",
+        "firstAccess": "First Access",
+        "lastAccess": "Last Access",
+        "notInformed": "Not informed"
       }
     },
     "list": {

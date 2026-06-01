@@ -49,6 +49,29 @@
           "correctionsWithFeedback": "No. Total de Correcoes com Feedback nao disponivel",
           "feedbackPercentage": "Porcentagem de Correcoes com Feedbacks nao disponivel"
         }
+      },
+      "graphs": {
+        "loading": "Carregando graficos...",
+        "fetchError": "Erro ao buscar indicadores",
+        "interactionsTitle": "Comparativo de interacoes",
+        "responseTimeTitle": "Comparativo de tempo de resposta",
+        "subtitle": "dos tutores da disciplina",
+        "interactionsLabel": "Interacoes",
+        "responseTimeLabel": "Tempo de resposta (h)",
+        "currentTutor": "Tutor atual",
+        "otherTutors": "Outros tutores",
+        "mean": "Media",
+        "median": "Mediana",
+        "tutorWithId": "Tutor {id}"
+      },
+      "generalData": {
+        "title": "Dados Pessoais",
+        "course": "Curso",
+        "city": "Cidade",
+        "group": "Polo",
+        "firstAccess": "Primeiro Acesso",
+        "lastAccess": "Ultimo Acesso",
+        "notInformed": "Nao informado"
       }
     },
     "list": {
