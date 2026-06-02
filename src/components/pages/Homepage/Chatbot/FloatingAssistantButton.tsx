@@ -44,7 +44,7 @@ export default function FloatingAssistantButton() {
             text-sm
           "
         >
-          Assistente IA
+          Íris IA
         </span>
       </div>
     </button>

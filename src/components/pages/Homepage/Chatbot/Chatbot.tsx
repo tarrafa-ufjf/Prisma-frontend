@@ -1,37 +1,41 @@
 'use client';
 
 import { useState } from "react";
-
-import {
-    ArrowRight,
-    Sparkles
-} from "lucide-react";
-
+import { ArrowRight, Sparkles } from "lucide-react";
 import SuggestionBox from "./Sugestões";
 
 interface Message {
     id: number;
     text: string;
     sender: "user" | "bot";
+    sql?: string;
 }
 
 export default function ChatbotPage() {
 
     const [input, setInput] = useState("");
+    const [messages, setMessages] = useState<Message[]>([]);
+    const [isTyping, setIsTyping] = useState(false);
 
-    const [messages, setMessages] =
-        useState<Message[]>([]);
+    async function askChatbot(question: string) {
 
-    const [isTyping, setIsTyping] =
-        useState(false);
+        const response = await fetch(
+            "http://localhost:5000/chatbot",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    question
+                }),
+            }
+        );
 
-    const [displayedText, setDisplayedText] =
-        useState("");
+        return await response.json();
+    }
 
-    const [isGenerating, setIsGenerating] =
-        useState(false);
-
-    function sendMessage(text: string) {
+    async function sendMessage(text: string) {
 
         if (!text.trim()) return;
 
@@ -47,68 +51,44 @@ export default function ChatbotPage() {
         ]);
 
         setInput("");
-
         setIsTyping(true);
 
-        const response =
-            "Analisando...";
+        try {
 
-        setTimeout(() => {
+            const result = await askChatbot(text);
+
+            console.log(result);
+            
+            const botMessage: Message = {
+                id: Date.now() + 1,
+                text: result.answer,
+                sender: "bot",
+                sql: result.sql
+            };
+
+            setMessages((prev) => [
+                ...prev,
+                botMessage
+            ]);
+
+        } catch (error) {
+
+            const errorMessage: Message = {
+                id: Date.now() + 1,
+                text: "Erro ao consultar o chatbot.",
+                sender: "bot"
+            };
+
+            setMessages((prev) => [
+                ...prev,
+                errorMessage
+            ]);
+
+        } finally {
 
             setIsTyping(false);
 
-            setIsGenerating(true);
-
-            let index = 0;
-
-            const interval = setInterval(() => {
-
-                setDisplayedText(
-                    response.slice(0, index + 1)
-                );
-
-                index++;
-
-                if (index >= response.length) {
-
-                    clearInterval(interval);
-
-                    setIsGenerating(false);
-
-                    const analyzingMessage: Message = {
-                        id: Date.now() + 1,
-                        text: "Analisando...",
-                        sender: "bot"
-                    };
-
-                    setMessages((prev) => [
-                        ...prev,
-                        analyzingMessage
-                    ]);
-
-                    setDisplayedText("");
-
-                    // SIMULA PROCESSAMENTO
-
-                    setTimeout(() => {
-
-                        const completedMessage: Message = {
-                            id: Date.now() + 2,
-                            text: "✓ Concluído.",
-                            sender: "bot"
-                        };
-
-                        setMessages((prev) => [
-                            ...prev,
-                            completedMessage
-                        ]);
-
-                    }, 2500);
-                }
-
-            }, 30);
-
-        }, 1200);
+        }
     }
 
     return (
@@ -172,8 +152,6 @@ export default function ChatbotPage() {
                 "
             >
 
-                {/* ÁREA COM SCROLL */}
-
                 <div
                     className="
                         flex-1
@@ -182,8 +160,6 @@ export default function ChatbotPage() {
                         overflow-y-auto
                     "
                 >
-
-                    {/* SUGESTÕES */}
 
                     {messages.length === 0 && (
 
@@ -207,8 +183,6 @@ export default function ChatbotPage() {
 
                             </div>
 
-                            {/* LABEL */}
-
                             <div className="flex items-center justify-center gap-3 mt-8 mb-8 ml-80">
 
                                 <Sparkles
@@ -224,8 +198,6 @@ export default function ChatbotPage() {
                         </>
 
                     )}
-
-                    {/* MENSAGENS */}
 
                     <div className="flex flex-col gap-5">
 
@@ -258,15 +230,36 @@ export default function ChatbotPage() {
                                     `}
                                 >
 
-                                    {message.text}
+                                    <div>
+
+                                        <div>
+                                            {message.text}
+                                        </div>
+
+                                        {message.sql && (
+
+                                            <pre
+                                                className="
+                                                    mt-3
+                                                    p-3
+                                                    rounded-lg
+                                                    bg-black/20
+                                                    text-xs
+                                                    overflow-x-auto
+                                                "
+                                            >
+                                                {message.sql}
+                                            </pre>
+
+                                        )}
+
+                                    </div>
 
                                 </div>
 
                             </div>
 
                         ))}
-
-                        {/* DIGITANDO */}
 
                         {isTyping && (
 
@@ -314,43 +307,9 @@ export default function ChatbotPage() {
 
                         )}
 
-                        {/* GERANDO TEXTO */}
-
-                        {isGenerating && (
-
-                            <div className="flex justify-start">
-
-                                <div
-                                    className="
-                                        max-w-[85%]
-                                        rounded-[28px]
-                                        px-6
-                                        py-5
-                                        text-[15px]
-                                        leading-6
-                                        shadow-sm
-                                        bg-[#4C5A73]
-                                        text-white
-                                    "
-                                >
-
-                                    {displayedText}
-
-                                    <span className="animate-pulse ml-1">
-                                        |
-                                    </span>
-
-                                </div>
-
-                            </div>
-
-                        )}
-
                     </div>
 
                 </div>
-
-                {/* INPUT */}
 
                 <div className="mt-8 shrink-0">
 
