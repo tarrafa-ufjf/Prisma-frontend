@@ -3,15 +3,22 @@
 import { useState } from "react";
 import { ArrowRight, Sparkles } from "lucide-react";
 import SuggestionBox from "./Sugestões";
-
+import { api } from "@/utils/api";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 interface Message {
     id: number;
     text: string;
     sender: "user" | "bot";
-    sql?: string;
 }
 
-export default function ChatbotPage() {
+interface ChatbotPageProps {
+    setResponse: (response: any) => void;
+}
+
+export default function ChatbotPage({
+    setResponse
+}: ChatbotPageProps) {
 
     const [input, setInput] = useState("");
     const [messages, setMessages] = useState<Message[]>([]);
@@ -19,22 +26,16 @@ export default function ChatbotPage() {
 
     async function askChatbot(question: string) {
 
-        const response = await fetch(
-            "http://localhost:5000/chatbot",
+        const response = await api.post(
+            "/chatbot",
             {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    question
-                }),
+                question
             }
         );
 
-        return await response.json();
+        return response.data;
     }
-
+        
     async function sendMessage(text: string) {
 
         if (!text.trim()) return;
@@ -56,14 +57,14 @@ export default function ChatbotPage() {
         try {
 
             const result = await askChatbot(text);
+            setResponse(result);
 
             console.log(result);
             
             const botMessage: Message = {
                 id: Date.now() + 1,
                 text: result.answer,
-                sender: "bot",
-                sql: result.sql
+                sender: "bot"
             };
 
             setMessages((prev) => [
@@ -110,12 +111,12 @@ export default function ChatbotPage() {
                 <div className="mt-10 ml-10 mb-5">
 
                     <h1 className="text-xl font-poppins font-semibold text-left">
-                        Chatbot
+                        Chatbot Íris
                     </h1>
-
+{/* 
                     <p style={{ color: "#9291A5" }}>
                         Íris
-                    </p>
+                    </p> */}
 
                 </div>
 
@@ -183,17 +184,17 @@ export default function ChatbotPage() {
 
                             </div>
 
-                            <div className="flex items-center justify-center gap-3 mt-8 mb-8 ml-80">
+                            <div className="flex justify-end mt-8 mb-8 pr-6">
+                                <div className="flex items-center gap-3">
+                                    <Sparkles
+                                        size={20}
+                                        className="text-[#C5C4D3]"
+                                    />
 
-                                <Sparkles
-                                    size={20}
-                                    className="text-[#C5C4D3]"
-                                />
-
-                                <p className="text-[18px] font-medium text-[#C5C4D3]">
-                                    Sugestões
-                                </p>
-
+                                    <p className="text-[18px] font-medium text-[#C5C4D3]">
+                                        Sugestões
+                                    </p>
+                                </div>
                             </div>
                         </>
 
@@ -230,30 +231,28 @@ export default function ChatbotPage() {
                                     `}
                                 >
 
-                                    <div>
-
-                                        <div>
-                                            {message.text}
-                                        </div>
-
-                                        {message.sql && (
-
-                                            <pre
-                                                className="
-                                                    mt-3
-                                                    p-3
-                                                    rounded-lg
-                                                    bg-black/20
-                                                    text-xs
-                                                    overflow-x-auto
-                                                "
-                                            >
-                                                {message.sql}
-                                            </pre>
-
-                                        )}
-
-                                    </div>
+                                <ReactMarkdown
+                                    remarkPlugins={[remarkGfm]}
+                                    components={{
+                                        ol: ({ children }) => (
+                                            <ol className="list-decimal pl-5 space-y-2">
+                                                {children}
+                                            </ol>
+                                        ),
+                                        ul: ({ children }) => (
+                                            <ul className="list-disc pl-5 space-y-2">
+                                                {children}
+                                            </ul>
+                                        ),
+                                        p: ({ children }) => (
+                                            <p className="mb-2">
+                                                {children}
+                                            </p>
+                                        )
+                                    }}
+                                >
+                                    {message.text}
+                                </ReactMarkdown>
 
                                 </div>
 
