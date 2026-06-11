@@ -6,6 +6,7 @@ import DadosGerais from './DadosGerais/DadosGerais';
 import HomeRanking from './ranking';
 import AdminButton from './Administrador/Admin';
 import MoodleWarning from "@/components/pages/administrador/moodleWarning";
+import FloatingAssistantButton from './Chatbot/FloatingAssistantButton';
 
 export default function Home() {
   const t = useTranslations('Home');
@@ -22,13 +23,17 @@ export default function Home() {
                 {t('institution')}
               </p>
           </div>
+
           <MoodleWarning />
           <AdminButton />
-      </div>
+        </div>
+
         <div>
           <div className="center-wrapper flex flex-col justify-between gap-10 mb-5">
             <DadosGerais />
+
             <Indicators />
+
             <div className="flex flex-row space-x-5">
               <HomeRanking type='best-performance' />
               <HomeRanking type='at-risk' />
@@ -36,6 +41,8 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      <FloatingAssistantButton />
     </div>
   );
 }
