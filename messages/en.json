@@ -14,6 +14,25 @@
     "courses": "Courses Dashboard",
     "tutors": "Tutors Dashboard"
   },
+  "Chatbot": {
+    "title": "Íris Chatbot",
+    "buttonLabel": "Íris AI",
+    "openAssistant": "Open Íris AI assistant",
+    "suggestionsTitle": "Suggestions",
+    "inputPlaceholder": "Write a question...",
+    "errors": {
+      "fetch": "Error querying the chatbot."
+    },
+    "suggestions": {
+      "dropoutRisk": "Which courses have the highest dropout risk?",
+      "engagementPerformance": "Is there a relationship between engagement and academic performance?",
+      "belowAverageCourses": "Which degree programs are performing below the institutional average?"
+    },
+    "visualization": {
+      "title": "Visualization",
+      "empty": "No chart is available for this question."
+    }
+  },
   "Tutors": {
     "overview": "Overview",
     "institution": "of the Institution",
@@ -562,6 +581,7 @@
       "passwordPlaceholder":"Enter the password",
       "passwordProtected": "Protected password",
       "testing": "Testing...",
+      "testConnection": "Test connection",
       "testingConnection": "Testing connection",
       "saving": "Saving...",
       "saveChanges": "Save changes",

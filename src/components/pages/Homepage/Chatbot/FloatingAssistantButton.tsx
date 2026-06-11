@@ -1,15 +1,19 @@
 'use client';
 
 import { Sparkles } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/i18n/navigation';
+import { useTranslations } from 'next-intl';
 
 export default function FloatingAssistantButton() {
 
   const router = useRouter();
+  const t = useTranslations('Chatbot');
 
   return (
     <button
       onClick={() => router.push('/chatbot')}
+      aria-label={t('openAssistant')}
+      title={t('openAssistant')}
       className="
         fixed
         bottom-8
@@ -44,7 +48,7 @@ export default function FloatingAssistantButton() {
             text-sm
           "
         >
-          Íris IA
+          {t('buttonLabel')}
         </span>
       </div>
     </button>

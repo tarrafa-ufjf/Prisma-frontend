@@ -4,6 +4,7 @@ import { useState } from "react";
 import { ArrowRight, Sparkles } from "lucide-react";
 import SuggestionBox from "./Sugestões";
 import { api } from "@/utils/api";
+import { useTranslations } from "next-intl";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 interface Message {
@@ -20,9 +21,15 @@ export default function ChatbotPage({
     setResponse
 }: ChatbotPageProps) {
 
+    const t = useTranslations("Chatbot");
     const [input, setInput] = useState("");
     const [messages, setMessages] = useState<Message[]>([]);
     const [isTyping, setIsTyping] = useState(false);
+    const suggestions = [
+        t("suggestions.dropoutRisk"),
+        t("suggestions.engagementPerformance"),
+        t("suggestions.belowAverageCourses")
+    ];
 
     async function askChatbot(question: string) {
 
@@ -76,7 +83,7 @@ export default function ChatbotPage({
 
             const errorMessage: Message = {
                 id: Date.now() + 1,
-                text: "Erro ao consultar o chatbot.",
+                text: t("errors.fetch"),
                 sender: "bot"
             };
 
@@ -111,7 +118,7 @@ export default function ChatbotPage({
                 <div className="mt-10 ml-10 mb-5">
 
                     <h1 className="text-xl font-poppins font-semibold text-left">
-                        Chatbot Íris
+                        {t("title")}
                     </h1>
 {/* 
                     <p style={{ color: "#9291A5" }}>
@@ -167,20 +174,13 @@ export default function ChatbotPage({
                         <>
                             <div className="flex flex-col gap-5">
 
-                                <SuggestionBox
-                                    text="Quais disciplinas apresentam maior risco de evasão?"
-                                    onClick={sendMessage}
-                                />
-
-                                <SuggestionBox
-                                    text="Existe relação entre engajamento e desempenho acadêmico?"
-                                    onClick={sendMessage}
-                                />
-
-                                <SuggestionBox
-                                    text="Quais cursos possuem desempenho abaixo da média institucional?"
-                                    onClick={sendMessage}
-                                />
+                                {suggestions.map((suggestion) => (
+                                    <SuggestionBox
+                                        key={suggestion}
+                                        text={suggestion}
+                                        onClick={sendMessage}
+                                    />
+                                ))}
 
                             </div>
 
@@ -192,7 +192,7 @@ export default function ChatbotPage({
                                     />
 
                                     <p className="text-[18px] font-medium text-[#C5C4D3]">
-                                        Sugestões
+                                        {t("suggestionsTitle")}
                                     </p>
                                 </div>
                             </div>
@@ -326,7 +326,7 @@ export default function ChatbotPage({
                                     sendMessage(input);
                                 }
                             }}
-                            placeholder="Escreva uma pergunta..."
+                            placeholder={t("inputPlaceholder")}
                             className="
                                 flex-1
                                 h-14

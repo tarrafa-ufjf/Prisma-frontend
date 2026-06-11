@@ -5,6 +5,7 @@ import LanguageSwitcher from '@/components/ui/language-switcher';
 import { Link, usePathname } from '@/i18n/navigation';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
+import { Suspense } from 'react';
 import { IconType } from 'react-icons';
 import { FaGraduationCap, FaHome, FaUserGraduate } from 'react-icons/fa';
 
@@ -79,7 +80,9 @@ export default function Sidebar() {
           </nav>
         </div>
         <div className="flex justify-between p-2">
-          <LanguageSwitcher />
+          <Suspense fallback={null}>
+            <LanguageSwitcher />
+          </Suspense>
           <LogoutButton />
         </div>
       </aside>

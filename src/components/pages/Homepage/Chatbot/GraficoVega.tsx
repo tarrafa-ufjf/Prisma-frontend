@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { useTranslations } from 'next-intl';
 import embed, { VisualizationSpec } from 'vega-embed';
 
 interface GraficoVegaPageProps {
@@ -11,6 +12,7 @@ export default function GraficoVegaPage({
     vegaSpec
 }: GraficoVegaPageProps) {
 
+    const t = useTranslations("Chatbot.visualization");
     const chartRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -45,7 +47,7 @@ export default function GraficoVegaPage({
             <div className="maincurso">
                 <div className="mt-10 ml-10 mb-5">
                     <h1 className="text-xl font-poppins font-semibold text-left">
-                        Visualização
+                        {t("title")}
                     </h1>
                 </div>
             </div>
@@ -67,7 +69,7 @@ export default function GraficoVegaPage({
                             text-lg
                         "
                     >
-                        Nenhum gráfico disponível para esta pergunta.
+                        {t("empty")}
                     </div>
                 ) : (
                     <div ref={chartRef} />
