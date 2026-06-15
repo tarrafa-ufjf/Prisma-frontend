@@ -391,7 +391,12 @@
       "approvalStatus": {
         "title": "Status de Aprovacao",
         "subtitle": "dos Alunos da Disciplina",
-        "empty": "Sem valores encontrados"
+        "empty": "Sem valores encontrados",
+        "labels": {
+          "approved": "Aprovado",
+          "failed": "Reprovado",
+          "ri": "RI"
+        }
       },
       "activities": {
         "title": "Atividades",

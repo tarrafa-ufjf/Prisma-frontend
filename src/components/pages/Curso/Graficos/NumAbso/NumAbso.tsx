@@ -7,16 +7,39 @@ interface NumAbsoProps {
     situations: Situation[]
 }
 
+const situationLabelKeys = {
+    aprovado: 'approved',
+    reprovado: 'failed',
+    ri: 'ri',
+} as const
+
+type SituationLabelKey = typeof situationLabelKeys[keyof typeof situationLabelKeys]
+
+function normalizeSituation(situation: string) {
+    return situation
+        .trim()
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/\s+/g, ' ')
+}
+
 export default function NumAbso({ situations }: NumAbsoProps) {
     const t = useTranslations('Courses.charts.approvalStatus')
     const error = useError()
 
     const legenda: ItemLegenda[] = useMemo(() => {
+        const labels: Record<SituationLabelKey, string> = {
+            approved: t('labels.approved'),
+            failed: t('labels.failed'),
+            ri: t('labels.ri'),
+        }
+
         return situations.map(data => ({
-            categoria: data.situacao,
+            categoria: labels[situationLabelKeys[normalizeSituation(data.situacao) as keyof typeof situationLabelKeys]] ?? data.situacao,
             valor: data.qtd
         }))
-    }, [situations])
+    }, [situations, t])
 
     const is_valid = useMemo(() => {
         return situations.some(data => data.qtd > 0) && situations.length > 0

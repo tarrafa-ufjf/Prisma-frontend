@@ -18,7 +18,6 @@ interface GraficoProps {
 }
 
 export default function Grafico({ data }: GraficoProps) {
-  console.log(data)
   return (
     <div style={{ height: 400 }}>
       <ResponsiveBar

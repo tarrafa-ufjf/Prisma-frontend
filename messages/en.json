@@ -391,7 +391,12 @@
       "approvalStatus": {
         "title": "Approval Status",
         "subtitle": "of Course Students",
-        "empty": "No values found"
+        "empty": "No values found",
+        "labels": {
+          "approved": "Approved",
+          "failed": "Failed",
+          "ri": "Insufficient Attendance"
+        }
       },
       "activities": {
         "title": "Activities",
