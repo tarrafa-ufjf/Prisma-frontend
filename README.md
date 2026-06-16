@@ -184,4 +184,4 @@ Em outro terminal, mantenha o backend em execucao conforme as instrucoes do repo
 
 ## Licenca
 
-Este repositorio faz parte do projeto Tarrafa. Caso haja uma licenca especifica para o projeto, ela deve ser documentada neste repositorio.
+Este projeto segue a licenca MIT. Consulte a referencia de licenca em [LICENSE](https://github.com/lapic-ufjf/searchat-behavior-api/blob/main/LICENSE).
