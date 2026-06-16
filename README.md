@@ -184,4 +184,4 @@ Em outro terminal, mantenha o backend em execucao conforme as instrucoes do repo
 
 ## Licenca
 
-Este projeto segue a licenca MIT. Consulte a referencia de licenca em [LICENSE](https://github.com/lapic-ufjf/searchat-behavior-api/blob/main/LICENSE).
+Este projeto segue a licenca MIT. Consulte a referencia de licenca em [LICENSE](https://github.com/tarrafa-ufjf/Tarrafa-frontend/blob/feat/readme/LICENSE).
