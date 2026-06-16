@@ -1,37 +1,187 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tarrafa Frontend
 
-## Getting Started
+Este repositorio contem o frontend do Tarrafa, uma plataforma de apoio ao acompanhamento academico por meio de dashboards, indicadores e visualizacoes de dados educacionais.
 
-First, run the development server:
+Aqui estao as telas e componentes usados para navegar por cursos, disciplinas, alunos, tutores, rankings, indicadores e recursos administrativos. A aplicacao se conecta ao backend do Tarrafa para autenticacao e consulta dos dados:
+
+- Backend: [tarrafa-ufjf/Tarrafa-backend](https://github.com/tarrafa-ufjf/Tarrafa-backend)
+
+## Sobre o Projeto
+
+O Tarrafa tem como objetivo apoiar a analise de desempenho academico por meio de paineis e visualizacoes interativas. A interface centraliza informacoes importantes para acompanhamento de cursos, disciplinas, tutores e estudantes, ajudando a identificar indicadores de desempenho, risco e engajamento.
+
+Neste repositorio estao a aplicacao web, as telas protegidas por autenticacao, a integracao com a API, a internacionalizacao da interface e os componentes de visualizacao usados nos paineis.
+
+## Principais Funcionalidades
+
+- Autenticacao integrada ao backend.
+- Pagina inicial com indicadores gerais e rankings.
+- Selecao e acompanhamento de cursos.
+- Visualizacao de disciplinas e seus dados associados.
+- Paineis de tutores com indicadores, rankings e dados gerais.
+- Area administrativa.
+- Chatbot com suporte a visualizacao de graficos Vega.
+- Suporte a internacionalizacao com portugues do Brasil e ingles.
+- Componentes de graficos, tabelas, filtros, ranking e indicadores.
+
+## Tecnologias
+
+- [Next.js](https://nextjs.org/) 15
+- [React](https://react.dev/) 19
+- [TypeScript](https://www.typescriptlang.org/)
+- [next-intl](https://next-intl.dev/) para internacionalizacao
+- [Axios](https://axios-http.com/) para comunicacao com a API
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Material UI](https://mui.com/)
+- Bibliotecas de visualizacao como Nivo, Vega, Vega-Lite, AG Charts e MUI X Charts
+
+## Requisitos
+
+Antes de rodar o frontend, tenha instalado:
+
+- Node.js 20 ou superior
+- npm
+- Backend do Tarrafa configurado e em execucao
+
+Consulte o README do backend para configurar a API corretamente:
+
+- [tarrafa-ufjf/Tarrafa-backend](https://github.com/tarrafa-ufjf/Tarrafa-backend)
+
+## Configuracao do Ambiente
+
+1. Instale as dependencias:
+
+```bash
+npm install
+```
+
+2. Crie o arquivo de ambiente a partir do exemplo:
+
+```bash
+cp .env.example .env
+```
+
+3. Configure a URL da API no arquivo `.env`:
+
+```env
+NEXT_PUBLIC_API_BASE_URL="http://localhost:8000"
+```
+
+Use a URL e porta configuradas no backend. Essa variavel e usada pelo frontend para autenticar o usuario e consumir os endpoints da API.
+
+## Como Rodar
+
+Para iniciar o ambiente de desenvolvimento:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+A aplicacao ficara disponivel em:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```text
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+O projeto usa o App Router do Next.js. As rotas principais ficam dentro de `src/app/[locale]`, com paginas autenticadas agrupadas em `src/app/[locale]/(auth)`.
 
-## Learn More
+## Scripts Disponiveis
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Inicia o servidor de desenvolvimento com Turbopack.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run build
+```
 
-## Deploy on Vercel
+Gera a build de producao.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npm run start
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# Tarrafa-frontend
+Executa a aplicacao em modo de producao apos a build.
+
+```bash
+npm run lint
+```
+
+Executa a verificacao de lint configurada para o projeto.
+
+## Estrutura do Projeto
+
+```text
+src/
+  app/                 Rotas da aplicacao com App Router
+  components/          Componentes de paginas, UI e templates
+  hooks/               Hooks reutilizaveis
+  i18n/                Configuracao de internacionalizacao
+  types/               Tipos TypeScript
+  utils/               Servicos, cliente da API e funcoes auxiliares
+messages/              Arquivos de traducao
+docs/                  Documentacao auxiliar do projeto
+```
+
+Arquivos importantes:
+
+- `.env.example`: exemplo das variaveis de ambiente.
+- `src/utils/api.ts`: cliente Axios para chamadas feitas no client-side.
+- `src/utils/api-server.ts`: cliente Axios para chamadas feitas no server-side com repasse de cookies.
+- `src/middleware.ts`: middleware de internacionalizacao e autenticacao.
+- `docs/internacionalizacao.md`: padrao usado para traducao da interface.
+
+## Internacionalizacao
+
+O projeto usa `next-intl` e atualmente possui suporte para:
+
+- `en`: idioma padrao, com URLs sem prefixo.
+- `pt-BR`: portugues do Brasil, com prefixo `/pt-BR`.
+
+Exemplos:
+
+```text
+/login
+/pt-BR/login
+/cursos
+/pt-BR/cursos
+```
+
+Ao adicionar textos novos na interface, atualize os arquivos:
+
+- `messages/en.json`
+- `messages/pt-BR.json`
+
+Mais detalhes estao em [docs/internacionalizacao.md](docs/internacionalizacao.md).
+
+## Integracao com o Backend
+
+Este frontend depende do backend para:
+
+- Validar autenticacao em `auth/me`.
+- Buscar dados de cursos, disciplinas, tutores, alunos e indicadores.
+- Manter cookies de sessao entre navegador, middleware e API.
+
+Durante o desenvolvimento, confirme se:
+
+- O backend esta rodando.
+- `NEXT_PUBLIC_API_BASE_URL` aponta para a URL correta da API.
+- As configuracoes de CORS e cookies do backend permitem requisicoes do frontend.
+
+## Fluxo de Desenvolvimento
+
+Uma rotina comum para desenvolvimento local:
+
+```bash
+npm install
+cp .env.example .env
+npm run dev
+```
+
+Em outro terminal, mantenha o backend em execucao conforme as instrucoes do repositorio [Tarrafa-backend](https://github.com/tarrafa-ufjf/Tarrafa-backend).
+
+## Licenca
+
+Este repositorio faz parte do projeto Tarrafa. Caso haja uma licenca especifica para o projeto, ela deve ser documentada neste repositorio.
