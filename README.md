@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/assets/prisma_banner.png" alt="Prisma Banner" width="85%">
+</p>
+
 # Tarrafa Frontend
 
 Este repositorio contem o frontend do Tarrafa, uma plataforma de apoio ao acompanhamento academico por meio de dashboards, indicadores e visualizacoes de dados educacionais.
