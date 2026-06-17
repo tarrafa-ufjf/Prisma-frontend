@@ -12,17 +12,17 @@
   <img src="https://img.shields.io/badge/Research-Tool-orange" alt="Tool">
 </p>
 
-# Tarrafa Frontend
+# Prisma Frontend
 
-This repository contains the Tarrafa frontend, a platform that supports academic monitoring through dashboards, indicators, and educational data visualizations.
+This repository contains the Prisma frontend, a platform that supports academic monitoring through dashboards, indicators, and educational data visualizations.
 
-It includes the screens and components used to browse courses, subjects, students, tutors, rankings, indicators, and administrative resources. The application connects to the Tarrafa backend for authentication and data access:
+It includes the screens and components used to browse courses, subjects, students, tutors, rankings, indicators, and administrative resources. The application connects to the Prisma backend for authentication and data access:
 
-- Backend: [tarrafa-ufjf/Tarrafa-backend](https://github.com/tarrafa-ufjf/Tarrafa-backend)
+- Backend: [tarrafa-ufjf/Prisma-backend](https://github.com/tarrafa-ufjf/Prisma-backend)
 
 ## About the Project
 
-Tarrafa aims to support academic performance analysis through interactive dashboards and visualizations. The interface centralizes key information for monitoring courses, subjects, tutors, and students, helping identify performance, risk, and engagement indicators.
+Prisma aims to support academic performance analysis through interactive dashboards and visualizations. The interface centralizes key information for monitoring courses, subjects, tutors, and students, helping identify performance, risk, and engagement indicators.
 
 This repository contains the web application, authentication-protected screens, API integration, interface internationalization, and visualization components used in the dashboards.
 
@@ -55,11 +55,11 @@ Before running the frontend, make sure you have installed:
 
 - Node.js 20 or higher
 - npm
-- Tarrafa backend configured and running
+- Prisma backend configured and running
 
 See the backend README to configure the API correctly:
 
-- [tarrafa-ufjf/Tarrafa-backend](https://github.com/tarrafa-ufjf/Tarrafa-backend)
+- [tarrafa-ufjf/Prisma-backend](https://github.com/tarrafa-ufjf/Prisma-backend)
 
 ## Environment Setup
 
@@ -194,7 +194,7 @@ cp .env.example .env
 npm run dev
 ```
 
-In another terminal, keep the backend running according to the instructions in the [Tarrafa-backend](https://github.com/tarrafa-ufjf/Tarrafa-backend) repository.
+In another terminal, keep the backend running according to the instructions in the [Prisma-backend](https://github.com/tarrafa-ufjf/Prisma-backend) repository.
 
 ## License
 
