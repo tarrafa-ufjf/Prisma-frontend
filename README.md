@@ -3,9 +3,8 @@
 </p>
 
 <p align="center">
-  Uma interface web para acompanhamento academico por meio de dashboards, indicadores e visualizacoes de dados educacionais.
+  A web interface for academic monitoring through dashboards, indicators, and educational data visualizations.
 </p>
-
 
 <p align="center">
   <img src="https://img.shields.io/badge/version-0.1.0-004b8d" alt="Version">
@@ -15,147 +14,147 @@
 
 # Tarrafa Frontend
 
-Este repositorio contem o frontend do Tarrafa, uma plataforma de apoio ao acompanhamento academico por meio de dashboards, indicadores e visualizacoes de dados educacionais.
+This repository contains the Tarrafa frontend, a platform that supports academic monitoring through dashboards, indicators, and educational data visualizations.
 
-Aqui estao as telas e componentes usados para navegar por cursos, disciplinas, alunos, tutores, rankings, indicadores e recursos administrativos. A aplicacao se conecta ao backend do Tarrafa para autenticacao e consulta dos dados:
+It includes the screens and components used to browse courses, subjects, students, tutors, rankings, indicators, and administrative resources. The application connects to the Tarrafa backend for authentication and data access:
 
 - Backend: [tarrafa-ufjf/Tarrafa-backend](https://github.com/tarrafa-ufjf/Tarrafa-backend)
 
-## Sobre o Projeto
+## About the Project
 
-O Tarrafa tem como objetivo apoiar a analise de desempenho academico por meio de paineis e visualizacoes interativas. A interface centraliza informacoes importantes para acompanhamento de cursos, disciplinas, tutores e estudantes, ajudando a identificar indicadores de desempenho, risco e engajamento.
+Tarrafa aims to support academic performance analysis through interactive dashboards and visualizations. The interface centralizes key information for monitoring courses, subjects, tutors, and students, helping identify performance, risk, and engagement indicators.
 
-Neste repositorio estao a aplicacao web, as telas protegidas por autenticacao, a integracao com a API, a internacionalizacao da interface e os componentes de visualizacao usados nos paineis.
+This repository contains the web application, authentication-protected screens, API integration, interface internationalization, and visualization components used in the dashboards.
 
-## Principais Funcionalidades
+## Main Features
 
-- Autenticacao integrada ao backend.
-- Pagina inicial com indicadores gerais e rankings.
-- Selecao e acompanhamento de cursos.
-- Visualizacao de disciplinas e seus dados associados.
-- Paineis de tutores com indicadores, rankings e dados gerais.
-- Area administrativa.
-- Chatbot com suporte a visualizacao de graficos Vega.
-- Suporte a internacionalizacao com portugues do Brasil e ingles.
-- Componentes de graficos, tabelas, filtros, ranking e indicadores.
+- Backend-integrated authentication.
+- Home page with general indicators and rankings.
+- Course selection and monitoring.
+- Subject visualization with associated data.
+- Tutor dashboards with indicators, rankings, and general data.
+- Administrative area.
+- Chatbot with support for Vega chart visualization.
+- Internationalization support for Brazilian Portuguese and English.
+- Chart, table, filter, ranking, and indicator components.
 
-## Tecnologias
+## Technologies
 
 - [Next.js](https://nextjs.org/) 15
 - [React](https://react.dev/) 19
 - [TypeScript](https://www.typescriptlang.org/)
-- [next-intl](https://next-intl.dev/) para internacionalizacao
-- [Axios](https://axios-http.com/) para comunicacao com a API
+- [next-intl](https://next-intl.dev/) for internationalization
+- [Axios](https://axios-http.com/) for API communication
 - [Tailwind CSS](https://tailwindcss.com/)
 - [Material UI](https://mui.com/)
-- Bibliotecas de visualizacao como Nivo, Vega, Vega-Lite, AG Charts e MUI X Charts
+- Visualization libraries such as Nivo, Vega, Vega-Lite, AG Charts, and MUI X Charts
 
-## Requisitos
+## Requirements
 
-Antes de rodar o frontend, tenha instalado:
+Before running the frontend, make sure you have installed:
 
-- Node.js 20 ou superior
+- Node.js 20 or higher
 - npm
-- Backend do Tarrafa configurado e em execucao
+- Tarrafa backend configured and running
 
-Consulte o README do backend para configurar a API corretamente:
+See the backend README to configure the API correctly:
 
 - [tarrafa-ufjf/Tarrafa-backend](https://github.com/tarrafa-ufjf/Tarrafa-backend)
 
-## Configuracao do Ambiente
+## Environment Setup
 
-1. Instale as dependencias:
+1. Install the dependencies:
 
 ```bash
 npm install
 ```
 
-2. Crie o arquivo de ambiente a partir do exemplo:
+2. Create the environment file from the example:
 
 ```bash
 cp .env.example .env
 ```
 
-3. Configure a URL da API no arquivo `.env`:
+3. Configure the API URL in the `.env` file:
 
 ```env
 NEXT_PUBLIC_API_BASE_URL="http://localhost:8000"
 ```
 
-Use a URL e porta configuradas no backend. Essa variavel e usada pelo frontend para autenticar o usuario e consumir os endpoints da API.
+Use the URL and port configured in the backend. This variable is used by the frontend to authenticate the user and consume the API endpoints.
 
-## Como Rodar
+## Running the Project
 
-Para iniciar o ambiente de desenvolvimento:
+To start the development environment:
 
 ```bash
 npm run dev
 ```
 
-A aplicacao ficara disponivel em:
+The application will be available at:
 
 ```text
 http://localhost:3000
 ```
 
-O projeto usa o App Router do Next.js. As rotas principais ficam dentro de `src/app/[locale]`, com paginas autenticadas agrupadas em `src/app/[locale]/(auth)`.
+The project uses the Next.js App Router. The main routes are located in `src/app/[locale]`, with authenticated pages grouped under `src/app/[locale]/(auth)`.
 
-## Scripts Disponiveis
+## Available Scripts
 
 ```bash
 npm run dev
 ```
 
-Inicia o servidor de desenvolvimento com Turbopack.
+Starts the development server with Turbopack.
 
 ```bash
 npm run build
 ```
 
-Gera a build de producao.
+Generates the production build.
 
 ```bash
 npm run start
 ```
 
-Executa a aplicacao em modo de producao apos a build.
+Runs the application in production mode after the build.
 
 ```bash
 npm run lint
 ```
 
-Executa a verificacao de lint configurada para o projeto.
+Runs the lint checks configured for the project.
 
-## Estrutura do Projeto
+## Project Structure
 
 ```text
 src/
-  app/                 Rotas da aplicacao com App Router
-  components/          Componentes de paginas, UI e templates
-  hooks/               Hooks reutilizaveis
-  i18n/                Configuracao de internacionalizacao
-  types/               Tipos TypeScript
-  utils/               Servicos, cliente da API e funcoes auxiliares
-messages/              Arquivos de traducao
-docs/                  Documentacao auxiliar do projeto
+  app/                 Application routes with App Router
+  components/          Page, UI, and template components
+  hooks/               Reusable hooks
+  i18n/                Internationalization configuration
+  types/               TypeScript types
+  utils/               Services, API client, and helper functions
+messages/              Translation files
+docs/                  Supporting project documentation
 ```
 
-Arquivos importantes:
+Important files:
 
-- `.env.example`: exemplo das variaveis de ambiente.
-- `src/utils/api.ts`: cliente Axios para chamadas feitas no client-side.
-- `src/utils/api-server.ts`: cliente Axios para chamadas feitas no server-side com repasse de cookies.
-- `src/middleware.ts`: middleware de internacionalizacao e autenticacao.
-- `docs/internacionalizacao.md`: padrao usado para traducao da interface.
+- `.env.example`: example environment variables.
+- `src/utils/api.ts`: Axios client for client-side requests.
+- `src/utils/api-server.ts`: Axios client for server-side requests with cookie forwarding.
+- `src/middleware.ts`: internationalization and authentication middleware.
+- `docs/internacionalizacao.md`: standard used for interface translation.
 
-## Internacionalizacao
+## Internationalization
 
-O projeto usa `next-intl` e atualmente possui suporte para:
+The project uses `next-intl` and currently supports:
 
-- `en`: idioma padrao, com URLs sem prefixo.
-- `pt-BR`: portugues do Brasil, com prefixo `/pt-BR`.
+- `en`: default language, with unprefixed URLs.
+- `pt-BR`: Brazilian Portuguese, with the `/pt-BR` prefix.
 
-Exemplos:
+Examples:
 
 ```text
 /login
@@ -164,30 +163,30 @@ Exemplos:
 /pt-BR/cursos
 ```
 
-Ao adicionar textos novos na interface, atualize os arquivos:
+When adding new interface text, update these files:
 
 - `messages/en.json`
 - `messages/pt-BR.json`
 
-Mais detalhes estao em [docs/internacionalizacao.md](docs/internacionalizacao.md).
+More details are available in [docs/internacionalizacao.md](docs/internacionalizacao.md).
 
-## Integracao com o Backend
+## Backend Integration
 
-Este frontend depende do backend para:
+This frontend depends on the backend to:
 
-- Validar autenticacao em `auth/me`.
-- Buscar dados de cursos, disciplinas, tutores, alunos e indicadores.
-- Manter cookies de sessao entre navegador, middleware e API.
+- Validate authentication through `auth/me`.
+- Fetch course, subject, tutor, student, and indicator data.
+- Maintain session cookies between the browser, middleware, and API.
 
-Durante o desenvolvimento, confirme se:
+During development, make sure that:
 
-- O backend esta rodando.
-- `NEXT_PUBLIC_API_BASE_URL` aponta para a URL correta da API.
-- As configuracoes de CORS e cookies do backend permitem requisicoes do frontend.
+- The backend is running.
+- `NEXT_PUBLIC_API_BASE_URL` points to the correct API URL.
+- The backend CORS and cookie settings allow requests from the frontend.
 
-## Fluxo de Desenvolvimento
+## Development Workflow
 
-Uma rotina comum para desenvolvimento local:
+A common routine for local development:
 
 ```bash
 npm install
@@ -195,8 +194,8 @@ cp .env.example .env
 npm run dev
 ```
 
-Em outro terminal, mantenha o backend em execucao conforme as instrucoes do repositorio [Tarrafa-backend](https://github.com/tarrafa-ufjf/Tarrafa-backend).
+In another terminal, keep the backend running according to the instructions in the [Tarrafa-backend](https://github.com/tarrafa-ufjf/Tarrafa-backend) repository.
 
-## Licenca
+## License
 
-Este projeto segue a licenca MIT. Consulte a referencia de licenca em [LICENSE](./LICENSE).
+This project is licensed under the MIT License. See the license reference in [LICENSE](./LICENSE).
