@@ -2,6 +2,17 @@
   <img src="docs/assets/prisma_banner.png" alt="Prisma Banner" width="85%">
 </p>
 
+<p align="center">
+  Uma interface web para acompanhamento academico por meio de dashboards, indicadores e visualizacoes de dados educacionais.
+</p>
+
+
+<p align="center">
+  <img src="https://img.shields.io/badge/version-0.1.0-004b8d" alt="Version">
+  <a href="./LICENSE"><img src="https://img.shields.io/badge/license-MIT-2fb594" alt="License"></a>
+  <img src="https://img.shields.io/badge/Research-Tool-orange" alt="Tool">
+</p>
+
 # Tarrafa Frontend
 
 Este repositorio contem o frontend do Tarrafa, uma plataforma de apoio ao acompanhamento academico por meio de dashboards, indicadores e visualizacoes de dados educacionais.
@@ -188,4 +199,4 @@ Em outro terminal, mantenha o backend em execucao conforme as instrucoes do repo
 
 ## Licenca
 
-Este projeto segue a licenca MIT. Consulte a referencia de licenca em [LICENSE](https://github.com/tarrafa-ufjf/Tarrafa-frontend/blob/feat/readme/LICENSE).
+Este projeto segue a licenca MIT. Consulte a referencia de licenca em [LICENSE](./LICENSE).
