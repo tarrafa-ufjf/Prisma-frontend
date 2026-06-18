@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  Uma interface web para apoiar o acompanhamento acadêmico por meio de indicadores, rankings, dashboards e visualizações educacionais.
+  A web interface to support academic monitoring through indicators, rankings, dashboards and educational visualizations.
 </p>
 
 <p align="center">
@@ -14,117 +14,119 @@
 </p>
 
 <h4 align="center">
-  <a href="#sobre-o-prisma">Sobre</a> |
-  <a href="#por-que-o-projeto-existe">Motivação</a> |
-  <a href="#o-que-a-interface-oferece">Recursos</a> |
-  <a href="#visão-da-interface">Interface</a> |
-  <a href="#executando-localmente">Executando</a>
+  <a href="#about-prisma">About</a> |
+  <a href="#why-the-project-exists">Motivation</a> |
+  <a href="#what-the-interface-offers">Features</a> |
+  <a href="#interface-overview">Interface</a> |
+  <a href="#running-locally">Running</a>
 </h4>
+
+📝 **Available in other languages:** [Português (Brasil)](./README.pt-BR.md)
 
 # Prisma Frontend
 
-O **Prisma Frontend** é a camada de interface do projeto Prisma, uma plataforma voltada para o acompanhamento de cursos, disciplinas, estudantes e tutores em contextos educacionais.
+**Prisma Frontend** is the interface layer of the Prisma project, a platform designed for monitoring courses, disciplines, students and tutors in educational contexts.
 
-A proposta do projeto é transformar dados acadêmicos em uma experiência visual mais clara para apoiar análises de desempenho, risco, participação e acompanhamento pedagógico. Em vez de apresentar apenas tabelas isoladas ou relatórios estáticos, o Prisma organiza indicadores, rankings e gráficos em painéis navegáveis, permitindo que diferentes perfis de usuário encontrem rapidamente sinais relevantes sobre a trajetória acadêmica dos estudantes.
+The project's purpose is to transform academic data into a clearer visual experience to support performance, risk, participation and pedagogical monitoring analyses. Rather than presenting only isolated tables or static reports, Prisma organizes indicators, rankings and graphs into navigable panels, allowing different user profiles to quickly find relevant signals about students' academic trajectories.
 
-Este repositório contém a aplicação web. A API, autenticação e regras de acesso ficam no backend:
+This repository contains the web application. The API, authentication and access rules are in the backend:
 
 - Backend: [tarrafa-ufjf/Prisma-backend](https://github.com/tarrafa-ufjf/Prisma-backend)
 
-## Demonstração
+## Demo
 
 <p align="center">
-  <img src="docs/assets/gif_interface.gif" alt="Demonstração da interface Prisma" width="85%">
+  <img src="docs/assets/gif_interface.gif" alt="Prisma interface demonstration" width="85%">
 </p>
 
-## Sobre o Prisma
+## About Prisma
 
-O Prisma nasce da necessidade de acompanhar grandes volumes de informações acadêmicas de forma mais acessível. Em ambientes educacionais, dados sobre disciplinas, atividades, estudantes, tutores e desempenho costumam existir em sistemas diferentes ou aparecer de maneira pouco amigável para tomada de decisão.
+Prisma was born from the need to monitor large volumes of academic information in a more accessible way. In educational environments, data about disciplines, activities, students, tutors and performance often exist in different systems or appear in a way that is not user-friendly for decision-making.
 
-A interface busca reduzir essa distância entre dado e interpretação. Ela centraliza informações importantes e apresenta visualizações que ajudam a perceber padrões, comparar cenários e identificar pontos que merecem atenção.
+The interface seeks to reduce the distance between data and interpretation. It centralizes important information and presents visualizations that help identify patterns, compare scenarios and highlight points that deserve attention.
 
-O foco não é substituir a análise humana, mas ampliar sua capacidade: oferecer uma visão mais organizada para que coordenadores, professores, tutores e equipes de acompanhamento possam investigar situações acadêmicas com mais contexto.
+The focus is not to replace human analysis, but to expand its capacity: to offer a more organized view so that coordinators, teachers, tutors and monitoring teams can investigate academic situations with more context.
 
-## Por que o projeto existe
+## Why the project exists
 
-O acompanhamento acadêmico depende de perguntas que nem sempre são simples de responder olhando dados brutos:
+Academic monitoring depends on questions that are not always simple to answer by looking at raw data:
 
-- Quais disciplinas concentram maiores sinais de dificuldade?
-- Quais estudantes podem precisar de acompanhamento mais próximo?
-- Como indicadores de participação, desempenho e evasão se distribuem entre cursos?
-- Quais tutores, turmas ou componentes apresentam resultados mais destacados?
-- Onde há padrões que merecem uma investigação pedagógica mais cuidadosa?
+- Which disciplines concentrate greater signals of difficulty?
+- Which students may need closer monitoring?
+- How are indicators of participation, performance and dropout distributed among courses?
+- Which tutors, classes or components show more outstanding results?
+- Where are there patterns that deserve more careful pedagogical investigation?
 
-O Prisma organiza essas perguntas em uma experiência visual. Rankings, gráficos, indicadores e filtros ajudam a transformar dados dispersos em pistas interpretáveis.
+Prisma organizes these questions into a visual experience. Rankings, graphs, indicators and filters help transform scattered data into interpretable clues.
 
-## Para quem é
+## Who it's for
 
-O projeto foi pensado para pessoas envolvidas no acompanhamento e gestão acadêmica:
+The project was designed for people involved in academic monitoring and management:
 
-- **Coordenadores e gestores**, que precisam observar o panorama de cursos e disciplinas.
-- **Professores e tutores**, que acompanham turmas, atividades e estudantes.
-- **Equipes pedagógicas**, que investigam risco, participação e desempenho.
-- **Pesquisadores**, que analisam dados educacionais e indicadores de aprendizagem.
-- **Administradores**, que precisam manter recursos e informações de apoio ao sistema.
+- **Coordinators and managers**, who need to observe the panorama of courses and disciplines.
+- **Teachers and tutors**, who follow classes, activities and students.
+- **Pedagogical teams**, who investigate risk, participation and performance.
+- **Researchers**, who analyze educational data and learning indicators.
+- **Administrators**, who need to maintain resources and system support information.
 
-## O que a interface oferece
+## What the interface offers
 
-O Prisma Frontend reúne telas e componentes para explorar diferentes níveis de informação acadêmica:
+Prisma Frontend brings together screens and components to explore different levels of academic information:
 
-- **Página inicial com indicadores gerais**, rankings e visões agregadas.
-- **Seleção e acompanhamento de cursos**, permitindo navegar por contextos específicos.
-- **Visualização de disciplinas**, com filtros e dados associados.
-- **Painéis de estudantes**, com dados pessoais, indicadores e gráficos de atividades.
-- **Painéis de tutores**, com dados gerais, rankings e indicadores relacionados.
-- **Área administrativa**, voltada a recursos de gestão do sistema.
-- **Chatbot com suporte a visualizações Vega**, permitindo explorar respostas e gráficos.
-- **Internacionalização**, com suporte a português brasileiro e inglês.
+- **Homepage with general indicators**, rankings and aggregated views.
+- **Course selection and monitoring**, allowing navigation of specific contexts.
+- **Discipline visualization**, with filters and associated data.
+- **Student panels**, with personal data, indicators and activity graphs.
+- **Tutor panels**, with general data, rankings and related indicators.
+- **Administrative area**, aimed at system management resources.
+- **Chatbot with Vega visualization support**, allowing exploration of responses and graphs.
+- **Internationalization**, with support for Brazilian Portuguese and English.
 
-## Visão da interface
+## Interface overview
 
-A navegação do Prisma foi organizada para ir do panorama geral ao detalhe:
+Prisma's navigation was organized to go from the general panorama to detail:
 
-| Área | Papel na experiência |
+| Area | Role in the experience |
 | --- | --- |
-| Home | Apresenta uma visão geral do ambiente acadêmico, com indicadores e rankings. |
-| Cursos | Permite selecionar um curso e acompanhar seus dados principais. |
-| Disciplinas | Centraliza informações de disciplinas e filtros para exploração. |
-| Alunos | Mostra listas e páginas individuais de estudantes. |
-| Tutores | Exibe dados, indicadores e rankings relacionados a tutoria. |
-| Chatbot | Apoia consultas e visualizações geradas a partir de dados. |
-| Administrador | Agrupa telas de gestão e manutenção do sistema. |
+| Home | Presents an overall view of the academic environment, with indicators and rankings. |
+| Courses | Allows you to select a course and monitor its main data. |
+| Disciplines | Centralizes discipline information and filters for exploration. |
+| Students | Shows lists and individual pages of students. |
+| Tutors | Displays data, indicators and rankings related to tutoring. |
+| Chatbot | Supports queries and visualizations generated from data. |
+| Administrator | Groups system management and maintenance screens. |
 
-## Como o Prisma interpreta dados
+## How Prisma interprets data
 
-O projeto combina diferentes formas de visualização para apoiar leituras complementares:
+The project combines different forms of visualization to support complementary readings:
 
-- **Indicadores** destacam sinais sintéticos, como desempenho, risco ou engajamento.
-- **Rankings** ajudam a comparar cursos, disciplinas, estudantes ou tutores.
-- **Gráficos** mostram distribuições, evoluções e relações entre variáveis.
-- **Tabelas e filtros** permitem investigação mais direta e granular.
-- **Painéis individuais** conectam informações gerais a trajetórias específicas.
+- **Indicators** highlight synthetic signals, such as performance, risk or engagement.
+- **Rankings** help compare courses, disciplines, students or tutors.
+- **Graphs** show distributions, evolutions and relationships between variables.
+- **Tables and filters** allow for more direct and granular investigation.
+- **Individual panels** connect general information to specific trajectories.
 
-Esses recursos foram pensados para favorecer uma leitura progressiva: primeiro o usuário identifica um sinal relevante, depois aprofunda a análise em telas mais específicas.
+These resources were designed to promote progressive reading: first the user identifies a relevant signal, then deepens the analysis on more specific screens.
 
-## Relação com o backend
+## Relationship with the backend
 
-Este frontend depende do Prisma Backend para obter dados, validar sessões e manter a integração com as fontes acadêmicas utilizadas pelo projeto.
+This frontend depends on Prisma Backend to obtain data, validate sessions and maintain integration with academic sources used by the project.
 
-Em linhas gerais:
+In general terms:
 
-- O frontend apresenta e organiza a experiência de uso.
-- O backend fornece os dados, autenticação e regras de acesso.
-- A comunicação entre os dois acontece por meio da URL configurada em `NEXT_PUBLIC_API_BASE_URL`.
+- The frontend presents and organizes the user experience.
+- The backend provides data, authentication and access rules.
+- Communication between the two happens through the URL configured in `NEXT_PUBLIC_API_BASE_URL`.
 
-Para uma execução completa do projeto, os dois repositórios devem estar configurados.
+For complete project execution, both repositories must be configured.
 
-## Tecnologias principais
+## Main technologies
 
-O projeto utiliza Next.js, React, TypeScript, Tailwind CSS, Material UI, next-intl, Axios e bibliotecas de visualização como Nivo, Vega, Vega-Lite, AG Charts e MUI X Charts.
+The project uses Next.js, React, TypeScript, Tailwind CSS, Material UI, next-intl, Axios and visualization libraries such as Nivo, Vega, Vega-Lite, AG Charts and MUI X Charts.
 
-## Executando localmente
+## Running locally
 
-Antes de iniciar, tenha o backend configurado e em execução. Depois, no repositório do frontend:
+Before starting, have the backend configured and running. Then, in the frontend repository:
 
 ```bash
 npm install
@@ -132,59 +134,59 @@ cp .env.example .env
 npm run dev
 ```
 
-Configure a URL da API no arquivo `.env`:
+Configure the API URL in the `.env` file:
 
 ```env
 NEXT_PUBLIC_API_BASE_URL="http://localhost:8000"
 ```
 
-A aplicação fica disponível em:
+The application is available at:
 
 ```text
 http://localhost:3000
 ```
 
-## Scripts disponíveis
+## Available scripts
 
-| Script | Descrição |
+| Script | Description |
 | --- | --- |
-| `npm run dev` | Inicia o ambiente de desenvolvimento com Turbopack. |
-| `npm run build` | Gera a versão de produção. |
-| `npm run start` | Executa a aplicação após o build. |
-| `npm run lint` | Executa as verificações de lint configuradas. |
+| `npm run dev` | Starts the development environment with Turbopack. |
+| `npm run build` | Generates the production version. |
+| `npm run start` | Runs the application after build. |
+| `npm run lint` | Runs configured lint checks. |
 
-## Estrutura do repositório
+## Repository structure
 
 ```text
 src/
-  app/                 Rotas da aplicação com App Router
-  components/          Componentes de páginas, interface e templates
-  hooks/               Hooks reutilizáveis
-  i18n/                Configuração de internacionalização
-  types/               Tipos TypeScript
-  utils/               Cliente de API, serviços e funções auxiliares
-messages/              Arquivos de tradução
-docs/                  Documentação e imagens de apoio
+  app/                 Application routes with App Router
+  components/          Page components, interface and templates
+  hooks/               Reusable hooks
+  i18n/                Internationalization configuration
+  types/               TypeScript types
+  utils/               API client, services and helper functions
+messages/              Translation files
+docs/                  Documentation and support images
 ```
 
-## Internacionalização
+## Internationalization
 
-A interface oferece suporte a:
+The interface supports:
 
-- `en`: idioma padrão, com URLs sem prefixo.
-- `pt-BR`: português brasileiro, com prefixo `/pt-BR`.
+- `en`: default language, with URLs without prefix.
+- `pt-BR`: Brazilian Portuguese, with `/pt-BR` prefix.
 
-Ao adicionar novos textos na interface, atualize:
+When adding new text to the interface, update:
 
 - `messages/en.json`
 - `messages/pt-BR.json`
 
-Mais detalhes estão em [docs/internacionalizacao.md](docs/internacionalizacao.md).
+More details are in [docs/internacionalizacao.md](docs/internacionalizacao.md).
 
-## Status do projeto
+## Project status
 
-O Prisma Frontend está em desenvolvimento como parte de uma iniciativa acadêmica de monitoramento educacional. A interface ainda pode evoluir em organização visual, cobertura de indicadores, experiência de uso e integração com novas fontes de dados.
+Prisma Frontend is under development as part of an academic educational monitoring initiative. The interface can still evolve in visual organization, indicator coverage, user experience and integration with new data sources.
 
-## Licença
+## License
 
-Este projeto está licenciado sob a licença MIT. Veja [LICENSE](./LICENSE).
+This project is licensed under the MIT License. See [LICENSE](./LICENSE).
