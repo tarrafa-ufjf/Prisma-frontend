@@ -20,6 +20,12 @@ It includes the screens and components used to browse courses, subjects, student
 
 - Backend: [tarrafa-ufjf/Prisma-backend](https://github.com/tarrafa-ufjf/Prisma-backend)
 
+## Demo
+
+<p align="center">
+  <img src="docs/assets/demo3.gif" alt="Prisma frontend demo" width="85%">
+</p>
+
 ## About the Project
 
 Prisma aims to support academic performance analysis through interactive dashboards and visualizations. The interface centralizes key information for monitoring courses, subjects, tutors, and students, helping identify performance, risk, and engagement indicators.
