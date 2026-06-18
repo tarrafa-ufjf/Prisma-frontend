@@ -23,7 +23,7 @@ It includes the screens and components used to browse courses, subjects, student
 ## Demo
 
 <p align="center">
-  <img src="docs/assets/demo3.gif" alt="Prisma frontend demo" width="85%">
+  <img src="docs/assets/gif_interface.gif" alt="Prisma frontend demo" width="85%">
 </p>
 
 ## About the Project
