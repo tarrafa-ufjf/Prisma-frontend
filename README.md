@@ -3,205 +3,188 @@
 </p>
 
 <p align="center">
-  A web interface for academic monitoring through dashboards, indicators, and educational data visualizations.
+  Uma interface web para apoiar o acompanhamento acadêmico por meio de indicadores, rankings, dashboards e visualizações educacionais.
 </p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/version-0.1.0-004b8d" alt="Version">
   <a href="./LICENSE"><img src="https://img.shields.io/badge/license-MIT-2fb594" alt="License"></a>
-  <img src="https://img.shields.io/badge/Research-Tool-orange" alt="Tool">
+  <img src="https://img.shields.io/badge/Academic-Monitoring-orange" alt="Academic Monitoring">
+  <img src="https://img.shields.io/badge/i18n-pt--BR%20%7C%20en-7c3aed" alt="Languages">
 </p>
+
+<h4 align="center">
+  <a href="#sobre-o-prisma">Sobre</a> |
+  <a href="#por-que-o-projeto-existe">Motivação</a> |
+  <a href="#o-que-a-interface-oferece">Recursos</a> |
+  <a href="#visão-da-interface">Interface</a> |
+  <a href="#executando-localmente">Executando</a>
+</h4>
 
 # Prisma Frontend
 
-This repository contains the Prisma frontend, a platform that supports academic monitoring through dashboards, indicators, and educational data visualizations.
+O **Prisma Frontend** é a camada de interface do projeto Prisma, uma plataforma voltada para o acompanhamento de cursos, disciplinas, estudantes e tutores em contextos educacionais.
 
-It includes the screens and components used to browse courses, subjects, students, tutors, rankings, indicators, and administrative resources. The application connects to the Prisma backend for authentication and data access:
+A proposta do projeto é transformar dados acadêmicos em uma experiência visual mais clara para apoiar análises de desempenho, risco, participação e acompanhamento pedagógico. Em vez de apresentar apenas tabelas isoladas ou relatórios estáticos, o Prisma organiza indicadores, rankings e gráficos em painéis navegáveis, permitindo que diferentes perfis de usuário encontrem rapidamente sinais relevantes sobre a trajetória acadêmica dos estudantes.
+
+Este repositório contém a aplicação web. A API, autenticação e regras de acesso ficam no backend:
 
 - Backend: [tarrafa-ufjf/Prisma-backend](https://github.com/tarrafa-ufjf/Prisma-backend)
 
-## Demo
+## Demonstração
 
 <p align="center">
-  <img src="docs/assets/gif_interface.gif" alt="Prisma frontend demo" width="85%">
+  <img src="docs/assets/gif_interface.gif" alt="Demonstração da interface Prisma" width="85%">
 </p>
 
-## About the Project
+## Sobre o Prisma
 
-Prisma aims to support academic performance analysis through interactive dashboards and visualizations. The interface centralizes key information for monitoring courses, subjects, tutors, and students, helping identify performance, risk, and engagement indicators.
+O Prisma nasce da necessidade de acompanhar grandes volumes de informações acadêmicas de forma mais acessível. Em ambientes educacionais, dados sobre disciplinas, atividades, estudantes, tutores e desempenho costumam existir em sistemas diferentes ou aparecer de maneira pouco amigável para tomada de decisão.
 
-This repository contains the web application, authentication-protected screens, API integration, interface internationalization, and visualization components used in the dashboards.
+A interface busca reduzir essa distância entre dado e interpretação. Ela centraliza informações importantes e apresenta visualizações que ajudam a perceber padrões, comparar cenários e identificar pontos que merecem atenção.
 
-## Main Features
+O foco não é substituir a análise humana, mas ampliar sua capacidade: oferecer uma visão mais organizada para que coordenadores, professores, tutores e equipes de acompanhamento possam investigar situações acadêmicas com mais contexto.
 
-- Backend-integrated authentication.
-- Home page with general indicators and rankings.
-- Course selection and monitoring.
-- Subject visualization with associated data.
-- Tutor dashboards with indicators, rankings, and general data.
-- Administrative area.
-- Chatbot with support for Vega chart visualization.
-- Internationalization support for Brazilian Portuguese and English.
-- Chart, table, filter, ranking, and indicator components.
+## Por que o projeto existe
 
-## Technologies
+O acompanhamento acadêmico depende de perguntas que nem sempre são simples de responder olhando dados brutos:
 
-- [Next.js](https://nextjs.org/) 15
-- [React](https://react.dev/) 19
-- [TypeScript](https://www.typescriptlang.org/)
-- [next-intl](https://next-intl.dev/) for internationalization
-- [Axios](https://axios-http.com/) for API communication
-- [Tailwind CSS](https://tailwindcss.com/)
-- [Material UI](https://mui.com/)
-- Visualization libraries such as Nivo, Vega, Vega-Lite, AG Charts, and MUI X Charts
+- Quais disciplinas concentram maiores sinais de dificuldade?
+- Quais estudantes podem precisar de acompanhamento mais próximo?
+- Como indicadores de participação, desempenho e evasão se distribuem entre cursos?
+- Quais tutores, turmas ou componentes apresentam resultados mais destacados?
+- Onde há padrões que merecem uma investigação pedagógica mais cuidadosa?
 
-## Requirements
+O Prisma organiza essas perguntas em uma experiência visual. Rankings, gráficos, indicadores e filtros ajudam a transformar dados dispersos em pistas interpretáveis.
 
-Before running the frontend, make sure you have installed:
+## Para quem é
 
-- Node.js 20 or higher
-- npm
-- Prisma backend configured and running
+O projeto foi pensado para pessoas envolvidas no acompanhamento e gestão acadêmica:
 
-See the backend README to configure the API correctly:
+- **Coordenadores e gestores**, que precisam observar o panorama de cursos e disciplinas.
+- **Professores e tutores**, que acompanham turmas, atividades e estudantes.
+- **Equipes pedagógicas**, que investigam risco, participação e desempenho.
+- **Pesquisadores**, que analisam dados educacionais e indicadores de aprendizagem.
+- **Administradores**, que precisam manter recursos e informações de apoio ao sistema.
 
-- [tarrafa-ufjf/Prisma-backend](https://github.com/tarrafa-ufjf/Prisma-backend)
+## O que a interface oferece
 
-## Environment Setup
+O Prisma Frontend reúne telas e componentes para explorar diferentes níveis de informação acadêmica:
 
-1. Install the dependencies:
+- **Página inicial com indicadores gerais**, rankings e visões agregadas.
+- **Seleção e acompanhamento de cursos**, permitindo navegar por contextos específicos.
+- **Visualização de disciplinas**, com filtros e dados associados.
+- **Painéis de estudantes**, com dados pessoais, indicadores e gráficos de atividades.
+- **Painéis de tutores**, com dados gerais, rankings e indicadores relacionados.
+- **Área administrativa**, voltada a recursos de gestão do sistema.
+- **Chatbot com suporte a visualizações Vega**, permitindo explorar respostas e gráficos.
+- **Internacionalização**, com suporte a português brasileiro e inglês.
+
+## Visão da interface
+
+A navegação do Prisma foi organizada para ir do panorama geral ao detalhe:
+
+| Área | Papel na experiência |
+| --- | --- |
+| Home | Apresenta uma visão geral do ambiente acadêmico, com indicadores e rankings. |
+| Cursos | Permite selecionar um curso e acompanhar seus dados principais. |
+| Disciplinas | Centraliza informações de disciplinas e filtros para exploração. |
+| Alunos | Mostra listas e páginas individuais de estudantes. |
+| Tutores | Exibe dados, indicadores e rankings relacionados a tutoria. |
+| Chatbot | Apoia consultas e visualizações geradas a partir de dados. |
+| Administrador | Agrupa telas de gestão e manutenção do sistema. |
+
+## Como o Prisma interpreta dados
+
+O projeto combina diferentes formas de visualização para apoiar leituras complementares:
+
+- **Indicadores** destacam sinais sintéticos, como desempenho, risco ou engajamento.
+- **Rankings** ajudam a comparar cursos, disciplinas, estudantes ou tutores.
+- **Gráficos** mostram distribuições, evoluções e relações entre variáveis.
+- **Tabelas e filtros** permitem investigação mais direta e granular.
+- **Painéis individuais** conectam informações gerais a trajetórias específicas.
+
+Esses recursos foram pensados para favorecer uma leitura progressiva: primeiro o usuário identifica um sinal relevante, depois aprofunda a análise em telas mais específicas.
+
+## Relação com o backend
+
+Este frontend depende do Prisma Backend para obter dados, validar sessões e manter a integração com as fontes acadêmicas utilizadas pelo projeto.
+
+Em linhas gerais:
+
+- O frontend apresenta e organiza a experiência de uso.
+- O backend fornece os dados, autenticação e regras de acesso.
+- A comunicação entre os dois acontece por meio da URL configurada em `NEXT_PUBLIC_API_BASE_URL`.
+
+Para uma execução completa do projeto, os dois repositórios devem estar configurados.
+
+## Tecnologias principais
+
+O projeto utiliza Next.js, React, TypeScript, Tailwind CSS, Material UI, next-intl, Axios e bibliotecas de visualização como Nivo, Vega, Vega-Lite, AG Charts e MUI X Charts.
+
+## Executando localmente
+
+Antes de iniciar, tenha o backend configurado e em execução. Depois, no repositório do frontend:
 
 ```bash
 npm install
-```
-
-2. Create the environment file from the example:
-
-```bash
 cp .env.example .env
+npm run dev
 ```
 
-3. Configure the API URL in the `.env` file:
+Configure a URL da API no arquivo `.env`:
 
 ```env
 NEXT_PUBLIC_API_BASE_URL="http://localhost:8000"
 ```
 
-Use the URL and port configured in the backend. This variable is used by the frontend to authenticate the user and consume the API endpoints.
-
-## Running the Project
-
-To start the development environment:
-
-```bash
-npm run dev
-```
-
-The application will be available at:
+A aplicação fica disponível em:
 
 ```text
 http://localhost:3000
 ```
 
-The project uses the Next.js App Router. The main routes are located in `src/app/[locale]`, with authenticated pages grouped under `src/app/[locale]/(auth)`.
+## Scripts disponíveis
 
-## Available Scripts
+| Script | Descrição |
+| --- | --- |
+| `npm run dev` | Inicia o ambiente de desenvolvimento com Turbopack. |
+| `npm run build` | Gera a versão de produção. |
+| `npm run start` | Executa a aplicação após o build. |
+| `npm run lint` | Executa as verificações de lint configuradas. |
 
-```bash
-npm run dev
-```
-
-Starts the development server with Turbopack.
-
-```bash
-npm run build
-```
-
-Generates the production build.
-
-```bash
-npm run start
-```
-
-Runs the application in production mode after the build.
-
-```bash
-npm run lint
-```
-
-Runs the lint checks configured for the project.
-
-## Project Structure
+## Estrutura do repositório
 
 ```text
 src/
-  app/                 Application routes with App Router
-  components/          Page, UI, and template components
-  hooks/               Reusable hooks
-  i18n/                Internationalization configuration
-  types/               TypeScript types
-  utils/               Services, API client, and helper functions
-messages/              Translation files
-docs/                  Supporting project documentation
+  app/                 Rotas da aplicação com App Router
+  components/          Componentes de páginas, interface e templates
+  hooks/               Hooks reutilizáveis
+  i18n/                Configuração de internacionalização
+  types/               Tipos TypeScript
+  utils/               Cliente de API, serviços e funções auxiliares
+messages/              Arquivos de tradução
+docs/                  Documentação e imagens de apoio
 ```
 
-Important files:
+## Internacionalização
 
-- `.env.example`: example environment variables.
-- `src/utils/api.ts`: Axios client for client-side requests.
-- `src/utils/api-server.ts`: Axios client for server-side requests with cookie forwarding.
-- `src/middleware.ts`: internationalization and authentication middleware.
-- `docs/internacionalizacao.md`: standard used for interface translation.
+A interface oferece suporte a:
 
-## Internationalization
+- `en`: idioma padrão, com URLs sem prefixo.
+- `pt-BR`: português brasileiro, com prefixo `/pt-BR`.
 
-The project uses `next-intl` and currently supports:
-
-- `en`: default language, with unprefixed URLs.
-- `pt-BR`: Brazilian Portuguese, with the `/pt-BR` prefix.
-
-Examples:
-
-```text
-/login
-/pt-BR/login
-/cursos
-/pt-BR/cursos
-```
-
-When adding new interface text, update these files:
+Ao adicionar novos textos na interface, atualize:
 
 - `messages/en.json`
 - `messages/pt-BR.json`
 
-More details are available in [docs/internacionalizacao.md](docs/internacionalizacao.md).
+Mais detalhes estão em [docs/internacionalizacao.md](docs/internacionalizacao.md).
 
-## Backend Integration
+## Status do projeto
 
-This frontend depends on the backend to:
+O Prisma Frontend está em desenvolvimento como parte de uma iniciativa acadêmica de monitoramento educacional. A interface ainda pode evoluir em organização visual, cobertura de indicadores, experiência de uso e integração com novas fontes de dados.
 
-- Validate authentication through `auth/me`.
-- Fetch course, subject, tutor, student, and indicator data.
-- Maintain session cookies between the browser, middleware, and API.
+## Licença
 
-During development, make sure that:
-
-- The backend is running.
-- `NEXT_PUBLIC_API_BASE_URL` points to the correct API URL.
-- The backend CORS and cookie settings allow requests from the frontend.
-
-## Development Workflow
-
-A common routine for local development:
-
-```bash
-npm install
-cp .env.example .env
-npm run dev
-```
-
-In another terminal, keep the backend running according to the instructions in the [Prisma-backend](https://github.com/tarrafa-ufjf/Prisma-backend) repository.
-
-## License
-
-This project is licensed under the MIT License. See the license reference in [LICENSE](./LICENSE).
+Este projeto está licenciado sob a licença MIT. Veja [LICENSE](./LICENSE).
