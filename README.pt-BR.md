@@ -25,7 +25,7 @@
 
 # Prisma Frontend
 
-O **Prisma Frontend** é a camada de interface do projeto Prisma, uma plataforma voltada para o acompanhamento de cursos, disciplinas, estudantes e tutores em contextos educacionais.
+O **Prisma Frontend** é a camada de interface do projeto Prisma, uma plataforma voltada para o acompanhamento de disciplinas, estudantes e tutores em contextos educacionais.
 
 A proposta do projeto é transformar dados acadêmicos em uma experiência visual mais clara para apoiar análises de desempenho, risco, participação e acompanhamento pedagógico. Em vez de apresentar apenas tabelas isoladas ou relatórios estáticos, o Prisma organiza indicadores, rankings e gráficos em painéis navegáveis, permitindo que diferentes perfis de usuário encontrem rapidamente sinais relevantes sobre a trajetória acadêmica dos estudantes.
 
@@ -53,7 +53,7 @@ O acompanhamento acadêmico depende de perguntas que nem sempre são simples de 
 
 - Quais disciplinas concentram maiores sinais de dificuldade?
 - Quais estudantes podem precisar de acompanhamento mais próximo?
-- Como indicadores de participação, desempenho e evasão se distribuem entre cursos?
+- Como indicadores de participação, desempenho e evasão se distribuem entre disciplinas?
 - Quais tutores, turmas ou componentes apresentam resultados mais destacados?
 - Onde há padrões que merecem uma investigação pedagógica mais cuidadosa?
 
@@ -63,7 +63,7 @@ O Prisma organiza essas perguntas em uma experiência visual. Rankings, gráfico
 
 O projeto foi pensado para pessoas envolvidas no acompanhamento e gestão acadêmica:
 
-- **Coordenadores e gestores**, que precisam observar o panorama de cursos e disciplinas.
+- **Coordenadores e gestores**, que precisam observar o panorama de disciplinas.
 - **Professores e tutores**, que acompanham turmas, atividades e estudantes.
 - **Equipes pedagógicas**, que investigam risco, participação e desempenho.
 - **Pesquisadores**, que analisam dados educacionais e indicadores de aprendizagem.
@@ -74,8 +74,7 @@ O projeto foi pensado para pessoas envolvidas no acompanhamento e gestão acadê
 O Prisma Frontend reúne telas e componentes para explorar diferentes níveis de informação acadêmica:
 
 - **Página inicial com indicadores gerais**, rankings e visões agregadas.
-- **Seleção e acompanhamento de cursos**, permitindo navegar por contextos específicos.
-- **Visualização de disciplinas**, com filtros e dados associados.
+- **Seleção e acompanhamento de disciplinas**, com filtros e dados associados para navegar por contextos específicos.
 - **Painéis de estudantes**, com dados pessoais, indicadores e gráficos de atividades.
 - **Painéis de tutores**, com dados gerais, rankings e indicadores relacionados.
 - **Área administrativa**, voltada a recursos de gestão do sistema.
@@ -89,8 +88,7 @@ A navegação do Prisma foi organizada para ir do panorama geral ao detalhe:
 | Área | Papel na experiência |
 | --- | --- |
 | Home | Apresenta uma visão geral do ambiente acadêmico, com indicadores e rankings. |
-| Cursos | Permite selecionar um curso e acompanhar seus dados principais. |
-| Disciplinas | Centraliza informações de disciplinas e filtros para exploração. |
+| Disciplinas | Permite selecionar uma disciplina, acompanhar seus dados principais e usar filtros para exploração. |
 | Alunos | Mostra listas e páginas individuais de estudantes. |
 | Tutores | Exibe dados, indicadores e rankings relacionados a tutoria. |
 | Chatbot | Apoia consultas e visualizações geradas a partir de dados. |
@@ -101,7 +99,7 @@ A navegação do Prisma foi organizada para ir do panorama geral ao detalhe:
 O projeto combina diferentes formas de visualização para apoiar leituras complementares:
 
 - **Indicadores** destacam sinais sintéticos, como desempenho, risco ou engajamento.
-- **Rankings** ajudam a comparar cursos, disciplinas, estudantes ou tutores.
+- **Rankings** ajudam a comparar disciplinas, estudantes ou tutores.
 - **Gráficos** mostram distribuições, evoluções e relações entre variáveis.
 - **Tabelas e filtros** permitem investigação mais direta e granular.
 - **Painéis individuais** conectam informações gerais a trajetórias específicas.

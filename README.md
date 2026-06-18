@@ -25,7 +25,7 @@
 
 # Prisma Frontend
 
-**Prisma Frontend** is the interface layer of the Prisma project, a platform designed for monitoring courses, disciplines, students and tutors in educational contexts.
+**Prisma Frontend** is the interface layer of the Prisma project, a platform designed for monitoring disciplines, students and tutors in educational contexts.
 
 The project's purpose is to transform academic data into a clearer visual experience to support performance, risk, participation and pedagogical monitoring analyses. Rather than presenting only isolated tables or static reports, Prisma organizes indicators, rankings and graphs into navigable panels, allowing different user profiles to quickly find relevant signals about students' academic trajectories.
 
@@ -53,7 +53,7 @@ Academic monitoring depends on questions that are not always simple to answer by
 
 - Which disciplines concentrate greater signals of difficulty?
 - Which students may need closer monitoring?
-- How are indicators of participation, performance and dropout distributed among courses?
+- How are indicators of participation, performance and dropout distributed among disciplines?
 - Which tutors, classes or components show more outstanding results?
 - Where are there patterns that deserve more careful pedagogical investigation?
 
@@ -63,7 +63,7 @@ Prisma organizes these questions into a visual experience. Rankings, graphs, ind
 
 The project was designed for people involved in academic monitoring and management:
 
-- **Coordinators and managers**, who need to observe the panorama of courses and disciplines.
+- **Coordinators and managers**, who need to observe the panorama of disciplines.
 - **Teachers and tutors**, who follow classes, activities and students.
 - **Pedagogical teams**, who investigate risk, participation and performance.
 - **Researchers**, who analyze educational data and learning indicators.
@@ -74,8 +74,7 @@ The project was designed for people involved in academic monitoring and manageme
 Prisma Frontend brings together screens and components to explore different levels of academic information:
 
 - **Homepage with general indicators**, rankings and aggregated views.
-- **Course selection and monitoring**, allowing navigation of specific contexts.
-- **Discipline visualization**, with filters and associated data.
+- **Discipline selection and monitoring**, with filters and associated data for navigating specific contexts.
 - **Student panels**, with personal data, indicators and activity graphs.
 - **Tutor panels**, with general data, rankings and related indicators.
 - **Administrative area**, aimed at system management resources.
@@ -89,8 +88,7 @@ Prisma's navigation was organized to go from the general panorama to detail:
 | Area | Role in the experience |
 | --- | --- |
 | Home | Presents an overall view of the academic environment, with indicators and rankings. |
-| Courses | Allows you to select a course and monitor its main data. |
-| Disciplines | Centralizes discipline information and filters for exploration. |
+| Disciplines | Allows you to select a discipline, monitor its main data and use filters for exploration. |
 | Students | Shows lists and individual pages of students. |
 | Tutors | Displays data, indicators and rankings related to tutoring. |
 | Chatbot | Supports queries and visualizations generated from data. |
@@ -101,7 +99,7 @@ Prisma's navigation was organized to go from the general panorama to detail:
 The project combines different forms of visualization to support complementary readings:
 
 - **Indicators** highlight synthetic signals, such as performance, risk or engagement.
-- **Rankings** help compare courses, disciplines, students or tutors.
+- **Rankings** help compare disciplines, students or tutors.
 - **Graphs** show distributions, evolutions and relationships between variables.
 - **Tables and filters** allow for more direct and granular investigation.
 - **Individual panels** connect general information to specific trajectories.
