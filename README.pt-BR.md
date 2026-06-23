@@ -10,12 +10,14 @@
   <img src="https://img.shields.io/badge/version-0.1.0-004b8d" alt="Version">
   <a href="./LICENSE"><img src="https://img.shields.io/badge/license-MIT-2fb594" alt="License"></a>
   <img src="https://img.shields.io/badge/Academic-Monitoring-orange" alt="Academic Monitoring">
+  <img src="https://img.shields.io/badge/Moodle-Integração-f98012" alt="Integração Moodle">
   <img src="https://img.shields.io/badge/i18n-pt--BR%20%7C%20en-7c3aed" alt="Languages">
 </p>
 
 <h4 align="center">
   <a href="#sobre-o-prisma">Sobre</a> |
   <a href="#por-que-o-projeto-existe">Motivação</a> |
+  <a href="#integração-com-o-moodle">Moodle</a> |
   <a href="#o-que-a-interface-oferece">Recursos</a> |
   <a href="#visão-da-interface">Interface</a> |
   <a href="#executando-localmente">Executando</a>
@@ -28,6 +30,8 @@
 O **Prisma Frontend** é a camada de interface do projeto Prisma, uma plataforma voltada para o acompanhamento de disciplinas, estudantes e tutores em contextos educacionais.
 
 A proposta do projeto é transformar dados acadêmicos em uma experiência visual mais clara para apoiar análises de desempenho, risco, participação e acompanhamento pedagógico. Em vez de apresentar apenas tabelas isoladas ou relatórios estáticos, o Prisma organiza indicadores, rankings e gráficos em painéis navegáveis, permitindo que diferentes perfis de usuário encontrem rapidamente sinais relevantes sobre a trajetória acadêmica dos estudantes.
+
+O Prisma hoje inclui uma solução voltada à integração com o Moodle, permitindo que dados do ambiente virtual de aprendizagem apoiem os indicadores e visualizações de acompanhamento acadêmico do projeto.
 
 Este repositório contém a aplicação web. A API, autenticação e regras de acesso ficam no backend:
 
@@ -59,6 +63,18 @@ O acompanhamento acadêmico depende de perguntas que nem sempre são simples de 
 
 O Prisma organiza essas perguntas em uma experiência visual. Rankings, gráficos, indicadores e filtros ajudam a transformar dados dispersos em pistas interpretáveis.
 
+## Integração com o Moodle
+
+O Prisma foi pensado para trabalhar com dados do Moodle, conectando informações do ambiente virtual de aprendizagem aos fluxos de acompanhamento acadêmico. Essa integração ajuda a transformar registros sobre disciplinas, estudantes, tutores, atividades e acessos em indicadores, rankings, dashboards e painéis individuais.
+
+Administradores podem acessar telas de configuração do Moodle, cadastrar a conexão utilizada pelo sistema e verificar se a integração está pronta. Depois de configurado, o Moodle passa a ser uma das fontes acadêmicas que alimentam a experiência do Prisma.
+
+O Prisma foi pensado para funcionar em diferentes versões do Moodle. A tabela abaixo lista as versões já testadas com o projeto:
+
+| Versão do Moodle | Status | Observações |
+| --- | --- | --- |
+| 3.1.3 | Testada | Versão atualmente validada para o fluxo de integração. |
+
 ## Para quem é
 
 O projeto foi pensado para pessoas envolvidas no acompanhamento e gestão acadêmica:
@@ -77,6 +93,7 @@ O Prisma Frontend reúne telas e componentes para explorar diferentes níveis de
 - **Seleção e acompanhamento de disciplinas**, com filtros e dados associados para navegar por contextos específicos.
 - **Painéis de estudantes**, com dados pessoais, indicadores e gráficos de atividades.
 - **Painéis de tutores**, com dados gerais, rankings e indicadores relacionados.
+- **Gestão da integração com o Moodle**, com telas administrativas para cadastrar e validar a conexão.
 - **Área administrativa**, voltada a recursos de gestão do sistema.
 - **Chatbot com suporte a visualizações Vega**, permitindo explorar respostas e gráficos.
 - **Internacionalização**, com suporte a português brasileiro e inglês.
@@ -92,7 +109,7 @@ A navegação do Prisma foi organizada para ir do panorama geral ao detalhe:
 | Alunos | Mostra listas e páginas individuais de estudantes. |
 | Tutores | Exibe dados, indicadores e rankings relacionados a tutoria. |
 | Chatbot | Apoia consultas e visualizações geradas a partir de dados. |
-| Administrador | Agrupa telas de gestão e manutenção do sistema. |
+| Administrador | Agrupa telas de gestão, integração com o Moodle e manutenção do sistema. |
 
 ## Como o Prisma interpreta dados
 
@@ -108,7 +125,7 @@ Esses recursos foram pensados para favorecer uma leitura progressiva: primeiro o
 
 ## Relação com o backend
 
-Este frontend depende do Prisma Backend para obter dados, validar sessões e manter a integração com as fontes acadêmicas utilizadas pelo projeto.
+Este frontend depende do Prisma Backend para obter dados, validar sessões e manter a integração com as fontes acadêmicas utilizadas pelo projeto, incluindo o Moodle.
 
 Em linhas gerais:
 

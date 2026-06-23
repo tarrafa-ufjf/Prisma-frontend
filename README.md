@@ -10,12 +10,14 @@
   <img src="https://img.shields.io/badge/version-0.1.0-004b8d" alt="Version">
   <a href="./LICENSE"><img src="https://img.shields.io/badge/license-MIT-2fb594" alt="License"></a>
   <img src="https://img.shields.io/badge/Academic-Monitoring-orange" alt="Academic Monitoring">
+  <img src="https://img.shields.io/badge/Moodle-Integration-f98012" alt="Moodle Integration">
   <img src="https://img.shields.io/badge/i18n-pt--BR%20%7C%20en-7c3aed" alt="Languages">
 </p>
 
 <h4 align="center">
   <a href="#about-prisma">About</a> |
   <a href="#why-the-project-exists">Motivation</a> |
+  <a href="#moodle-integration">Moodle</a> |
   <a href="#what-the-interface-offers">Features</a> |
   <a href="#interface-overview">Interface</a> |
   <a href="#running-locally">Running</a>
@@ -28,6 +30,8 @@
 **Prisma Frontend** is the interface layer of the Prisma project, a platform designed for monitoring disciplines, students and tutors in educational contexts.
 
 The project's purpose is to transform academic data into a clearer visual experience to support performance, risk, participation and pedagogical monitoring analyses. Rather than presenting only isolated tables or static reports, Prisma organizes indicators, rankings and graphs into navigable panels, allowing different user profiles to quickly find relevant signals about students' academic trajectories.
+
+Prisma currently includes a solution focused on Moodle integration, allowing academic data from the virtual learning environment to support the project's monitoring indicators and visualizations.
 
 This repository contains the web application. The API, authentication and access rules are in the backend:
 
@@ -59,6 +63,18 @@ Academic monitoring depends on questions that are not always simple to answer by
 
 Prisma organizes these questions into a visual experience. Rankings, graphs, indicators and filters help transform scattered data into interpretable clues.
 
+## Moodle integration
+
+Prisma is designed to work with data from Moodle, connecting information from the virtual learning environment to academic monitoring workflows. This integration helps transform Moodle records about disciplines, students, tutors, activities and access into indicators, rankings, dashboards and individual panels.
+
+Administrators can access Moodle configuration screens, register the connection used by the system and check whether the integration is ready. Once configured, Moodle becomes one of the academic data sources that feeds the Prisma experience.
+
+Prisma is intended to work across different Moodle versions. The table below lists the versions already tested with the project:
+
+| Moodle version | Status | Notes |
+| --- | --- | --- |
+| 3.1.3 | Tested | Current validated version for the integration flow. |
+
 ## Who it's for
 
 The project was designed for people involved in academic monitoring and management:
@@ -77,6 +93,7 @@ Prisma Frontend brings together screens and components to explore different leve
 - **Discipline selection and monitoring**, with filters and associated data for navigating specific contexts.
 - **Student panels**, with personal data, indicators and activity graphs.
 - **Tutor panels**, with general data, rankings and related indicators.
+- **Moodle integration management**, with administrative screens to register and validate the connection.
 - **Administrative area**, aimed at system management resources.
 - **Chatbot with Vega visualization support**, allowing exploration of responses and graphs.
 - **Internationalization**, with support for Brazilian Portuguese and English.
@@ -92,7 +109,7 @@ Prisma's navigation was organized to go from the general panorama to detail:
 | Students | Shows lists and individual pages of students. |
 | Tutors | Displays data, indicators and rankings related to tutoring. |
 | Chatbot | Supports queries and visualizations generated from data. |
-| Administrator | Groups system management and maintenance screens. |
+| Administrator | Groups system management, Moodle integration and maintenance screens. |
 
 ## How Prisma interprets data
 
@@ -108,7 +125,7 @@ These resources were designed to promote progressive reading: first the user ide
 
 ## Relationship with the backend
 
-This frontend depends on Prisma Backend to obtain data, validate sessions and maintain integration with academic sources used by the project.
+This frontend depends on Prisma Backend to obtain data, validate sessions and maintain integration with academic sources used by the project, including Moodle.
 
 In general terms:
 
