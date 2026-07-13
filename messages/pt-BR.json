@@ -20,8 +20,24 @@
     "openAssistant": "Abrir assistente Íris IA",
     "suggestionsTitle": "Sugestões",
     "inputPlaceholder": "Escreva uma pergunta...",
+    "newConversation": "Nova conversa",
+    "conversationHistory": "Histórico",
+    "refreshConversations": "Atualizar conversas",
+    "deleteConversation": "Excluir conversa",
+    "confirmDeleteConversation": "Excluir a conversa \"{title}\"?",
+    "loadingConversations": "Carregando conversas...",
+    "loadingConversation": "Carregando conversa...",
+    "emptyConversations": "Nenhuma conversa encontrada.",
+    "emptyConversation": "Conversa sem mensagens.",
+    "untitledConversation": "Conversa sem título",
+    "interpretedQuestion": "Pergunta interpretada:",
+    "debugSql": "SQL",
+    "emptyAnswer": "Não foi possível obter uma resposta.",
     "errors": {
-      "fetch": "Erro ao consultar o chatbot."
+      "fetch": "Erro ao consultar o chatbot.",
+      "loadConversations": "Erro ao carregar conversas.",
+      "loadConversation": "Erro ao carregar a conversa.",
+      "deleteConversation": "Erro ao excluir a conversa."
     },
     "suggestions": {
       "dropoutRisk": "Quais disciplinas apresentam maior risco de evasão?",

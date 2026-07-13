@@ -13,13 +13,13 @@ export default function ChatPage() {
 
             <div className="grid grid-cols-12 gap-6 h-[calc(100vh-48px)]">
 
-                <div className="col-span-5 h-full">
+                <div className="col-span-6 h-full">
                     <ChatbotPage
                         setResponse={setResponse}
                     />
                 </div>
 
-                <div className="col-span-7 flex flex-col gap-6 h-full">
+                <div className="col-span-6 flex flex-col gap-6 h-full">
                     <GraficoVegaPage
                         vegaSpec={response?.vega}
                     />
