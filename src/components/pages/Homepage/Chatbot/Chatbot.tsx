@@ -35,6 +35,13 @@ interface BackendMessage {
     created_at: string;
 }
 
+interface BackendConversation {
+    id: number;
+    title: string;
+    messages?: BackendMessage[];
+    vega?: unknown | null;
+}
+
 interface Message {
     id: number;
     text: string;
@@ -126,11 +133,12 @@ export default function ChatbotPage({
     const loadConversation = useCallback(async (conversationId: number) => {
         setIsLoadingConversation(true);
         setErrorMessage(null);
+        setResponse(undefined);
 
         try {
             const response = await api.get(`/chatbot/conversations/${conversationId}`);
-            const conversation = response.data.conversation;
-            const loadedMessages = (conversation.messages ?? []).map((message: BackendMessage) => ({
+            const conversation = response.data.conversation as BackendConversation;
+            const loadedMessages: Message[] = (conversation.messages ?? []).map((message: BackendMessage) => ({
                 id: message.id,
                 text: message.content,
                 sender: message.role === "user" ? "user" : "bot",
@@ -142,10 +150,13 @@ export default function ChatbotPage({
             const lastVegaMessage = [...loadedMessages].reverse().find((message: Message) => {
                 return message.sender === "bot" && message.vega;
             });
+            const conversationVega = "vega" in conversation
+                ? conversation.vega
+                : lastVegaMessage?.vega ?? null;
 
             setActiveConversationId(conversation.id);
             setMessages(loadedMessages);
-            setResponse(lastVegaMessage ? { vega: lastVegaMessage.vega } : null);
+            setResponse(conversationVega ? { vega: conversationVega } : null);
             localStorage.setItem(lastConversationStorageKey, String(conversation.id));
         } catch (error) {
             if (handleUnauthorized(error)) {
@@ -158,7 +169,10 @@ export default function ChatbotPage({
         }
     }, [handleUnauthorized, setResponse, t]);
 
-    const loadConversations = useCallback(async (preferredConversationId?: number | null) => {
+    const loadConversations = useCallback(async (
+        preferredConversationId?: number | null,
+        shouldLoadConversation = true
+    ) => {
         setIsLoadingConversations(true);
         setErrorMessage(null);
 
@@ -180,12 +194,14 @@ export default function ChatbotPage({
 
             setConversations(nextConversations);
 
-            if (nextActiveId && canOpenNextActive) {
+            if (nextActiveId && canOpenNextActive && shouldLoadConversation) {
                 await loadConversation(nextActiveId);
             } else {
-                setActiveConversationId(null);
-                setMessages([]);
-                setResponse(null);
+                if (!nextActiveId || !canOpenNextActive) {
+                    setActiveConversationId(null);
+                    setMessages([]);
+                    setResponse(undefined);
+                }
             }
         } catch (error) {
             if (handleUnauthorized(error)) {
@@ -216,7 +232,7 @@ export default function ChatbotPage({
         setActiveConversationId(null);
         setMessages([]);
         setErrorMessage(null);
-        setResponse(null);
+        setResponse(undefined);
         localStorage.removeItem(lastConversationStorageKey);
     }
 
@@ -252,7 +268,7 @@ export default function ChatbotPage({
                 } else {
                     localStorage.removeItem(lastConversationStorageKey);
                     setMessages([]);
-                    setResponse(null);
+                    setResponse(undefined);
                 }
             }
 
@@ -320,7 +336,7 @@ export default function ChatbotPage({
                 botMessage
             ]);
 
-            await loadConversations(nextConversationId);
+            await loadConversations(nextConversationId, false);
         } catch (error) {
             if (handleUnauthorized(error)) {
                 return;

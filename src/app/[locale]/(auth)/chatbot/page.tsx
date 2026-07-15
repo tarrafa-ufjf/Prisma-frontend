@@ -6,7 +6,8 @@ import GraficoVegaPage from "@/components/pages/Homepage/Chatbot/GraficoVega";
 
 export default function ChatPage() {
 
-    const [response, setResponse] = useState<any>(null);
+    const [response, setResponse] = useState<any>();
+    const vegaSpec = response === undefined ? undefined : response?.vega ?? null;
 
     return (
         <div className="w-full min-h-screen bg-white pl-[290px] pr-16 py-6">
@@ -21,7 +22,7 @@ export default function ChatPage() {
 
                 <div className="col-span-6 flex flex-col gap-6 h-full">
                     <GraficoVegaPage
-                        vegaSpec={response?.vega}
+                        vegaSpec={vegaSpec}
                     />
                 </div>
 
