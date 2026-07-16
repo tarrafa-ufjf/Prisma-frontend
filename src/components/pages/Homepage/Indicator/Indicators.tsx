@@ -102,7 +102,7 @@ export default function Indicators() {
                         className="object-cover"
                       />
                     </div>
-                    <p className="text-2xl font-bold text-gray-900">70%</p>
+                    <p className="text-2xl font-bold text-gray-900">{data.engagement.good_percentage}%</p>
                   </div>
                   <div className="ml-17 flex text-left">
                     <div className="flex flex-col leading-snug">
@@ -128,7 +128,7 @@ export default function Indicators() {
                         className="ml-2.5 object-cover"
                       />
                     </div>
-                    <p className="text-2xl font-bold text-gray-900">55%</p>
+                    <p className="text-2xl font-bold text-gray-900">{data.motivation.good_percentage}%</p>
                   </div>
 
                   <div className="ml-19 flex text-left">
@@ -155,7 +155,7 @@ export default function Indicators() {
                         className="object-cover"
                       />
                     </div>
-                    <p className="text-2xl font-bold text-gray-900">55%</p>
+                    <p className="text-2xl font-bold text-gray-900">{data.performance.good_percentage}%</p>
                   </div>
 
                   <div className="ml-17 flex text-left">
@@ -182,7 +182,7 @@ export default function Indicators() {
                         className="object-cover text-white"
                       />
                     </div>
-                    <p className="text-2xl font-bold text-gray-900">65%</p>
+                    <p className="text-2xl font-bold text-gray-900">{data.cognitive.good_percentage}%</p>
                   </div>
 
                   <div className="ml-17 flex text-left">
@@ -212,7 +212,7 @@ export default function Indicators() {
                       className="mr-0.5 object-cover"
                     />
                   </div>
-                  <p className="text-2xl font-bold text-gray-900">16%</p>
+                  <p className="text-2xl font-bold text-gray-900">{data.relation_teacher_student.good_percentage}%</p>
                 </div>
                 <div className="ml-17 flex text-left">
                   <div className="flex flex-col leading-snug">
@@ -238,7 +238,7 @@ export default function Indicators() {
                       className="object-cover"
                     />
                   </div>
-                  <p className="text-2xl font-bold text-gray-900">99%</p>
+                  <p className="text-2xl font-bold text-gray-900">{data.give_up.good_percentage}%</p>
                 </div>
                 <div className="ml-17 flex text-left">
                   <div className="flex flex-col leading-snug">

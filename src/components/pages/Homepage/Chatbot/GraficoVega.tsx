@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import embed, { VisualizationSpec } from 'vega-embed';
 
 interface GraficoVegaPageProps {
-    vegaSpec: VisualizationSpec | null;
+    vegaSpec: VisualizationSpec | null | undefined;
 }
 
 export default function GraficoVegaPage({
@@ -16,19 +16,19 @@ export default function GraficoVegaPage({
     const chartRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
+        let finalized = false;
+        let finalizeView: (() => void) | undefined;
 
         if (!chartRef.current) {
             return;
         }
 
-        if (vegaSpec === undefined) {
-            return;
-        }
-
-        if (vegaSpec === null) {
+        if (vegaSpec === undefined || vegaSpec === null) {
             chartRef.current.innerHTML = "";
             return;
         }
+
+        chartRef.current.innerHTML = "";
 
         embed(
             chartRef.current,
@@ -37,7 +37,22 @@ export default function GraficoVegaPage({
                 actions: true,
                 renderer: "svg"
             }
-        );
+        ).then((result) => {
+            finalizeView = () => result.view.finalize();
+
+            if (finalized) {
+                finalizeView();
+            }
+        });
+
+        return () => {
+            finalized = true;
+            finalizeView?.();
+
+            if (chartRef.current) {
+                chartRef.current.innerHTML = "";
+            }
+        };
 
     }, [vegaSpec]);
 
@@ -55,10 +70,12 @@ export default function GraficoVegaPage({
             <div className="relative after:absolute after:bottom-0 after:left-1/2 after:translate-x-[-50%] after:w-[95%] after:h-[1px] after:bg-gray-200 after:shadow-[0_2px_4px_rgba(0,0,0,0.05)] bg-white" />
 
             <div className="p-10">
+                <div
+                    ref={chartRef}
+                    className={vegaSpec ? "block" : "hidden"}
+                />
 
-                {vegaSpec === undefined ? (
-                    <div />
-                ) : vegaSpec === null ? (
+                {vegaSpec === null && (
                     <div
                         className="
                             flex
@@ -71,8 +88,6 @@ export default function GraficoVegaPage({
                     >
                         {t("empty")}
                     </div>
-                ) : (
-                    <div ref={chartRef} />
                 )}
             </div>
 

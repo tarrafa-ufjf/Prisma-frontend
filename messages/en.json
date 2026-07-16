@@ -20,8 +20,24 @@
     "openAssistant": "Open Íris AI assistant",
     "suggestionsTitle": "Suggestions",
     "inputPlaceholder": "Write a question...",
+    "newConversation": "New conversation",
+    "conversationHistory": "History",
+    "refreshConversations": "Refresh conversations",
+    "deleteConversation": "Delete conversation",
+    "confirmDeleteConversation": "Delete the conversation \"{title}\"?",
+    "loadingConversations": "Loading conversations...",
+    "loadingConversation": "Loading conversation...",
+    "emptyConversations": "No conversations found.",
+    "emptyConversation": "Conversation without messages.",
+    "untitledConversation": "Untitled conversation",
+    "interpretedQuestion": "Interpreted question:",
+    "debugSql": "SQL",
+    "emptyAnswer": "Could not get an answer.",
     "errors": {
-      "fetch": "Error querying the chatbot."
+      "fetch": "Error querying the chatbot.",
+      "loadConversations": "Error loading conversations.",
+      "loadConversation": "Error loading the conversation.",
+      "deleteConversation": "Error deleting the conversation."
     },
     "suggestions": {
       "dropoutRisk": "Which courses have the highest dropout risk?",
