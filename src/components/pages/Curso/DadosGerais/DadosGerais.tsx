@@ -11,7 +11,7 @@ interface DadosGeraisProps {
 }
 type GeneralData = {
   total_enrolled: number
-  taxa_aprovacao: number
+  approval_rate: number
   avg_grade_all: number
 }
 
@@ -77,7 +77,7 @@ export default function DadosGerais({ id }: DadosGeraisProps) {
                 {t("approvalRate")}
               </p>
               <div className="w-20 h-12 bg-gray-100 flex items-center justify-center rounded text-base">
-                {data.taxa_aprovacao ? data.taxa_aprovacao.toLocaleString(locale) : 0}%
+                {data.approval_rate ? data.approval_rate.toLocaleString(locale) : 0}%
               </div>
             </div>
           </div>
