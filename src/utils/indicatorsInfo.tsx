@@ -1,13 +1,24 @@
 export const getIndicatorsInfo = {
-    interacaoAvaliativaInfo: "Considera as interações dos alunos em fóruns avaliativos da disciplina.",
+    interacaoAvaliativaInfo: "interacaoAvaliativaInfo",
 
-    interacaoNaoAvaliativaInfo: "Considera as interações voluntárias de discentes em fóruns não avaliativos da disciplina.",
+    interacaoNaoAvaliativaInfo: "interacaoNaoAvaliativaInfo",
 
-    desempenhoInfo: "Considera a nota final de discentes na disciplina.",
+    desempenhoInfo: "desempenhoInfo",
 
-    profCogInfo: "Considera o envolvimento cognitivo de discentes no conjunto de tarefas da disciplina. Clique no ícone para mais informações.",
+    profCogInfo: "profCogInfo",
+    // Para mais informações, acesse: https://docs.moodle.org/501/en/Learning_analytics_indicators#Cognitive_depth
+    relacaoAlunoProfInfo: "relacaoAlunoProfInfo",
 
-    relacaoAlunoProfInfo: "Considera a comunicabilidade direta entre discentes e docentes através de fóruns.",
+    desistenciaInfo: "desistenciaInfo",
 
-    desistenciaInfo: " Indica discentes com baixas classificações gerais na agregação dos demais indicadores, comumente associado à desistência do curso."
-};
+    // Tutores:
+
+    feedbackInfo: "feedbackInfo",
+
+    accessInfo: "accessInfo",
+
+    responseInfo: "responseInfo"
+
+} as const;
+
+export const indicatorInfoKeys = new Set<string>(Object.values(getIndicatorsInfo));

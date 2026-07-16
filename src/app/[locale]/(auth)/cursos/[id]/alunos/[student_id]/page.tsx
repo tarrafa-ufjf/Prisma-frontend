@@ -1,0 +1,37 @@
+import AlunoPageClient from '@/components/pages/Aluno/AlunoPageClient';
+import NotFound from '@/components/ui/not-found';
+import { getCourses } from '@/utils/api-server';
+import { getTranslations } from 'next-intl/server';
+
+interface PageProps {
+  params: Promise<{
+    locale: string;
+    id: string;
+    student_id: string;
+  }>;
+}
+
+export default async function Page({ params }: PageProps) {
+  const { id, student_id } = await params;
+  const t = await getTranslations('Courses');
+
+  const cursos = await getCourses();
+  const curso = cursos.find(curso => curso.id === Number(id));
+
+  if (!curso) {
+    return (
+      <NotFound cursos={cursos}>
+        <div className="flex-1 flex justify-center items-center pt-4 pl-[240px]">
+          <p>{t('notFound', { courseId: id })}</p>
+        </div>
+      </NotFound>
+    );
+  }
+
+  return (
+    <AlunoPageClient
+      curso={curso}
+      alunoId={Number(student_id)}
+    />
+  );
+}

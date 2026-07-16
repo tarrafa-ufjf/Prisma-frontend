@@ -5,10 +5,16 @@ export interface DisciplinaType {
     data: string;
     value: number;
     // flags
-    flagEngajamento?: number;
-    flagMotivacao?: number;
-    flagDesempenho?: number;
-    flagProfCog?: number;
-    flagRelAlunoProf?: number;
+    teachers?: {
+        full_name: string;
+        tutor_id: number;
+    }[];
+    flagEngajamento?: string;
+    flagMotivacao?: string;
+    flagDesempenho?: string;
+    flagProfCog?: string;
+    flagRelAlunoProf?: string;
     flagDesistencia?: boolean;
+    total_enrolled?: number;
+    mean_subject?:number;
 }

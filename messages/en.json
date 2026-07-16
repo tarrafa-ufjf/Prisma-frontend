@@ -1,0 +1,678 @@
+{
+  "Metadata": {
+    "title": "Prisma Project",
+    "description": "Application using Next.js"
+  },
+  "Common": {
+    "appName": "Prisma Project",
+    "logout": "Log out",
+    "changeLanguage": "Change language"
+  },
+  "Sidebar": {
+    "menu": "MENU",
+    "home": "Home",
+    "courses": "Courses Dashboard",
+    "tutors": "Tutors Dashboard"
+  },
+  "Chatbot": {
+    "title": "Íris Chatbot",
+    "buttonLabel": "Íris AI",
+    "openAssistant": "Open Íris AI assistant",
+    "suggestionsTitle": "Suggestions",
+    "inputPlaceholder": "Write a question...",
+    "newConversation": "New conversation",
+    "conversationHistory": "History",
+    "refreshConversations": "Refresh conversations",
+    "deleteConversation": "Delete conversation",
+    "confirmDeleteConversation": "Delete the conversation \"{title}\"?",
+    "loadingConversations": "Loading conversations...",
+    "loadingConversation": "Loading conversation...",
+    "emptyConversations": "No conversations found.",
+    "emptyConversation": "Conversation without messages.",
+    "untitledConversation": "Untitled conversation",
+    "interpretedQuestion": "Interpreted question:",
+    "debugSql": "SQL",
+    "emptyAnswer": "Could not get an answer.",
+    "errors": {
+      "fetch": "Error querying the chatbot.",
+      "loadConversations": "Error loading conversations.",
+      "loadConversation": "Error loading the conversation.",
+      "deleteConversation": "Error deleting the conversation."
+    },
+    "suggestions": {
+      "dropoutRisk": "Which courses have the highest dropout risk?",
+      "engagementPerformance": "Is there a relationship between engagement and academic performance?",
+      "belowAverageCourses": "Which degree programs are performing below the institutional average?"
+    },
+    "visualization": {
+      "title": "Visualization",
+      "empty": "No chart is available for this question."
+    }
+  },
+  "Tutors": {
+    "overview": "Overview",
+    "institution": "of the Institution",
+    "detail": {
+      "title": "Tutor",
+      "fetchError": "Error loading data",
+      "linkLabel": "by clicking here",
+      "notFoundEnd": ", or try again later!",
+      "courseNotFoundStart": "Course {courseId} not found! Please select a course",
+      "tutorNotFoundStart": "Tutor {tutorId} was not found or does not belong to the selected course! Please return to the course tutors page",
+      "statsBar": {
+        "loading": "Loading indicators...",
+        "fetchError": "Error loading indicators",
+        "metrics": {
+          "fastForumResponses": "Total fast forum responses",
+          "normalForumResponses": "Total normal forum responses",
+          "lateForumResponses": "Total late forum responses",
+          "meanForumResponseHours": "Average hours to answer forum messages",
+          "medianForumResponseHours": "Median hours to answer forum messages",
+          "totalLogins": "Total logins",
+          "weeklyCourseViews": "Average course views per week",
+          "totalCorrections": "Total corrections",
+          "correctionsWithFeedback": "Total corrections with feedback",
+          "feedbackPercentage": "Percentage of corrections with feedback"
+        },
+        "unavailable": {
+          "fastForumResponses": "Total fast forum responses unavailable",
+          "normalForumResponses": "Total normal forum responses unavailable",
+          "lateForumResponses": "Total late forum responses unavailable",
+          "mean": "Average unavailable",
+          "median": "Median unavailable",
+          "totalLogins": "Total logins unavailable",
+          "totalCorrections": "Total corrections unavailable",
+          "correctionsWithFeedback": "Total corrections with feedback unavailable",
+          "feedbackPercentage": "Percentage of corrections with feedback unavailable"
+        }
+      },
+      "graphs": {
+        "loading": "Loading charts...",
+        "fetchError": "Error loading indicators",
+        "interactionsTitle": "Interaction comparison",
+        "responseTimeTitle": "Response time comparison",
+        "subtitle": "for course tutors",
+        "interactionsLabel": "Interactions",
+        "responseTimeLabel": "Response time (h)",
+        "currentTutor": "Current tutor",
+        "otherTutors": "Other tutors",
+        "mean": "Average",
+        "median": "Median",
+        "tutorWithId": "Tutor {id}"
+      },
+      "generalData": {
+        "title": "Personal Data",
+        "course": "Course",
+        "city": "City",
+        "group": "Campus",
+        "firstAccess": "First Access",
+        "lastAccess": "Last Access",
+        "notInformed": "Not informed"
+      },
+      "indicators": {
+        "title": "Pedagogical Indicators",
+        "subtitle": "calculated",
+        "details": "Details",
+        "seeMore": "See more",
+        "forumResponses": "Forum Responses",
+        "courseAccess": "Course access",
+        "feedback": "Feedback",
+        "indicatorIconAlt": "Student-teacher icon",
+        "loading": "Loading data",
+        "fetchError": "Error loading indicators"
+      }
+    },
+    "list": {
+      "title": "Tutors",
+      "searchPlaceholder": "Tutor",
+      "noCourseSelected": "No course has been selected yet.",
+      "fetchError": "Error loading tutor data"
+    },
+    "generalData": {
+      "title": "General Data",
+      "subtitle": "of the Course",
+      "averageLogsLine1": "Total average",
+      "averageLogsLine2": "logs per day",
+      "averageLogsLine3": "per tutor",
+      "studentsPerTutorLine1": "Number",
+      "studentsPerTutorLine2": "of students",
+      "studentsPerTutorLine3": "per tutor",
+      "totalTutorsLine1": "Total",
+      "totalTutorsLine2": "accesses",
+      "totalTutorsLine3": "by tutors",
+      "loading": "Fetching data",
+      "fetchError": "Error loading general data"
+    },
+    "indicators": {
+      "title": "Indicators",
+      "subtitle": "calculated",
+      "seeMore": "See more",
+      "tutorsPrefix": "of tutors",
+      "forumResponses": "with a good forum response index",
+      "courseAccess": "with a good course page access index",
+      "feedback": "with a good feedback index",
+      "noResponseInfo": "No processed message information",
+      "noAccessInfo": "No processed access information",
+      "noFeedbackInfo": "No processed feedback information",
+      "indicatorIconAlt": "Student-teacher icon",
+      "loading": "Fetching data",
+      "fetchError": "Error loading indicators"
+    },
+    "interactionChannels": {
+      "title": "Interaction Channels",
+      "subtitle": "of the course",
+      "fetchError": "Error loading indicators",
+      "headers": {
+        "channel": "Interaction Channel",
+        "studentMessages": "Student messages",
+        "tutorMessages": "Tutor messages",
+        "totalMessages": "Total messages"
+      }
+    },
+    "rankings": {
+      "performance": {
+        "title": "Ranking",
+        "subtitle": "Most active tutors",
+        "loading": "Loading ranking",
+        "notEnoughTutors": "The class does not have enough tutors to create a ranking",
+        "fetchError": "Error loading performance ranking"
+      },
+      "badPerformance": {
+        "title": "Ranking",
+        "subtitle": "Least active tutors",
+        "loading": "Loading ranking",
+        "notEnoughTutors": "The class does not have enough tutors to create a ranking",
+        "fetchError": "Error loading performance ranking"
+      }
+    },
+    "ranking": {
+      "title": "Ranking",
+      "bestPerformanceSubtitle": "Tutors with best performance",
+      "atRiskSubtitle": "Tutors with worst performance",
+      "loading": "Loading ranking",
+      "notEnoughTutors": "Not enough tutors to create a ranking",
+      "fetchError": "Error loading performance ranking"
+    },
+    "overviewGeneralData": {
+      "title": "General Data",
+      "subtitle": "of Institution Tutors",
+      "totalTutorsLine1": "Total",
+      "totalTutorsLine2": "institution",
+      "totalTutorsLine3": "tutors",
+      "tutorsPerCourseLine1": "Average",
+      "tutorsPerCourseLine2": "tutors per",
+      "tutorsPerCourseLine3": "course",
+      "studentsPerTutorLine1": "Average",
+      "studentsPerTutorLine2": "students per",
+      "studentsPerTutorLine3": "tutor",
+      "loading": "Loading general data",
+      "fetchError": "Error loading general data"
+    },
+    "overviewIndicators": {
+      "title": "Pedagogical Indicators",
+      "subtitle": "calculated",
+      "seeMore": "See more",
+      "subjectsPrefix": "of courses",
+      "forumResponses": "with an excellent forum response index",
+      "courseAccess": "with a good platform access index",
+      "feedback": "with a good feedback index",
+      "noResponseInfo": "No processed message information",
+      "noAccessInfo": "No processed access information",
+      "noFeedbackInfo": "No processed feedback information",
+      "indicatorIconAlt": "Student-teacher icon",
+      "loading": "Fetching data",
+      "fetchError": "Error loading indicators"
+    }
+  },
+  "Tables": {
+    "loadingData": "Loading data...",
+    "showingEntries": "Showing {range} of {total} entries"
+  },
+  "Columns": {
+    "undefined": "Not defined",
+    "moreTeachers": "+{count} others",
+    "details": "Details",
+    "tutor": "Tutor",
+    "student": "Student",
+    "subject": "Subject",
+    "teacher": "Teacher",
+    "forumResponseIndex": "Forum Response Index",
+    "meanForumResponseHours": "Average forum response time per hour",
+    "meanForumResponseHoursIndex": "Average forum response time index per hour",
+    "medianForumResponseHours": "Median forum response time per hour",
+    "medianForumResponseHoursIndex": "Median forum response time index per hour",
+    "fastForumResponses": "No. of fast forum responses",
+    "lateForumResponses": "No. of late forum responses",
+    "normalForumResponses": "No. of normal-time forum responses",
+    "accessScore": "Access score",
+    "accessScoreIndex": "Access score index",
+    "totalForumResponses": "Total forum responses",
+    "feedbackIndex": "Feedback Index",
+    "corrections": "No. of corrections",
+    "correctionsIndex": "Corrections index",
+    "correctionsWithFeedback": "No. of corrections with feedback",
+    "correctionsWithFeedbackIndex": "Corrections with feedback index",
+    "pdfFeedbacks": "No. of PDF feedbacks",
+    "pdfFeedbacksIndex": "PDF feedback index",
+    "textFeedbacks": "No. of text feedbacks",
+    "textFeedbacksIndex": "Text feedback index",
+    "feedbackPercentage": "Feedback percentage",
+    "feedbackPercentageIndex": "Feedback percentage index",
+    "platformAccessIndex": "Platform Access Index",
+    "maximumInactiveDays": "Maximum inactive days",
+    "inactiveDaysIndex": "Inactive days index",
+    "logins": "Number of logins",
+    "loginsIndex": "Login count index",
+    "subjectLogins": "Number of class logins",
+    "weeklyLogins": "Weekly logins",
+    "weeklyLoginsIndex": "Weekly login count index",
+    "evaluativeInteractionIndex": "Evaluative Interaction Index",
+    "evaluativeForumPosts": "No. of posts in graded forums",
+    "performance": "Performance",
+    "performanceIndex": "Performance Index",
+    "grade": "Grade",
+    "classAverageComparison": "Comparison with class average",
+    "nonEvaluativeInteractionIndex": "Non-Evaluative Interaction Index",
+    "nonRequiredForumPosts": "No. of posts in non-required forums",
+    "averageCognitiveDepth": "Average Cognitive Depth Level",
+    "forumAverageCognitiveDepth": "Average Cognitive Depth Level in Forums",
+    "quizAverageCognitiveDepth": "Average Cognitive Depth Level in Quizzes",
+    "assignmentAverageCognitiveDepth": "Average Cognitive Depth Level in Assignments",
+    "dropoutIndex": "Dropout Index",
+    "cognitiveDepthLevel": "Cognitive Depth Level",
+    "cognitiveDepth": "Cognitive Depth",
+    "studentTeacherRelationship": "Student-Teacher Relationship",
+    "enrolledStudents": "No. of enrolled students",
+    "classGradeAverage": "Class grade average",
+    "levels": {
+      "veryLow": "Very Low",
+      "low": "Low",
+      "normal": "Normal",
+      "medium": "Medium",
+      "high": "High",
+      "veryHigh": "Very High",
+      "positive": "Positive",
+      "negative": "Negative"
+    }
+  },
+  "Pagination": {
+    "showingResults": "Showing {start} to {end} of {total} results",
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "Filters": {
+    "search": "Search"
+  },
+  "IndicatorsTabs": {
+    "evaluativeInteraction": "Evaluative Interaction",
+    "nonEvaluativeInteraction": "Non-Evaluative Interaction",
+    "performance": "Performance",
+    "cognitiveDepth": "Cognitive Depth",
+    "dropout": "Dropout",
+    "forumResponses": "Forum Responses",
+    "courseAccess": "Course Access",
+    "feedback": "Feedback",
+    "studentTeacherRelationship": "Student-Teacher Relationship"
+  },
+  "Tooltip": {
+    "title": "Information",
+    "ok": "Ok"
+  },
+  "IndicatorInfo": {
+    "interacaoAvaliativaInfo": "Considers students' interactions in graded course forums.",
+    "interacaoNaoAvaliativaInfo": "Considers students' voluntary interactions in non-graded course forums.",
+    "desempenhoInfo": "Considers students' final grade in the course.",
+    "profCogInfo": "Considers students' cognitive engagement across the course tasks.",
+    "relacaoAlunoProfInfo": "Considers direct communication between students and teachers through forums.",
+    "desistenciaInfo": "Indicates students with low overall classifications across the other indicators, commonly associated with course dropout.",
+    "feedbackInfo": "Assesses the quality and frequency of feedback provided by the tutor in graded activities, considering corrections made, feedback presence, and the type of response offered to students (textual and/or PDF annotations).",
+    "accessInfo": "Analyzes the tutor's presence and regularity of access to the platform, based on log records, indicating the level of course monitoring.",
+    "responseInfo": "Assesses the tutor's forum participation, considering response volume and average response time to student messages, classified as: fast (less than 1 day), normal (between 1 and 5 days), delayed (more than 5 days), or no response."
+  },
+  "Home": {
+    "overview": "Overview",
+    "institution": "of the Institution",
+    "generalData": {
+      "title": "General Data",
+      "subtitle": "of the Institution",
+      "totalUsers": "Total registered users",
+      "totalCourses": "Total offered courses",
+      "totalSubjects": "Total registered subjects",
+      "loading": "Loading general data",
+      "fetchError": "Error loading general data"
+    },
+    "ranking": {
+      "title": "Ranking",
+      "bestPerformance": "Courses with Best Performance",
+      "worstPerformance": "Courses with Worst Performance",
+      "loading": "Loading ranking",
+      "notEnoughStudents": "The class does not have enough students to create a ranking",
+      "fetchError": "Error loading performance ranking"
+    },
+    "adminButton": {
+      "label": "Administrator Dashboard"
+    },
+    "indicators": {
+      "title": "Indicators",
+      "subtitle": "calculated",
+      "learnMore": "Learn more",
+      "subjectsPrefix": "of courses",
+      "evaluativeInteraction": "with an excellent evaluative interaction rate",
+      "nonEvaluativeInteraction": "with a good non-evaluative interaction rate",
+      "performance": "with good performance",
+      "cognitiveDepth": "with level 3 cognitive depth",
+      "studentTeacherRelationship": "with a good student-teacher relationship",
+      "dropout": "with a low dropout rate",
+      "indicatorIconAlt": "Student-teacher icon",
+      "loading": "Fetching data",
+      "fetchError": "Error loading indicators"
+    }
+  },
+  "Courses": {
+    "course": "Course",
+    "notFound": "Course {courseId} not found! Please use the menu in the upper-left corner, or try again later!",
+    "generalData": {
+      "title": "General Data",
+      "subtitle": "of the Course",
+      "totalEnrolled": "Total enrolled students",
+      "averageFinalGrades": "Average final grades of the course",
+      "approvalRate": "Course approval rate",
+      "loading": "Fetching data",
+      "fetchError": "Error loading general data"
+    },
+    "indicators": {
+      "title": "Indicators",
+      "subtitle": "calculated",
+      "seeMore": "See more",
+      "studentsPrefix": "of students",
+      "evaluativeInteraction": "with an excellent evaluative interaction rate",
+      "nonEvaluativeInteraction": "with a good non-evaluative interaction rate",
+      "performance": "with good performance",
+      "cognitiveDepth": "with level 3 cognitive depth",
+      "studentTeacherRelationship": "with a good student-teacher relationship",
+      "dropout": "with a low dropout rate",
+      "noEngagementInfo": "No processed engagement information",
+      "noMotivationInfo": "No processed motivation information",
+      "noPerformanceInfo": "No processed performance information",
+      "noCognitiveInfo": "No processed cognitive information",
+      "noPedagogicalInfo": "No processed pedagogical information",
+      "noDropoutInfo": "No processed dropout information",
+      "indicatorIconAlt": "Student-teacher icon",
+      "loading": "Fetching data",
+      "fetchError": "Error loading indicators"
+    },
+    "charts": {
+      "loading": "Loading charts",
+      "fetchError": "Error loading chart data",
+      "approvalStatus": {
+        "title": "Approval Status",
+        "subtitle": "of Course Students",
+        "empty": "No values found",
+        "labels": {
+          "approved": "Approved",
+          "failed": "Failed",
+          "ri": "Insufficient Attendance"
+        }
+      },
+      "activities": {
+        "title": "Activities",
+        "subtitle": "of the Course",
+        "loadingChart": "Loading chart..."
+      }
+    },
+    "rankings": {
+      "performance": {
+        "title": "Ranking",
+        "subtitle": "Students with Best Performance",
+        "loading": "Loading ranking",
+        "notEnoughStudents": "The class does not have enough students to create a ranking",
+        "fetchError": "Error loading best performance ranking"
+      },
+      "difficulty": {
+        "title": "Ranking",
+        "subtitle": "Students with the Most Difficulties",
+        "loading": "Loading ranking",
+        "notEnoughStudents": "The class does not have enough students to create a ranking",
+        "fetchError": "Error loading difficulty ranking"
+      }
+    }
+  },
+  "Students": {
+    "title": "Students",
+    "searchPlaceholder": "Student",
+    "noCourseSelected": "No course has been selected yet.",
+    "fetchError": "Error loading student data",
+    "details": {
+      "title": "Student",
+      "noStudentSelected": "No student has been selected yet.",
+      "finalGrade": "Final grade",
+      "grades": "Grades",
+      "courseSubtitle": "of the course",
+      "loading": "Loading...",
+      "personalData": {
+        "title": "Personal Data",
+        "loading": "Loading data",
+        "fetchError": "Error loading personal data.",
+        "email": "Email",
+        "course": "Course",
+        "city": "City",
+        "studentGroup": "Campus",
+        "firstAccess": "First Access",
+        "lastAccess": "Last Access"
+      },
+      "indicators": {
+        "title": "Indicators",
+        "subtitle": "calculated",
+        "loading": "Loading indicators",
+        "empty": "Indicators not found.",
+        "studentTeacherIconAlt": "Student-teacher icon",
+        "performanceIconAlt": "Performance icon",
+        "cognitiveDepthIconAlt": "Cognitive depth icon",
+        "dropoutIconAlt": "Dropout icon",
+        "yes": "Yes",
+        "no": "No",
+        "cards": {
+          "evaluativeInteraction": "Evaluative Interaction Index",
+          "nonEvaluativeInteraction": "Non-Evaluative Interaction Index",
+          "performance": "Performance",
+          "cognitiveDepth": "Cognitive Depth",
+          "dropout": "Dropout"
+        },
+        "levels": {
+          "veryLow": "Very Low",
+          "low": "Low",
+          "medium": "Medium",
+          "high": "High",
+          "veryHigh": "Very High",
+          "undefined": "Not defined"
+        }
+      },
+      "finalGradeChart": {
+        "loading": "Loading...",
+        "empty": "Final grade not found."
+      },
+      "activitiesChart": {
+        "loading": "Loading...",
+        "empty": "No activity found."
+      },
+      "indicatorDetails": {
+        "loading": "Loading data",
+        "fetchError": "Error loading data",
+        "evaluativeForumPosts": "No. of posts in graded forums",
+        "completedQuizzesPercentage": "Completed quizzes percentage",
+        "submittedAssignmentsPercentage": "Submitted assignments percentage",
+        "averageEvaluativeGrades": "Overall average of evaluative grades",
+        "classAverageComparison": "Comparison with class average",
+        "activitiesBelowAverage": "No. of activities below average",
+        "nonRequiredForumParticipation": "Participation percentage in non-required forums",
+        "complementaryMaterialViews": "No. of views in complementary materials",
+        "lastWeekInteractions": "No. of interactions in the last week",
+        "forumAverageCognitiveDepth": "Average Cognitive Depth Level in Forums",
+        "quizAverageCognitiveDepth": "Average Cognitive Depth Level in Quizzes",
+        "assignmentAverageCognitiveDepth": "Average Cognitive Depth Level in Assignments",
+        "teacherMessages": "No. of messages exchanged with the teacher",
+        "teacherMediatedForumParticipation": "Participation percentage in teacher-mediated forums",
+        "studentTeacherContactFrequency": "Student-teacher contact frequency"
+      }
+    }
+  },
+  "Subjects": {
+    "loadingData": "Loading subject data...",
+    "loading": "Loading subjects...",
+    "overview": "Overview",
+    "subtitle": "of Subjects",
+    "searchPlaceholder": "Subject",
+    "filters": {
+      "course": "Course",
+      "filterByCourse": "Filter by Course",
+      "indicator": "Indicator",
+      "magnitude": "Magnitude",
+      "select": "Select",
+      "indicators": {
+        "evaluativeInteraction": "Evaluative Interaction",
+        "nonEvaluativeInteraction": "Non-Evaluative Interaction",
+        "performance": "Performance",
+        "cognitiveDepth": "Cognitive Depth",
+        "studentTeacherRelationship": "Student-Teacher Relationship",
+        "dropout": "Dropout"
+      },
+      "magnitudes": {
+        "positive": "Positive",
+        "negative": "Negative",
+        "veryHigh": "Very High",
+        "high": "High",
+        "medium": "Medium",
+        "low": "Low",
+        "veryLow": "Very Low"
+      }
+    }
+  },
+  "SelectCourses": {
+    "courses": "Courses",
+    "tutors": "Tutors",
+    "chooseCourse": "Choose a course",
+    "searchPlaceholder": "Search subject",
+    "emptyTitle": "No courses found",
+    "emptySearch": "No courses matching \"{searchTerm}\" were found.",
+    "empty": "No courses available at the moment.",
+    "clearSearch": "Clear search",
+    "processing": "Processing"
+  },
+  "Login": {
+    "subtitle": "Sign in to your account",
+    "email": "Email",
+    "emailPlaceholder": "Enter your email",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "rememberMe": "Remember me",
+    "forgotPassword": "Forgot password?",
+    "submit": "Sign in",
+    "loading": "Signing in...",
+    "invalidCredentials": "Incorrect email or password. Please try again."
+  },
+
+  "Admin": {
+    "MoodleWarning": {
+      "title": "Moodle not configured",
+      "description": "No Moodle integration has been registred yet. Register a connection to use the system features.",
+      "dismiss": "Later",
+      "configure": "Configure Moodle"
+    },
+    "Auth": {
+      "loading": "Loading..."
+    },
+    "MainPage": {
+      "title": "Administration",
+      "subtitle": "General Management"
+    },
+    "ManageMoodle": {
+      "templateTitle": "Manage",
+      "templateSubtitle": "Moodle",
+      "title": "Moodle Integration",
+      "subtitle": "information management",
+      "host": "Host",
+      "hostPlaceholder": "Enter the host",
+      "port": "Port",
+      "portPlaceholder": "Enter the port",
+      "database": "Database",
+      "databasePlaceholder": "Enter database",
+      "user": "User",
+      "userPlaceholder": "Enter the user",
+      "password": "Password",
+      "passwordPlaceholder":"Enter the password",
+      "passwordProtected": "Protected password",
+      "testing": "Testing...",
+      "testConnection": "Test connection",
+      "testingConnection": "Testing connection",
+      "saving": "Saving...",
+      "saveChanges": "Save changes",
+      "registerMoodle": "Register Moodle",
+      "edit": "Edit",
+      "cancel": "Cancel",
+      "success": "Success",
+      "error": "Error",
+      "ok": "OK",
+      "understand": "Understand",
+      "testSuccess": "Connection successful! Moodle version {version}",
+      "testError": "Failed to onnect to Moodle. Please check the information.",
+      "saveSuccessUpdate": "Configuration updated successfully!",
+      "saveSuccessCreate": "Configuration savaed successfully!",
+      "saveError": "Error saving configuration."
+    },
+    "ManageUsers": {
+      "templateTitle": "Management",
+      "templateSubtitle": "of users",
+      "title": "User Management",
+      "subtitle": "registration and access management",
+      "email": "Email",
+      "emailPlaceholder": "Enter email",
+      "emailValid": "✔ Valid email",
+      "emailInvalid": "Enter a valid email",
+      "emailInvalidFormat": "Enter a valid email (e.g., name@domain.com)",
+      "emailInvalidError": "Invalid email. Check the format.",
+      "password": "Password",
+      "passwordPlaceholder": "Enter password",
+      "registerButton": "Register user",
+      "loadingRegister": "Registering user...",
+      "registerSuccess": "User registered successfully!",
+      "registerError": "Error registering user.",
+      "deleteSuccess": "User deleted successfully!",
+      "deleteError": "Error deleting user.",
+      "updateSuccess": "User updated successfully!",
+      "updateError": "Error updating user.",
+      "save": "Save",
+      "cancel": "Cancel",
+      "edit": "Edit",
+      "delete": "Delete",
+      "confirmDeleteTitle": "Confirm deletion",
+      "confirmDeleteText": "Are you sure you want to delete this user?",
+      "confirm": "Confirm"
+    },
+    "Dashboard": {
+      "overviewTitle": "Overview",
+      "overviewSubtitle": "of the system",
+      "hideDetails": "Hide details",
+      "showMore": "Show more",
+      "totalUsers": "Total system users",
+      "schedulerStatus": "Main scheduler status",
+      "online": "Online",
+      "offline": "Offline",
+      "scheduler": "Scheduler",
+      "lastHeartbeat": "Last heartbeat:",
+      "timeout": "Timeout:",
+      "seconds": "seconds",
+      "jobs": "Jobs",
+      "channel": "Channel:",
+      "lastFinished": "Last run:",
+      "nextRun": "Next run:",
+      "errorLabel": "Error:",
+      "manageTitle": "Manage",
+      "manageSubtitle": "resource registration",
+      "btnManageUsers": "Manage users",
+      "btnManageMoodle": "Manage Moodle",
+      "statusLabel": "Status",
+      "idLabel": "ID:"
+    }
+  }
+
+}

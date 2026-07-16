@@ -1,0 +1,40 @@
+.EspacarIndicadores {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
+}
+
+.BoxGrupodeRisco {
+    flex-direction: column;
+    display: flex;
+    border-radius: 10px;
+    background-color: rgba(217, 217, 217, 0.45);
+    height: 250px;
+    margin-bottom: 20px;
+    width: 400px;
+}
+
+.BoxGrupodeRiscoIndicadores {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.BoxCentralizarIndicadores {
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.textoPersonalizado {
+    font-size: 14px;
+    color: #374DAA;
+    font-weight: 600;
+    text-wrap: wrap;
+}
+.textoPersonalizado2 {
+    font-size: 14px;
+}

@@ -1,8 +1,9 @@
 'use client';
 
 import React from 'react';
-import { AlunoType } from '@/types/aluno';
-import { getNivel, getFlagCor, getProfCogCor, getDesistencia, getFlagDesistenciaCor } from '@/utils/columns';
+import Loading from '@/components/ui/loading';
+import ErrorMessage from '../ui/error-message';
+import { Aluno as AlunoType } from '@/types/aluno';
 import {
     Table,
     TableBody,
@@ -11,86 +12,139 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/tabela';
+import { 
+    getCognitiveData, 
+    getPerformanceData, 
+    getMotivationData 
+} from '@/utils/alunoService';
+import { useTranslations } from 'next-intl';
 
 interface AlunoRowProps {
     aluno: AlunoType;
     activeTab: string;
-}
+    cursoSelecionado: number | null;
+};
 
-const AlunoRow: React.FC<AlunoRowProps> = ({ aluno, activeTab }) => {
-    const render = (columnName: string, value: any) => {
-        switch (columnName) {
-            case 'flagEngajamento':
-            case 'flagMotivacao':
-            case 'flagDesempenho':
-            case 'flagRelAlunoProf':
-                return (
-                    <div className={`py-1 px-6 max-w-fit text-center rounded-md text-xs font-medium border-[1.5px] ${getFlagCor(value)}`}>
-                        {getNivel(value)}
-                    </div>
-                );
+const AlunoRow: React.FC<AlunoRowProps> = ({ aluno, activeTab, cursoSelecionado }) => {
+    const t = useTranslations("Students.details.indicatorDetails");
 
-            case 'flagProfCog':
-                return (
-                    <div className={`py-1 px-6 max-w-fit rounded-md text-xs font-medium border-[1.5px] ${getProfCogCor(value)}`}></div>
-                );
+    const [extraData, setExtraData] = React.useState<any>(null);
+    const [loadingExtra, setLoadingExtra] = React.useState(false);
 
-            case 'flagDesistencia':
-                return (
-                    <div className={`py-1 px-6 max-w-fit rounded-md text-xs font-medium border-[1.5px] ${getFlagDesistenciaCor(value)}`}>
-                        {getDesistencia(value)}
-                    </div>
-                );
+    React.useEffect(() => {
+        async function fetchData() {
+            try {
+                if (!aluno?.id || !cursoSelecionado) {
+                    setExtraData(null);
+                    return;
+                }
 
-            default:
-                return value !== null && value !== undefined ? value.toString() : '-';
+                setLoadingExtra(true);
+
+                let data = null;
+
+                if (activeTab === "Profundidade Cognitiva") {
+                    data = await getCognitiveData(cursoSelecionado, aluno.id);
+                }
+
+                if (activeTab === "Desempenho") {
+                    data = await getPerformanceData(cursoSelecionado, aluno.id);
+                }
+
+                if (activeTab === "Interação Não Avaliativa") {
+                    data = await getMotivationData(cursoSelecionado, aluno.id);
+                }
+
+                setExtraData(data);
+
+            } catch (error) {
+                console.error("Erro ao buscar dados: ", error);
+                setExtraData(null);
+            } finally {
+                setLoadingExtra(false);
+            }
         }
+
+        fetchData();
+    }, [activeTab, aluno?.id, cursoSelecionado]);
+
+    const getValue = (columnName: string) => {
+
+        // PROFUNDIDADE COGNITIVA
+        if (activeTab === "Profundidade Cognitiva" && extraData) {
+            const map: Record<string, any> = {
+                profCogForuns: extraData.forum_mean_level,
+                profCogQuizzes: extraData.quiz_mean_level,
+                profCogTarefas: extraData.assign_mean_level,
+            };
+
+            return map[columnName];
+        }
+
+        // DESEMPENHO
+        if (activeTab === "Desempenho" && extraData) {
+            const map: Record<string, any> = {
+                media_percentual: extraData.media_percentual,
+                compMedia: extraData.comparative,
+                ativAbaixoMedia: '-', // não vem da API
+            };
+
+            return map[columnName];
+        }
+
+        // MOTIVAÇÃO (Interação Não Avaliativa)
+        if (activeTab === "Interação Não Avaliativa" && extraData) {
+            const map: Record<string, any> = {
+                partForunsNaoObrig: extraData.num_posts_unrequired,
+                nVisuCompl: '-', // não vem da API
+                nInter: '-', // não vem da API
+            };
+
+            return map[columnName];
+        }
+
+        return aluno[columnName as keyof AlunoType];
+    };
+
+    const render = (columnName: string, value: any) => {
+        return value != null ? value.toString() : '-';
     };
 
     const getColumns = () => {
         switch (activeTab) {
             case "Interação Avaliativa":
                 return [
-                    { label: "Nº de Posts em Fóruns Avaliativos", name: "nPostsForunsAv" },
-                    { label: "Percentual de Quizzes Realizados", name: "quizzesRealiz" },
-                    { label: "Percentual de Tarefas Enviadas", name: "tarefasEnv" },
+                    { label: t("evaluativeForumPosts"), name: "num_posts_required" },
+                    { label: t("completedQuizzesPercentage"), name: "quizzesRealiz" },
+                    { label: t("submittedAssignmentsPercentage"), name: "tarefasEnv" },
                 ];
 
             case "Desempenho":
                 return [
-                    { label: "Média Geral das Notas Avaliativas", name: "mediaNotas" },
-                    { label: "Comparação com a Média da Turma", name: "compMedia" },
-                    { label: "Nº de Atividades Abaixo da Média", name: "ativAbaixoMedia" },
+                    { label: t("averageEvaluativeGrades"), name: "media_percentual" },
+                    { label: t("classAverageComparison"), name: "compMedia" },
+                    { label: t("activitiesBelowAverage"), name: "ativAbaixoMedia" },
                 ];
 
             case "Interação Não Avaliativa":
                 return [
-                    { label: "Percentual de Participação em Fóruns Não Obrigatórios", name: "partForunsNaoObrig" },
-                    { label: "Nº de Visualizações em Materiais Complementares", name: "nVisuCompl" },
-                    { label: "Nº de Interações na Última Semana", name: "nInter" },
+                    { label: t("nonRequiredForumParticipation"), name: "partForunsNaoObrig" },
+                    { label: t("complementaryMaterialViews"), name: "nVisuCompl" },
+                    { label: t("lastWeekInteractions"), name: "nInter" },
                 ];
 
             case "Profundidade Cognitiva":
                 return [
-                    { label: "Nível Médio de Profundidade Cognitiva em Fóruns", name: "profCogForuns" },
-                    { label: "Nível Médio de Profundidade Cognitiva em Quizzes", name: "profCogQuizzes" },
-                    { label: "Nível Médio de Profundidade Cognitiva em Tarefas", name: "profCogTarefas" },
+                    { label: t("forumAverageCognitiveDepth"), name: "profCogForuns" },
+                    { label: t("quizAverageCognitiveDepth"), name: "profCogQuizzes" },
+                    { label: t("assignmentAverageCognitiveDepth"), name: "profCogTarefas" },
                 ];
 
             case "Relação Aluno-Professor":
                 return [
-                    { label: "Nº de Mensagens Trocadas com o Professor", name: "nMsgsAlunoProf" },
-                    { label: "Percentual de Participação em Fóruns Mediados pelo Docente", name: "partForunsDocente" },
-                    { label: "Frequência de Contato Aluno-Professor", name: "freqContAlunoProf" },
-                ];
-
-            case "Desistência":
-                return [
-                    { label: "Índice de Interação Avaliativa", name: "flagEngajamento" },
-                    { label: "Índice de Interação Não Avaliativa", name: "flagMotivacao" },
-                    { label: "Índice de Desempenho", name: "flagDesempenho" },
-                    { label: "Índice de Relação Aluno-Professor", name: "flagRelAlunoProf" },
-                    { label: "Índice de Desistência", name: "flagDesistencia" },
+                    { label: t("teacherMessages"), name: "nMsgsAlunoProf" },
+                    { label: t("teacherMediatedForumParticipation"), name: "partForunsDocente" },
+                    { label: t("studentTeacherContactFrequency"), name: "freqContAlunoProf" },
                 ];
 
             default:
@@ -99,6 +153,18 @@ const AlunoRow: React.FC<AlunoRowProps> = ({ aluno, activeTab }) => {
     };
 
     const columns = getColumns();
+
+    if (loadingExtra) {
+        return <Loading>{t("loading")}</Loading>;
+    }
+
+    if (!extraData && (activeTab === "Profundidade Cognitiva" || activeTab === "Desempenho" || activeTab === "Interação Não Avaliativa" || activeTab === "Relação Aluno-Professor")) {
+        return (
+            <div className="flex justify-center items-center h-full min-h-[200px]">
+                <ErrorMessage>{t("fetchError")}</ErrorMessage>
+            </div>
+        );
+    }
 
     return (
         <div className="bg-white ml-8 mr-8 mb-8 mt-4">
@@ -117,7 +183,7 @@ const AlunoRow: React.FC<AlunoRowProps> = ({ aluno, activeTab }) => {
                         {columns.map((column, index) => (
                             <TableCell key={index} className="p-4">
                                 <div className="flex items-center justify-center">
-                                    {render(column.name, aluno[column.name as keyof AlunoType])}
+                                    {render(column.name, getValue(column.name))}
                                 </div>
                             </TableCell>
                         ))}
@@ -125,7 +191,6 @@ const AlunoRow: React.FC<AlunoRowProps> = ({ aluno, activeTab }) => {
                 </TableBody>
             </Table>
         </div>
-
     );
 };
 
