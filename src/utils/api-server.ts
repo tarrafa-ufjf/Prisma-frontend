@@ -1,9 +1,9 @@
 import { Curso } from "@/types/curso";
 import axios from "axios";
-import { cookies, headers } from "next/headers";
+import { cookies } from "next/headers";
 
-const publicApiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || '/api'
-const internalApiBaseUrl = process.env.API_INTERNAL_BASE_URL
+const internalApiBaseUrl =
+    process.env.API_INTERNAL_BASE_URL || 'http://127.0.0.1:5000'
 
 async function getRequestCookieHeader() {
     const cookieStore = await cookies()
@@ -13,28 +13,8 @@ async function getRequestCookieHeader() {
         .join('; ')
 }
 
-async function getServerBaseUrl() {
-    if (internalApiBaseUrl) {
-        return internalApiBaseUrl
-    }
-
-    if (/^https?:\/\//.test(publicApiBaseUrl)) {
-        return publicApiBaseUrl
-    }
-
-    const headerStore = await headers()
-    const protocol = headerStore.get('x-forwarded-proto') ?? 'http'
-    const host = headerStore.get('x-forwarded-host') ?? headerStore.get('host')
-
-    if (!host) {
-        return publicApiBaseUrl
-    }
-
-    return new URL(publicApiBaseUrl, `${protocol}://${host}`).toString()
-}
-
 export const api = axios.create({
-    baseURL: publicApiBaseUrl,
+    baseURL: internalApiBaseUrl,
     withCredentials: true,
     headers: {
         "Accept": "application/json"
@@ -42,8 +22,6 @@ export const api = axios.create({
 })
 
 api.interceptors.request.use(async (config) => {
-    config.baseURL = await getServerBaseUrl()
-
     const cookieHeader = await getRequestCookieHeader()
 
     if (cookieHeader) {

@@ -4,6 +4,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { routing } from "@/i18n/routing";
 
 const intlMiddleware = createIntlMiddleware(routing);
+const internalApiBaseUrl =
+  process.env.API_INTERNAL_BASE_URL || "http://127.0.0.1:5000";
 
 export const config = {
   matcher: ["/((?!api|_next|_vercel|.*\\..*).*)"],
@@ -45,7 +47,7 @@ export async function middleware(request: NextRequest) {
   let authSetCookie: string | null = null;
 
   try {
-    const authUrl = new URL("/api/auth/me", request.url);
+    const authUrl = new URL("/auth/me", internalApiBaseUrl);
     const response = await fetch(authUrl, {
       headers: {
         Cookie: request.headers.get("cookie") ?? "",
