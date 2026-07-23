@@ -1,7 +1,7 @@
 import { Curso } from "@/types/curso";
 import axios from "axios";
 
-const base_url = process.env.NEXT_PUBLIC_API_BASE_URL || ''
+const base_url = process.env.NEXT_PUBLIC_API_BASE_URL || '/api'
 
 export const api = axios.create({
     baseURL: base_url,

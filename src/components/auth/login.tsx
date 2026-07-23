@@ -4,7 +4,6 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import { useRouter } from '@/i18n/navigation';
 import { login } from '@/utils/auth';
 
 interface LoginPageProps {
@@ -20,7 +19,6 @@ export default function LoginPage({ redirectTo = '/' }: LoginPageProps) {
     const [showPassword, setShowPassword] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
-    const router = useRouter();
 
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -34,9 +32,7 @@ export default function LoginPage({ redirectTo = '/' }: LoginPageProps) {
             setError(t('invalidCredentials'));
             setIsLoading(false);
         } else {
-            // Redireciona para a página solicitada ou para a home
-            router.push(redirectTo);
-            router.refresh();
+            window.location.assign(redirectTo);
         }
     }
 

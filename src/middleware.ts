@@ -38,29 +38,26 @@ function withAuthCookie(response: NextResponse, authSetCookie: string | null) {
 }
 
 export async function middleware(request: NextRequest) {
-  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
   const { pathnameWithoutLocale, localePrefix } = getPathInfo(
     request.nextUrl.pathname
   );
   let isAuthenticated = false;
   let authSetCookie: string | null = null;
 
-  if (baseUrl) {
-    try {
-      const apiUrl = new URL(baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`);
-      const response = await fetch(new URL("auth/me", apiUrl), {
-        headers: {
-          Cookie: request.headers.get("cookie") ?? "",
-          Accept: "application/json",
-        },
-        cache: "no-store",
-      });
+  try {
+    const authUrl = new URL("/api/auth/me", request.url);
+    const response = await fetch(authUrl, {
+      headers: {
+        Cookie: request.headers.get("cookie") ?? "",
+        Accept: "application/json",
+      },
+      cache: "no-store",
+    });
 
-      isAuthenticated = response.ok;
-      authSetCookie = response.headers.get("set-cookie");
-    } catch {
-      isAuthenticated = false;
-    }
+    isAuthenticated = response.ok;
+    authSetCookie = response.headers.get("set-cookie");
+  } catch {
+    isAuthenticated = false;
   }
 
   // Tratamento do usuario deslogado
