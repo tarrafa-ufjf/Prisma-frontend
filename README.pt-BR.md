@@ -95,7 +95,7 @@ O Prisma Frontend reúne telas e componentes para explorar diferentes níveis de
 - **Painéis de tutores**, com dados gerais, rankings e indicadores relacionados.
 - **Gestão da integração com o Moodle**, com telas administrativas para cadastrar e validar a conexão.
 - **Área administrativa**, voltada a recursos de gestão do sistema.
-- **Chatbot com suporte a visualizações Vega**, permitindo explorar respostas e gráficos.
+- **Chatbot com histórico de conversas e resultados tabulares**, permitindo explorar respostas e dados das consultas.
 - **Internacionalização**, com suporte a português brasileiro e inglês.
 
 ## Visão da interface
@@ -137,7 +137,7 @@ Para uma execução completa do projeto, os dois repositórios devem estar confi
 
 ## Tecnologias principais
 
-O projeto utiliza Next.js, React, TypeScript, Tailwind CSS, Material UI, next-intl, Axios e bibliotecas de visualização como Nivo, Vega, Vega-Lite, AG Charts e MUI X Charts.
+O projeto utiliza Next.js, React, TypeScript, Tailwind CSS, Material UI, next-intl, Axios e bibliotecas de visualização como Nivo, AG Charts e MUI X Charts.
 
 ## Executando localmente
 

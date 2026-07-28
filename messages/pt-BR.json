@@ -43,10 +43,6 @@
       "dropoutRisk": "Quais disciplinas apresentam maior risco de evasão?",
       "engagementPerformance": "Existe relação entre engajamento e desempenho acadêmico?",
       "belowAverageCourses": "Quais cursos possuem desempenho abaixo da média institucional?"
-    },
-    "visualization": {
-      "title": "Visualização",
-      "empty": "Nenhum gráfico disponível para esta pergunta."
     }
   },
   "Tutors": {

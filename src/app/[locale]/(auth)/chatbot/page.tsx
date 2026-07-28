@@ -1,33 +1,9 @@
-'use client';
-
-import { useState } from "react";
 import ChatbotPage from "@/components/pages/Homepage/Chatbot/Chatbot";
-import GraficoVegaPage from "@/components/pages/Homepage/Chatbot/GraficoVega";
 
 export default function ChatPage() {
-
-    const [response, setResponse] = useState<any>();
-    const vegaSpec = response === undefined ? undefined : response?.vega ?? null;
-
     return (
-        <div className="w-full min-h-screen bg-white pl-[290px] pr-16 py-6">
-
-            <div className="grid grid-cols-12 gap-6 h-[calc(100vh-48px)]">
-
-                <div className="col-span-6 h-full">
-                    <ChatbotPage
-                        setResponse={setResponse}
-                    />
-                </div>
-
-                <div className="col-span-6 flex flex-col gap-6 h-full">
-                    <GraficoVegaPage
-                        vegaSpec={vegaSpec}
-                    />
-                </div>
-
-            </div>
-
+        <div className="min-h-screen w-full min-w-0 max-w-full overflow-x-hidden bg-white pl-[290px] pr-16 py-6">
+            <ChatbotPage />
         </div>
     );
 }

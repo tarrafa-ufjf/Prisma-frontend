@@ -30,8 +30,6 @@ interface BackendMessage {
         row_count?: number;
         truncated?: boolean;
     } | null;
-    metadata: Record<string, unknown> | null;
-    vega?: unknown;
     created_at: string;
 }
 
@@ -39,7 +37,6 @@ interface BackendConversation {
     id: number;
     title: string;
     messages?: BackendMessage[];
-    vega?: unknown | null;
 }
 
 interface Message {
@@ -49,11 +46,6 @@ interface Message {
     rewrittenQuestion?: string | null;
     sql?: string | null;
     rows?: Record<string, unknown>[];
-    vega?: unknown;
-}
-
-interface ChatbotPageProps {
-    setResponse: (response: any) => void;
 }
 
 const lastConversationStorageKey = "chatbot:lastConversationId";
@@ -64,18 +56,6 @@ function getMessageRows(resultJson: BackendMessage["result_json"]) {
     }
 
     return resultJson.rows;
-}
-
-function getStoredVega(message: BackendMessage) {
-    if (message.vega) {
-        return message.vega;
-    }
-
-    if (message.metadata && "vega" in message.metadata) {
-        return message.metadata.vega;
-    }
-
-    return undefined;
 }
 
 function formatCellValue(value: unknown) {
@@ -90,9 +70,7 @@ function formatCellValue(value: unknown) {
     return String(value);
 }
 
-export default function ChatbotPage({
-    setResponse
-}: ChatbotPageProps) {
+export default function ChatbotPage() {
 
     const t = useTranslations("Chatbot");
     const [input, setInput] = useState("");
@@ -133,8 +111,6 @@ export default function ChatbotPage({
     const loadConversation = useCallback(async (conversationId: number) => {
         setIsLoadingConversation(true);
         setErrorMessage(null);
-        setResponse(undefined);
-
         try {
             const response = await api.get(`/chatbot/conversations/${conversationId}`);
             const conversation = response.data.conversation as BackendConversation;
@@ -144,19 +120,11 @@ export default function ChatbotPage({
                 sender: message.role === "user" ? "user" : "bot",
                 rewrittenQuestion: message.rewritten_question,
                 sql: message.sql,
-                rows: getMessageRows(message.result_json),
-                vega: getStoredVega(message)
+                rows: getMessageRows(message.result_json)
             }));
-            const lastVegaMessage = [...loadedMessages].reverse().find((message: Message) => {
-                return message.sender === "bot" && message.vega;
-            });
-            const conversationVega = "vega" in conversation
-                ? conversation.vega
-                : lastVegaMessage?.vega ?? null;
 
             setActiveConversationId(conversation.id);
             setMessages(loadedMessages);
-            setResponse(conversationVega ? { vega: conversationVega } : null);
             localStorage.setItem(lastConversationStorageKey, String(conversation.id));
         } catch (error) {
             if (handleUnauthorized(error)) {
@@ -167,7 +135,7 @@ export default function ChatbotPage({
         } finally {
             setIsLoadingConversation(false);
         }
-    }, [handleUnauthorized, setResponse, t]);
+    }, [handleUnauthorized, t]);
 
     const loadConversations = useCallback(async (
         preferredConversationId?: number | null,
@@ -200,7 +168,6 @@ export default function ChatbotPage({
                 if (!nextActiveId || !canOpenNextActive) {
                     setActiveConversationId(null);
                     setMessages([]);
-                    setResponse(undefined);
                 }
             }
         } catch (error) {
@@ -212,7 +179,7 @@ export default function ChatbotPage({
         } finally {
             setIsLoadingConversations(false);
         }
-    }, [handleUnauthorized, loadConversation, setResponse, t]);
+    }, [handleUnauthorized, loadConversation, t]);
 
     useEffect(() => {
         loadConversations();
@@ -232,7 +199,6 @@ export default function ChatbotPage({
         setActiveConversationId(null);
         setMessages([]);
         setErrorMessage(null);
-        setResponse(undefined);
         localStorage.removeItem(lastConversationStorageKey);
     }
 
@@ -268,7 +234,6 @@ export default function ChatbotPage({
                 } else {
                     localStorage.removeItem(lastConversationStorageKey);
                     setMessages([]);
-                    setResponse(undefined);
                 }
             }
 
@@ -320,15 +285,12 @@ export default function ChatbotPage({
                 localStorage.setItem(lastConversationStorageKey, String(nextConversationId));
             }
 
-            setResponse(result);
-
             const botMessage: Message = {
                 id: Date.now() + 1,
                 text: result.answer ?? t("emptyAnswer"),
                 sender: "bot",
                 rewrittenQuestion: result.rewritten_question,
-                rows: Array.isArray(result.json) ? result.json : result.json?.rows,
-                vega: result.vega
+                rows: Array.isArray(result.json) ? result.json : result.json?.rows
             };
 
             setMessages((prev) => [
@@ -374,8 +336,8 @@ export default function ChatbotPage({
         }
 
         return (
-            <div className="mt-4 max-h-64 overflow-auto rounded-lg border border-white/20">
-                <table className="w-full min-w-max text-left text-xs">
+            <div className="mt-4 max-h-64 w-full min-w-0 max-w-full overflow-auto rounded-lg border border-white/20">
+                <table className="min-w-max text-left text-xs">
                     <thead className="bg-white/10">
                         <tr>
                             {columns.map((column) => (
@@ -412,12 +374,19 @@ export default function ChatbotPage({
                 key={message.id}
                 className={`
                     flex
+                    w-full
+                    max-w-full
+                    min-w-0
+                    overflow-hidden
                     ${message.sender === "user" ? "justify-end" : "justify-start"}
                 `}
             >
                 <div
                     className={`
+                        min-w-0
                         max-w-[88%]
+                        overflow-hidden
+                        break-words
                         rounded-[24px]
                         px-5
                         py-4
@@ -425,8 +394,8 @@ export default function ChatbotPage({
                         leading-6
                         shadow-sm
                         ${message.sender === "user"
-                            ? "bg-[#4353B3] text-white"
-                            : "bg-[#4C5A73] text-white"
+                            ? "w-fit bg-[#4353B3] text-white"
+                            : "w-[88%] bg-[#4C5A73] text-white"
                         }
                     `}
                 >
@@ -444,9 +413,19 @@ export default function ChatbotPage({
                                 </ul>
                             ),
                             p: ({ children }) => (
-                                <p className="mb-2 last:mb-0">
+                                <p className="mb-2 break-words [overflow-wrap:anywhere] last:mb-0">
                                     {children}
                                 </p>
+                            ),
+                            pre: ({ children }) => (
+                                <pre className="max-w-full overflow-x-auto whitespace-pre-wrap break-words">
+                                    {children}
+                                </pre>
+                            ),
+                            code: ({ children }) => (
+                                <code className="break-words [overflow-wrap:anywhere]">
+                                    {children}
+                                </code>
                             )
                         }}
                     >
@@ -454,7 +433,7 @@ export default function ChatbotPage({
                     </ReactMarkdown>
 
                     {shouldShowRewrittenQuestion && (
-                        <div className="mt-3 rounded-lg bg-white/10 px-3 py-2 text-xs leading-5 text-white/85">
+                        <div className="mt-3 break-words [overflow-wrap:anywhere] rounded-lg bg-white/10 px-3 py-2 text-xs leading-5 text-white/85">
                             <span className="font-semibold">
                                 {t("interpretedQuestion")}
                             </span>{" "}
@@ -469,7 +448,7 @@ export default function ChatbotPage({
                             <summary className="cursor-pointer font-semibold">
                                 {t("debugSql")}
                             </summary>
-                            <pre className="mt-2 whitespace-pre-wrap break-words">
+                            <pre className="mt-2 max-w-full overflow-x-auto whitespace-pre-wrap break-words [overflow-wrap:anywhere]">
                                 {message.sql}
                             </pre>
                         </details>
@@ -483,11 +462,13 @@ export default function ChatbotPage({
         <div
             className="
                 Box
+                w-full
+                min-w-0
                 h-[calc(100vh-48px)]
                 overflow-hidden
             "
         >
-            <div className="flex h-full min-h-0">
+            <div className="flex h-full min-h-0 min-w-0">
                 <aside className="flex w-56 shrink-0 flex-col border-r border-[#ECECF4] bg-[#F8F8FC]">
                     <div className="p-4">
                         <button
@@ -616,10 +597,10 @@ export default function ChatbotPage({
                     </div>
                 </aside>
 
-                <section className="flex min-w-0 flex-1 flex-col">
-                    <div className="maincurso shrink-0">
-                        <div className="mt-10 ml-10 mb-5">
-                            <h1 className="text-xl font-poppins font-semibold text-left">
+                <section className="flex min-w-0 max-w-full flex-1 flex-col overflow-hidden">
+                    <div className="flex w-full min-w-0 shrink-0">
+                        <div className="mt-10 mb-5 min-w-0 px-10">
+                            <h1 className="break-words text-left font-poppins text-xl font-semibold [overflow-wrap:anywhere]">
                                 {activeConversation?.title || t("title")}
                             </h1>
                         </div>
@@ -645,9 +626,12 @@ export default function ChatbotPage({
                         className="
                             flex
                             min-h-0
+                            min-w-0
+                            max-w-full
                             flex-1
                             flex-col
                             justify-between
+                            overflow-hidden
                             p-8
                         "
                     >
@@ -660,7 +644,11 @@ export default function ChatbotPage({
                         <div
                             className="
                                 min-h-0
+                                min-w-0
+                                w-full
+                                max-w-full
                                 flex-1
+                                overflow-x-hidden
                                 overflow-y-auto
                                 pr-2
                             "
@@ -690,7 +678,7 @@ export default function ChatbotPage({
                                     </div>
                                 </>
                             ) : (
-                                <div className="flex flex-col gap-5">
+                                <div className="flex w-full min-w-0 max-w-full flex-col gap-5 overflow-hidden">
                                     {messages.map(renderMessage)}
 
                                     {isTyping && (
@@ -719,7 +707,7 @@ export default function ChatbotPage({
                         <div className="mt-8 shrink-0">
                             <div className="w-full h-[1px] bg-[#ECECF4] mb-6" />
 
-                            <div className="flex items-center gap-4">
+                            <div className="flex min-w-0 items-center gap-4">
                                 <input
                                     value={input}
                                     onChange={(e) =>
@@ -734,6 +722,7 @@ export default function ChatbotPage({
                                     disabled={isLoadingConversation}
                                     className="
                                         flex-1
+                                        min-w-0
                                         h-14
                                         rounded-[18px]
                                         bg-[#F4F4F7]

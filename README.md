@@ -95,7 +95,7 @@ Prisma Frontend brings together screens and components to explore different leve
 - **Tutor panels**, with general data, rankings and related indicators.
 - **Moodle integration management**, with administrative screens to register and validate the connection.
 - **Administrative area**, aimed at system management resources.
-- **Chatbot with Vega visualization support**, allowing exploration of responses and graphs.
+- **Chatbot with conversation history and tabular results**, allowing exploration of answers and query data.
 - **Internationalization**, with support for Brazilian Portuguese and English.
 
 ## Interface overview
@@ -137,7 +137,7 @@ For complete project execution, both repositories must be configured.
 
 ## Main technologies
 
-The project uses Next.js, React, TypeScript, Tailwind CSS, Material UI, next-intl, Axios and visualization libraries such as Nivo, Vega, Vega-Lite, AG Charts and MUI X Charts.
+The project uses Next.js, React, TypeScript, Tailwind CSS, Material UI, next-intl, Axios and visualization libraries such as Nivo, AG Charts and MUI X Charts.
 
 ## Running locally
 
