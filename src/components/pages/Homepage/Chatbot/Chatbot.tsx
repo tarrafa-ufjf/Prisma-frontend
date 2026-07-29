@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import axios from "axios";
 import { ArrowRight, MessageSquarePlus, RefreshCw, Trash2 } from "lucide-react";
 import SuggestionBox from "./Sugestões";
@@ -135,6 +135,7 @@ export default function ChatbotPage({ setVegaSpec }: ChatbotPageProps) {
     const [isLoadingConversation, setIsLoadingConversation] = useState(false);
     const [deletingConversationId, setDeletingConversationId] = useState<number | null>(null);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const messagesContainerRef = useRef<HTMLDivElement>(null);
 
     const suggestions = [
         t("suggestions.dropoutRisk"),
@@ -247,6 +248,19 @@ export default function ChatbotPage({ setVegaSpec }: ChatbotPageProps) {
     useEffect(() => {
         loadConversations();
     }, [loadConversations]);
+
+    useEffect(() => {
+        const messagesContainer = messagesContainerRef.current;
+
+        if (!messagesContainer) {
+            return;
+        }
+
+        messagesContainer.scrollTo({
+            top: messagesContainer.scrollHeight,
+            behavior: "smooth"
+        });
+    }, [messages, isTyping]);
 
     async function askChatbot(question: string) {
         const payload = activeConversationId
@@ -732,6 +746,7 @@ export default function ChatbotPage({ setVegaSpec }: ChatbotPageProps) {
                         )}
 
                         <div
+                            ref={messagesContainerRef}
                             className="
                                 min-h-0
                                 min-w-0
