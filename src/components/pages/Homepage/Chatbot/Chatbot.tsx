@@ -400,7 +400,7 @@ export default function ChatbotPage({ setVegaSpec }: ChatbotPageProps) {
 
         return (
             <div className="mt-4 max-h-64 w-full min-w-0 max-w-full overflow-auto rounded-lg border border-white/20">
-                <table className="min-w-max text-left text-xs">
+                <table className="w-full min-w-max text-left text-xs">
                     <thead className="bg-white/10">
                         <tr>
                             {columns.map((column) => (
@@ -447,7 +447,7 @@ export default function ChatbotPage({ setVegaSpec }: ChatbotPageProps) {
                 <div
                     className={`
                         min-w-0
-                        max-w-[88%]
+                        max-w-[96%]
                         overflow-hidden
                         break-words
                         rounded-[24px]
@@ -458,7 +458,7 @@ export default function ChatbotPage({ setVegaSpec }: ChatbotPageProps) {
                         shadow-sm
                         ${message.sender === "user"
                             ? "w-fit bg-[#4353B3] text-white"
-                            : "w-[88%] bg-[#4C5A73] text-white"
+                            : "w-[96%] bg-[#4C5A73] text-white"
                         }
                     `}
                 >
@@ -489,6 +489,33 @@ export default function ChatbotPage({ setVegaSpec }: ChatbotPageProps) {
                                 <code className="break-words [overflow-wrap:anywhere]">
                                     {children}
                                 </code>
+                            ),
+                            table: ({ children }) => (
+                                <div className="my-3 w-full max-w-full overflow-x-auto rounded-lg border border-white/20">
+                                    <table className="min-w-max text-left text-xs">
+                                        {children}
+                                    </table>
+                                </div>
+                            ),
+                            thead: ({ children }) => (
+                                <thead className="bg-white/10">
+                                    {children}
+                                </thead>
+                            ),
+                            tr: ({ children }) => (
+                                <tr className="border-t border-white/10 first:border-t-0">
+                                    {children}
+                                </tr>
+                            ),
+                            th: ({ children }) => (
+                                <th className="whitespace-normal px-3 py-2 align-bottom font-semibold">
+                                    {children}
+                                </th>
+                            ),
+                            td: ({ children }) => (
+                                <td className="whitespace-nowrap px-3 py-2 align-top">
+                                    {children}
+                                </td>
                             )
                         }}
                     >
@@ -496,7 +523,7 @@ export default function ChatbotPage({ setVegaSpec }: ChatbotPageProps) {
                     </ReactMarkdown>
 
                     {shouldShowRewrittenQuestion && (
-                        <div className="mt-3 break-words [overflow-wrap:anywhere] rounded-lg bg-white/10 px-3 py-2 text-xs leading-5 text-white/85">
+                        <div className="mt-3 break-words [overflow-wrap:anywhere] rounded-lg bg-white/10 px-3 py-2 text-[11px] leading-4 text-white/85">
                             <span className="font-semibold">
                                 {t("interpretedQuestion")}
                             </span>{" "}
@@ -532,7 +559,7 @@ export default function ChatbotPage({ setVegaSpec }: ChatbotPageProps) {
             "
         >
             <div className="flex h-full min-h-0 min-w-0">
-                <aside className="flex w-56 shrink-0 flex-col border-r border-[#ECECF4] bg-[#F8F8FC]">
+                <aside className="flex w-50 shrink-0 flex-col border-r border-[#ECECF4] bg-[#F8F8FC]">
                     <div className="p-4">
                         <button
                             onClick={startNewConversation}
@@ -662,7 +689,7 @@ export default function ChatbotPage({ setVegaSpec }: ChatbotPageProps) {
 
                 <section className="flex min-w-0 max-w-full flex-1 flex-col overflow-hidden">
                     <div className="flex w-full min-w-0 shrink-0">
-                        <div className="mt-10 mb-5 min-w-0 px-10">
+                        <div className="mb-5 mt-10 min-w-0 px-6">
                             <h1 className="break-words text-left font-poppins text-xl font-semibold [overflow-wrap:anywhere]">
                                 {activeConversation?.title || t("title")}
                             </h1>
@@ -695,7 +722,7 @@ export default function ChatbotPage({ setVegaSpec }: ChatbotPageProps) {
                             flex-col
                             justify-between
                             overflow-hidden
-                            p-8
+                            p-6
                         "
                     >
                         {errorMessage && (
@@ -767,7 +794,7 @@ export default function ChatbotPage({ setVegaSpec }: ChatbotPageProps) {
                             )}
                         </div>
 
-                        <div className="mt-8 shrink-0">
+                        <div className="mt-6 shrink-0">
                             <div className="w-full h-[1px] bg-[#ECECF4] mb-6" />
 
                             <div className="flex min-w-0 items-center gap-4">
