@@ -58,7 +58,38 @@ interface ChatbotPageProps {
     setVegaSpec: Dispatch<SetStateAction<VisualizationSpec | null | undefined>>;
 }
 
+interface ChatbotErrorResponse {
+    success?: boolean;
+    error?: unknown;
+    error_code?: unknown;
+    answer?: unknown;
+    retryable?: unknown;
+}
+
 const lastConversationStorageKey = "chatbot:lastConversationId";
+
+function getChatbotErrorMessage(error: unknown, fallbackMessage: string) {
+    if (!axios.isAxiosError<ChatbotErrorResponse>(error)) {
+        return fallbackMessage;
+    }
+
+    const responseData = error.response?.data;
+
+    if (
+        responseData?.success === false &&
+        responseData.error_code === "CHATBOT_INTERNAL_ERROR"
+    ) {
+        if (typeof responseData.answer === "string" && responseData.answer.trim()) {
+            return responseData.answer;
+        }
+
+        if (typeof responseData.error === "string" && responseData.error.trim()) {
+            return responseData.error;
+        }
+    }
+
+    return fallbackMessage;
+}
 
 function getMessageRows(resultJson: BackendMessage["result_json"]) {
     if (!resultJson?.rows || !Array.isArray(resultJson.rows)) {
@@ -341,14 +372,9 @@ export default function ChatbotPage({ setVegaSpec }: ChatbotPageProps) {
                 return;
             }
 
-            const fallbackMessage =
-                error instanceof Error
-                    ? error.message
-                    : t("errors.fetch");
-
             const botMessage: Message = {
                 id: Date.now() + 1,
-                text: fallbackMessage,
+                text: getChatbotErrorMessage(error, t("errors.fetch")),
                 sender: "bot"
             };
 
