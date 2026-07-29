@@ -43,6 +43,11 @@
       "dropoutRisk": "Which courses have the highest dropout risk?",
       "engagementPerformance": "Is there a relationship between engagement and academic performance?",
       "belowAverageCourses": "Which degree programs are performing below the institutional average?"
+    },
+    "visualization": {
+      "title": "Visualization",
+      "empty": "No chart is available for this question.",
+      "error": "This chart could not be rendered."
     }
   },
   "Tutors": {

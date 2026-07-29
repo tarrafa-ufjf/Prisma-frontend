@@ -8,6 +8,8 @@ import { api } from "@/utils/api";
 import { useTranslations } from "next-intl";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import type { Dispatch, SetStateAction } from "react";
+import type { VisualizationSpec } from "vega-embed";
 
 type MessageSender = "user" | "bot";
 
@@ -30,6 +32,8 @@ interface BackendMessage {
         row_count?: number;
         truncated?: boolean;
     } | null;
+    metadata: Record<string, unknown> | null;
+    vega?: VisualizationSpec | null;
     created_at: string;
 }
 
@@ -37,6 +41,7 @@ interface BackendConversation {
     id: number;
     title: string;
     messages?: BackendMessage[];
+    vega?: VisualizationSpec | null;
 }
 
 interface Message {
@@ -46,6 +51,11 @@ interface Message {
     rewrittenQuestion?: string | null;
     sql?: string | null;
     rows?: Record<string, unknown>[];
+    vega?: VisualizationSpec | null;
+}
+
+interface ChatbotPageProps {
+    setVegaSpec: Dispatch<SetStateAction<VisualizationSpec | null | undefined>>;
 }
 
 const lastConversationStorageKey = "chatbot:lastConversationId";
@@ -56,6 +66,18 @@ function getMessageRows(resultJson: BackendMessage["result_json"]) {
     }
 
     return resultJson.rows;
+}
+
+function getStoredVega(message: BackendMessage) {
+    if (message.vega) {
+        return message.vega;
+    }
+
+    if (message.metadata && "vega" in message.metadata) {
+        return message.metadata.vega as VisualizationSpec | null;
+    }
+
+    return undefined;
 }
 
 function formatCellValue(value: unknown) {
@@ -70,7 +92,7 @@ function formatCellValue(value: unknown) {
     return String(value);
 }
 
-export default function ChatbotPage() {
+export default function ChatbotPage({ setVegaSpec }: ChatbotPageProps) {
 
     const t = useTranslations("Chatbot");
     const [input, setInput] = useState("");
@@ -111,6 +133,8 @@ export default function ChatbotPage() {
     const loadConversation = useCallback(async (conversationId: number) => {
         setIsLoadingConversation(true);
         setErrorMessage(null);
+        setVegaSpec(undefined);
+
         try {
             const response = await api.get(`/chatbot/conversations/${conversationId}`);
             const conversation = response.data.conversation as BackendConversation;
@@ -120,11 +144,18 @@ export default function ChatbotPage() {
                 sender: message.role === "user" ? "user" : "bot",
                 rewrittenQuestion: message.rewritten_question,
                 sql: message.sql,
-                rows: getMessageRows(message.result_json)
+                rows: getMessageRows(message.result_json),
+                vega: getStoredVega(message)
             }));
+            const lastVegaMessage = [...loadedMessages].reverse().find((message) => {
+                return message.sender === "bot" && message.vega;
+            });
+            const conversationVega =
+                conversation.vega ?? lastVegaMessage?.vega ?? null;
 
             setActiveConversationId(conversation.id);
             setMessages(loadedMessages);
+            setVegaSpec(conversationVega);
             localStorage.setItem(lastConversationStorageKey, String(conversation.id));
         } catch (error) {
             if (handleUnauthorized(error)) {
@@ -135,7 +166,7 @@ export default function ChatbotPage() {
         } finally {
             setIsLoadingConversation(false);
         }
-    }, [handleUnauthorized, t]);
+    }, [handleUnauthorized, setVegaSpec, t]);
 
     const loadConversations = useCallback(async (
         preferredConversationId?: number | null,
@@ -168,6 +199,7 @@ export default function ChatbotPage() {
                 if (!nextActiveId || !canOpenNextActive) {
                     setActiveConversationId(null);
                     setMessages([]);
+                    setVegaSpec(undefined);
                 }
             }
         } catch (error) {
@@ -179,7 +211,7 @@ export default function ChatbotPage() {
         } finally {
             setIsLoadingConversations(false);
         }
-    }, [handleUnauthorized, loadConversation, t]);
+    }, [handleUnauthorized, loadConversation, setVegaSpec, t]);
 
     useEffect(() => {
         loadConversations();
@@ -199,6 +231,7 @@ export default function ChatbotPage() {
         setActiveConversationId(null);
         setMessages([]);
         setErrorMessage(null);
+        setVegaSpec(undefined);
         localStorage.removeItem(lastConversationStorageKey);
     }
 
@@ -234,6 +267,7 @@ export default function ChatbotPage() {
                 } else {
                     localStorage.removeItem(lastConversationStorageKey);
                     setMessages([]);
+                    setVegaSpec(undefined);
                 }
             }
 
@@ -285,12 +319,15 @@ export default function ChatbotPage() {
                 localStorage.setItem(lastConversationStorageKey, String(nextConversationId));
             }
 
+            setVegaSpec(result.vega ?? null);
+
             const botMessage: Message = {
                 id: Date.now() + 1,
                 text: result.answer ?? t("emptyAnswer"),
                 sender: "bot",
                 rewrittenQuestion: result.rewritten_question,
-                rows: Array.isArray(result.json) ? result.json : result.json?.rows
+                rows: Array.isArray(result.json) ? result.json : result.json?.rows,
+                vega: result.vega ?? null
             };
 
             setMessages((prev) => [
