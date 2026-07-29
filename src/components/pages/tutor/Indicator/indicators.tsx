@@ -1,8 +1,5 @@
 'use client';
 
-import responseIcon from './response.png'
-import clickIcon from './click.png'
-import chatIcon from './chat.png'
 import Image from 'next/image';
 import { Tooltip } from "@/components/template/tooltip";
 import { getIndicatorsInfo } from "@/utils/indicatorsInfo";
@@ -99,10 +96,11 @@ export default function Indicators({ id_course, id_tutor }: IndicatorsProps) {
               <div className="ml-5 flex justify-start space-x-3">
                 <div className="bg-[#3CD856] rounded-full flex items-center justify-center w-8 h-8 min-w-8">
                   <Image
-                    src={responseIcon}
+                    src="/images/tutores/response.png"
                     alt={t("indicatorIconAlt")}
                     width={15}
                     height={20}
+                    unoptimized
                     className="object-cover"
                   />
                 </div>
@@ -124,10 +122,11 @@ export default function Indicators({ id_course, id_tutor }: IndicatorsProps) {
               <div className="ml-5 flex justify-start space-x-3">
                 <div className="bg-[#5C3CD8] rounded-full flex items-center justify-center w-8 h-8">
                   <Image
-                    src={clickIcon}
+                    src="/images/tutores/click.png"
                     alt={t("indicatorIconAlt")}
                     width={21}
                     height={28}
+                    unoptimized
                     className="mr-0.5 object-cover"
                   />
                 </div>
@@ -149,10 +148,11 @@ export default function Indicators({ id_course, id_tutor }: IndicatorsProps) {
               <div className="ml-5 flex justify-start space-x-3">
                 <div className="bg-[#D83C8C] rounded-full flex items-center justify-center w-8 h-8">
                   <Image
-                    src={chatIcon}
+                    src="/images/tutores/chat.png"
                     alt={t("indicatorIconAlt")}
                     width={21}
                     height={28}
+                    unoptimized
                     className="object-cover"
                   />
                 </div>

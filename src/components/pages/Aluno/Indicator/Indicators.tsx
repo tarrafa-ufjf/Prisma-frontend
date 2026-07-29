@@ -1,9 +1,4 @@
 import styles from './Indicators.module.css';
-import alunoIcon2 from './baixados2.png';
-import alunoIcon3 from './baixados.png';
-import alunoIcon1 from './baixados1.png';
-import alunoIcon5 from './evasion.png';
-import cognitive_depth from './cognitive_depth.png';
 import Image from 'next/image';
 import { Aluno as AlunoType, Tab } from "@/types/aluno";
 import * as React from "react";
@@ -127,10 +122,11 @@ export default function Indicators({ aluno, cursoSelecionado }: IndicatorsProps)
               <div className="ml-5 flex justify-start space-x-3">
                 <div className="bg-[#3CD856] rounded-full flex items-center justify-center w-8 h-8 min-w-8">
                   <Image
-                    src={alunoIcon1}
+                    src="/images/indicators/baixados1.png"
                     alt={t("studentTeacherIconAlt")}
                     width={15}
                     height={20}
+                    unoptimized
                     className="object-cover"
                   />
                 </div>
@@ -152,10 +148,11 @@ export default function Indicators({ aluno, cursoSelecionado }: IndicatorsProps)
               <div className="ml-5 flex justify-start space-x-3">
                 <div className="bg-[#3C56D8] rounded-full flex items-center justify-center w-8 h-8 min-w-8">
                   <Image
-                    src={alunoIcon3}
+                    src="/images/indicators/baixados.png"
                     alt={t("studentTeacherIconAlt")}
                     width={21}
                     height={28}
+                    unoptimized
                     className="object-cover translate-x-[5px]"
                   />
                 </div>
@@ -179,10 +176,11 @@ export default function Indicators({ aluno, cursoSelecionado }: IndicatorsProps)
               <div className="flex justify-center items-center space-x-3 mb-4">
                 <div className="bg-[#D8D03C] rounded-full flex items-center justify-center w-8 h-8">
                   <Image
-                    src={alunoIcon2}
+                    src="/images/indicators/baixados2.png"
                     alt={t("performanceIconAlt")}
                     width={21}
                     height={28}
+                    unoptimized
                     className="object-cover"
                   />
                 </div>
@@ -206,10 +204,11 @@ export default function Indicators({ aluno, cursoSelecionado }: IndicatorsProps)
               <div className="ml-5 flex justify-start space-x-3">
                 <div className="bg-[#D86D3C] rounded-full flex items-center justify-center w-8 h-8 min-w-8">
                   <Image
-                    src={cognitive_depth}
+                    src="/images/indicators/cognitive_depth.png"
                     alt={t("cognitiveDepthIconAlt")}
                     width={18}
                     height={20}
+                    unoptimized
                     className="object-cover"
                   />
                 </div>
@@ -234,10 +233,11 @@ export default function Indicators({ aluno, cursoSelecionado }: IndicatorsProps)
             <div className="flex items-center space-x-3 ml-5 mt-1">
               <div className="bg-[#D83C8C] rounded-full flex items-center justify-center w-8 h-8">
                 <Image
-                  src={alunoIcon5}
+                  src="/images/indicators/evasion.png"
                   alt={t("dropoutIconAlt")}
                   width={21}
                   height={28}
+                  unoptimized
                   className="object-cover"
                 />
               </div>

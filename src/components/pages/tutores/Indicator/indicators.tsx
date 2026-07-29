@@ -1,7 +1,4 @@
 import styles from './Indicators.module.css';
-import chat from "./chat.png";
-import click from "./click.png";
-import response from "./response.png";
 import Image from 'next/image';
 import { Tooltip } from "@/components/template/tooltip";
 import { getIndicatorsInfo } from "@/utils/indicatorsInfo";
@@ -69,10 +66,11 @@ export default function Indicators() {
                     <div className="ml-5 flex justify-start space-x-3">
                       <div className="bg-[#3C56D8] rounded-full flex items-center justify-center w-8 h-8">
                         <Image
-                          src={chat}
+                          src="/images/tutores/chat.png"
                           alt={t("indicatorIconAlt")}
                           width={15}
                           height={20}
+                          unoptimized
                           className="object-cover"
                         />
                       </div>
@@ -114,10 +112,11 @@ export default function Indicators() {
                     <div className="ml-5 flex justify-start space-x-3">
                       <div className="bg-[#5C3CD8] rounded-full flex items-center justify-center w-8 h-8">
                         <Image
-                          src={click}
+                          src="/images/tutores/click.png"
                           alt={t("indicatorIconAlt")}
                           width={20}
                           height={28}
+                          unoptimized
                           className="object-cover text-white"
                         />
                       </div>
@@ -155,11 +154,12 @@ export default function Indicators() {
                   <div className="ml-5 flex justify-start space-x-3">
                     <div className="bg-[#D83C8C] rounded-full flex items-center justify-center w-8 h-8">
                       <Image
-                        src={response}
-                        alt={t("indicatorIconAlt")}
-                        width={15}
-                        height={20}
-                        className="object-cover text-white"
+                      src="/images/tutores/response.png"
+                      alt={t("indicatorIconAlt")}
+                      width={15}
+                      height={20}
+                      unoptimized
+                      className="object-cover text-white"
                       />
                     </div>
                     <p className="text-2xl font-bold text-gray-900">
