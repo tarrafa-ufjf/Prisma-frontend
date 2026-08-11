@@ -43,6 +43,33 @@ This repository contains the web application. The API, authentication and access
   <img src="docs/assets/gif_interface.gif" alt="Prisma interface demonstration" width="85%">
 </p>
 
+## Project
+
+Prisma is an academic project developed at the Federal University of Juiz de Fora (UFJF), as part of the research and development activities of the [LApIC — Laboratory of Innovative Applications in Computing](https://www.lapic.com.br/).
+
+The project brings together research and technological development in Computing and Education, focusing on the use of educational data, indicators, visualizations and computational tools to support academic monitoring and decision-making.
+
+### Contributors
+
+The project involved the following contributors across its research, development and academic activities:
+
+- Ágata Meireles Carvalho
+- Alfredo Lucas da Silva Neto
+- Breno Furtado Rosado
+- Dayane Guimarães Gomes Godoy
+- Fernanda dos Santos Coutinho
+- Gabriel Alejandro de Araújo Soriano
+- Gabriella Carvalho
+- Joel Henrique Nunes de Oliveira Silva
+- Júlia Borges Beccari
+- Luiza Machado Costa
+- Yan Messias de Azevedo Fonseca
+
+### Project Coordination
+
+- Jairo Francisco de Souza (UFJF)
+- Renê Rodrigues Veloso (Unimontes)
+
 ## About Prisma
 
 Prisma was born from the need to monitor large volumes of academic information in a more accessible way. In educational environments, data about disciplines, activities, students, tutors and performance often exist in different systems or appear in a way that is not user-friendly for decision-making.

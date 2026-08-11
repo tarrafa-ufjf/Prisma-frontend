@@ -43,6 +43,33 @@ Este repositório contém a aplicação web. A API, autenticação e regras de a
   <img src="docs/assets/gif_interface.gif" alt="Demonstração da interface Prisma" width="85%">
 </p>
 
+## Projeto
+
+O Prisma é um projeto acadêmico desenvolvido na Universidade Federal de Juiz de Fora (UFJF), como parte das atividades de pesquisa e desenvolvimento do [LApIC — Laboratório de Aplicações Inovadoras em Computação](https://www.lapic.com.br/).
+
+O projeto reúne pesquisa e desenvolvimento tecnológico nas áreas de Computação e Educação, com foco no uso de dados educacionais, indicadores, visualizações e ferramentas computacionais para apoiar o acompanhamento acadêmico e a tomada de decisões.
+
+### Colaboradores
+
+O projeto contou com a participação dos seguintes colaboradores em suas atividades de pesquisa, desenvolvimento e acadêmicas:
+
+- Ágata Meireles Carvalho
+- Alfredo Lucas da Silva Neto
+- Breno Furtado Rosado
+- Dayane Guimarães Gomes Godoy
+- Fernanda dos Santos Coutinho
+- Gabriel Alejandro de Araújo Soriano
+- Gabriella Carvalho
+- Joel Henrique Nunes de Oliveira Silva
+- Júlia Borges Beccari
+- Luiza Machado Costa
+- Yan Messias de Azevedo Fonseca
+
+### Coordenação do Projeto
+
+- Jairo Francisco de Souza (UFJF)
+- Renê Rodrigues Veloso (Unimontes)
+
 ## Sobre o Prisma
 
 O Prisma nasce da necessidade de acompanhar grandes volumes de informações acadêmicas de forma mais acessível. Em ambientes educacionais, dados sobre disciplinas, atividades, estudantes, tutores e desempenho costumam existir em sistemas diferentes ou aparecer de maneira pouco amigável para tomada de decisão.
