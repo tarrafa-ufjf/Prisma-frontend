@@ -145,24 +145,6 @@ The following versions have been tested with the current integration:
 
 > This table should be updated whenever a new Moodle version is tested and validated.
 
-### Updating to another Moodle version
-
-When migrating the integration to a new Moodle version, the following procedure should be followed:
-
-1. Identify the Moodle version currently supported by the project.
-2. Check the changes introduced by the target Moodle version.
-3. Identify changes that may affect the data retrieval process.
-4. Verify whether the existing connector remains compatible.
-5. Update the Moodle Version Mapping when necessary.
-6. Create or update the corresponding Moodle Connector.
-7. Test authentication and communication with the new Moodle version.
-8. Test data retrieval from the Institutional Database.
-9. Validate the format and completeness of the retrieved data.
-10. Execute the indicator calculation process.
-11. Verify that the resulting indicators are correctly stored in the Local Database.
-12. Validate the corresponding Front-End visualizations.
-13. Update the supported versions table in this documentation.
-
 Any version-specific changes or compatibility issues should be documented here to facilitate future migrations.
 
 ## Data processing
@@ -838,19 +820,379 @@ When creating or modifying a metric:
 8. Update this documentation.
 9. Test the complete data flow.
 
-### Adding support for a Moodle version
+### Adding support for a new Moodle version
 
-When adding support for a new Moodle version:
+Support for a new Moodle version is implemented primarily in the Moodle mapping and connector layer.
 
-1. Identify the differences from previously supported versions.
-2. Implement or update the appropriate connector.
-3. Update the Moodle Version Mapping.
-4. Test the connection.
-5. Test data retrieval.
-6. Run the analysis process.
-7. Validate the generated indicators.
-8. Update the supported versions table.
-9. Document any version-specific behavior.
+```text
+src/
+└── analysis_lib/
+    └── mapper/
+        ├── map.py
+        ├── moodle.py
+        └── connectors/
+            └── moodle3_1.py
+```
+
+Currently, Prisma provides a connector specific to Moodle 3.1.3:
+
+```text
+src/analysis_lib/mapper/connectors/moodle3_1.py
+```
+
+The `map.py` component is responsible for identifying the Moodle version and selecting the corresponding connector.
+
+The general flow is:
+
+```text
+Moodle Database Connection
+          │
+          ▼
+        map.py
+          │
+          ├── get_moodle_version()
+          │
+          ▼
+     Detected version
+          │
+          ▼
+       get_moodle()
+          │
+          ├── 3.1.3 → Moodle31
+          │
+          └── new version → MoodleXX
+                              │
+                              ▼
+                       Version-specific
+                          queries
+```
+
+### 1. Identify the current Moodle version
+
+The Moodle version is obtained directly from the institutional database through the following query:
+
+```sql
+SELECT name, value
+FROM mdl_config
+WHERE name = 'release'
+```
+
+This operation is performed by:
+
+```text
+src/analysis_lib/mapper/map.py
+└── Mapper.get_moodle_version()
+```
+
+The method retrieves the Moodle release version, which is subsequently used to select the appropriate connector.
+
+### 2. Check how the version is mapped
+
+The `get_moodle()` method in `map.py` associates supported Moodle versions with their corresponding connectors.
+
+For examplo:
+
+```python
+def get_moodle(self, connector, version):
+    match version:
+        case '3.1.3':
+            return Moodle31(connector)
+        case _:
+            raise ValueError("Unsupported Moodle version")
+```
+
+When adding a new version, a new case must be added to the version mapping.
+
+For example, to add support for Moodle `4.1.0`:
+
+```python
+case '4.1.0':
+    return Moodle410(connector)
+```
+
+### 3. Create the connector for the new version
+
+Create a new connector file in:
+
+```text
+src/analysis_lib/mapper/connectors/
+```
+
+For example:
+
+```text
+src/analysis_lib/mapper/connectors/moodle4_1.py
+```
+
+The new connector should follow the structure of the existing version-specific connector:
+
+```python
+from ..moodle import Moodle
+
+class Moodle410(Moodle):
+    ...
+```
+
+The connector is responsible for implementing or adapting the queries required by Prisma for the target Moodle version.
+
+The existing connector can be used as the initial reference:
+
+```text
+src/analysis_lib/mapper/connectors/moodle3_1.py
+```
+
+The existing SQL queries should not be assumed to be fully compatible with the new version. Moodle database tables, fields and relationships must be verified before reusing them.
+
+### 4. Verify the methods used by the Mapper
+
+The `map.py` component contains methods that forward requests to the selected Moodle connector.
+
+The methods currently used by the system include:
+
+```text
+get_general_query()
+get_engagement_data()
+get_all_students()
+get_courses()
+get_activity_weights()
+get_grades_by_course()
+get_foruns_non_required()
+get_forum_data()
+get_course_forum_viewed()
+get_forum_post_created()
+forum_reply_viewed()
+get_assign_submission_status_viewed()
+get_assign_assessable_submitted()
+get_assign_feedback_viewed()
+get_quizz_viewed()
+get_quizz_attempt_submitted()
+get_quizz_attempt_reviewd()
+fetch_subject_info()
+fetch_total_enrollment()
+get_pct_usage_resource()
+get_all_subjects()
+get_daily_active_subjects()
+get_week_active_subjects()
+get_month_active_subjects()
+fetch_student_summary()
+fetch_student_grades()
+fetch_subjects_summary()
+fetch_institution_info()
+fetch_responses_forums()
+fetch_tutors_login_subject()
+fetch_daily_events()
+fetch_subject_info_tutors()
+fetch_tutors_names()
+fetch_tutors_names_by_ids()
+fetch_forum_messages_counts()
+fetch_tutor_summary()
+fetch_institution_info_tutors()
+fetch_tutors_feedback_subject()
+fetch_tutors_access_days()
+fetch_all_tutors()
+fetch_subjects_summary_tutors()
+```
+
+These methods should be compared with the methods available in the new connector.
+
+The general relationship is:
+
+```text
+Mapper
+   │
+   ├── identifies the Moodle version
+   │
+   ├── selects the corresponding connector
+   │
+   ▼
+Moodle410
+   │
+   ├── get_courses()
+   ├── get_grades_by_course()
+   ├── get_forum_data()
+   ├── ...
+   │
+   ▼
+Moodle Database
+```
+
+The `Mapper` methods normally do not need to be duplicated for each Moodle version. Instead, the version-specific behavior is implemented in the connector selected by `get_moodle()`.
+
+### 5. Compare the SQL queries
+
+The file:
+
+```text
+src/analysis_lib/mapper/connectors/moodle3_1.py
+```
+
+contains the SQL queries used by Prisma to retrieve Moodle data.
+
+When adding a new Moodle version, each query should be reviewed to verify whether:
+
+- the required tables still exist;
+- the required fields still exist;
+- field names have not changed;
+- relationships between tables remain valid;
+- returned values have the expected format;
+- SQL functions used by the queries remain available;
+- the queries still return all data required by the indicators.
+
+For example, if the existing connector contains:
+
+```sql
+SELECT *
+FROM mdl_course
+```
+
+the structure of `mdl_course` should be verified in the target Moodle version.
+
+Queries that depend on Moodle-version-specific structures should be adapted in the new connector when necessary.
+
+### 6. Create an initial copy of the connector
+
+A recommended approach is to use the existing connector as the starting point for the new version:
+
+```text
+moodle3_1.py
+      │
+      │ copy and adapt
+      ▼
+moodle4_1.py
+```
+
+The new connector should then be reviewed and modified only where the target Moodle version differs.
+
+Keeping version-specific implementations in separate connectors avoids introducing version-specific conditional logic throughout individual queries.
+
+### 7. Register the new connector in `map,py`
+
+Import the new connector class in `map.py`:
+
+```python
+from .connectors.moodle3_1 import Moodle31
+from .connectors.moodle4_1 import Moodle410
+```
+
+Then add the new version to the `get_moodle()` method:
+
+```python
+def get_moodle(self, connector, version):
+    match version:
+        case '3.1.3':
+            return Moodle31(connector)
+        case '4.1.0':
+            return Moodle410(connector)
+        case _:
+            raise ValueError("Unsupported Moodle version")
+```
+
+### 8. Test Moodle version detection
+
+Before testing the indicators, verify that Prisma correctly identifies the new Moodle version.
+
+The expected flow is:
+
+```text
+Moodle Database
+     │
+     ▼
+mdl_config
+     │
+     ▼
+get_moodle_version()
+     │
+     ▼
+"4.1.0"
+     │
+     ▼
+get_moodle()
+     │
+     ▼
+Moodle410
+```
+
+The Moodle connection configuration can also be tested through the backend administrative routes:
+
+```text
+/admin/moodle-config
+/admin/moodle-config/test
+```
+
+These routes use:
+
+```text
+pre_api/services/moodle_config_service.py
+```
+
+### 9. Teste the queries individually
+
+Before executing the complete indicator processing pipeline, the queries of the new connector should be tested individually.
+
+At minimum, verify:
+
+- course retrieval;
+- student retrieval;
+- grade retrieval;
+- forum retrieval;
+- activity retrieval;
+- course information retrieval;
+- tutor data retrieval;
+- event retrieval;
+- data required by the student indicators;
+- data required by the tutor indicators.
+
+The objective is to verify not only that the queries execute successfully, but also that their results have the structure expected by the rest of the system.
+
+### 10. Execute the indicator processing pipeline
+
+After validating the connector, excute the normal processing pipeline:
+
+```text
+Moodle
+   ↓
+Moodle Connector
+   ↓
+Analysis System
+   ↓
+Indicator Calculation
+   ↓
+Local Database
+```
+
+Verify that all indicators dependent on Moodle data continue to be calculated correctly.
+
+### 11. Validate the results in the Front-End
+
+Finally, verify that the processed data are correctly displayed in the Front-End.
+
+Validation should include:
+
+- indicators;
+- rankings;
+- charts;
+- student information;
+- course information;
+- tutor information;
+- other visualizations dependent on Moodle data.
+
+### Checklist for adding a new Moodle version
+
+- [ ] Identify the Moodle version.
+- [ ] Verify changes in the Moodle database structure.
+- [ ] Compare the tables and fields used by Prisma.
+- [ ] Create the new connector in `src/analysis_lib/mapper/connectors/`.
+- [ ] Adapt the required SQL queries.
+- [ ] Verify all methods used by the Mapper.
+- [ ] Register the new connector in `map.py`.
+- [ ] Test Moodle version detection.
+- [ ] Test the Moodle connection.
+- [ ] Test data retrieval.
+- [ ] Execute indicator calculation.
+- [ ] Validate the data stored in the Local Database.
+- [ ] Validate the Front-End visualizations.
+- [ ] Add the new version to the supported versions table.
+- [ ] Document version-specific behavior.
 
 ## Testing and validation
 
