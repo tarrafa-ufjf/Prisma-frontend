@@ -213,56 +213,584 @@ This separation allows multiple processing tasks to be handled independently and
 
 ## Metrics and indicators
 
-Prisma uses metrics and derived indicators to transform academic data into information that can support monitoring and analysis.
+Prisma uses metrics and derived indicators to transform Moodle data into information for academic monitoring and analysis.
 
-The metrics section should document the calculation and interpretation of each metric used by the system.
+The indicators are organized into two groups:
 
-For each metric, the following information should be provided:
+- **Student indicators:** Engagement, Motivation, Performance, Student-Instructor Interaction, Cognitive Depth and Dropout Risk.
+- **Teacher/Tutor indicators:** Access, Forum Replies and Feedback.
 
-* **Purpose:** What the metric represents.
-* **Data source:** Which data are used.
-* **Calculation:** Formula or calculation procedure.
-* **Interpretation:** How the resulting value should be understood.
-* **Implementation:** Where the metric is calculated or used in the code.
-* **Visualization:** Where the metric is displayed in the Front-End.
+The calculation process generally consists of four stages:
 
-### Metrics currently used
+1. **Data extraction:** raw data are retrieved from the Moodle database.
+2. **Metric calculation:** raw Moodle records are transformed into quantitative metrics.
+3. **Discretization and aggregation:** metrics may be categorized and aggregated at student, tutor, course or institutional level.
+4. **Persistence and visualization:** the resulting indicators are stored and made available to the Front-End.
 
-| Metric             | Description | Data source | Implementation |
-| ------------------ | ----------- | ----------- | -------------- |
-| *To be documented* |             |             |                |
+> The calculations described below represent the indicator methodology implemented in Prisma. Implementation details may vary according to the Moodle version and the corresponding connector.
 
-### Indicator calculation
+### Student indicators
 
-Indicators may combine one or more metrics to provide higher-level information about academic monitoring.
+Student indicators are calculated from Moodle activity and academic data. The main dimensions considered are engagement, motivation, performance, student-instructor interaction, cognitive depth and dropout risk.
 
-For each indicator, document:
+| Indicator | Moodle source | Raw metric |
+| --- | --- | --- |
+| **Engagement** | `mdl_forum_posts` | Total number of posts made by the student in evaluative forums. |
+| **Motivation** | `mdl_forum_posts` | Total number of posts made by the student in non-evaluative forums. |
+| **Performance** | `mdl_grade_grades` | Composite score based on absolute grade and relative position in the course grade distribution. |
+| **Student-Instructor Interaction** | `mdl_forum_posts`, `mdl_messages` | Frequency of direct message exchanges and forum replies between students and tutors. |
+| **Cognitive Depth** | `mdl_logstore_standard_log` | Interaction score based on the complexity of the student's activity within Moodle. |
+| **Dropout Risk** | `mdl_user_lastaccess`, `mdl_logstore_*` | Risk classification based on inactivity and low performance, engagement, motivation and cognitive depth. |
 
-* Metrics involved.
-* Calculation or aggregation method.
-* Expected range of values.
-* Interpretation.
-* Where it is displayed.
-* Where it is calculated in the code.
+### Student indicator discretization
 
-#### [Indicator name]
+Student metrics are categorized relative to the distribution observed within the course.
 
-**Description:**
-[Description]
+The classification uses the first quartile ($Q1$), third quartile ($Q3$), and interquartile range:
 
-**Metrics involved:**
+```text
+IQR = Q3 - Q1
+LowerBound = Q1 - 1.5 × IQR
+UpperBound = Q3 + 1.5 × IQR
+```
 
-* [Metric]
-* [Metric]
+The resulting categories are:
 
-**Calculation:**
-[Formula or procedure]
+| Category | Relative position |
+| --- | --- |
+| **Very low** | Below the lower bound |
+| **Low** | Between the lower bound and Q1 |
+| **Average** | Between Q1 and Q3 |
+| **High** | Between Q3 and the upper bound |
+| **Very high** | Above the upper bound |
+
+This relative classification allows student results to be interpreted according to the characteristics of their own course cohort rather than only through absolute values.
+
+### Engagement
+
+**Purpose:**  
+Measures student participation in evaluative forums.
+
+**Data source:**
+
+- `mdl_forum_posts`
+
+**Calculation:**  
+The number of posts made by each student in forums associated with evaluated activities is counted.
+
+**Interpretation:**  
+Higher values indicate greater participation in formal discussion activities.
+
+**Discretization:**  
+The resulting value is classified into five levels using the student discretization procedure described above.
+
+---
+
+### Motivation
+
+**Purpose:**  
+Measures voluntary or non-assessed participation in Moodle discussion spaces.
+
+**Data source:**
+
+- `mdl_forum_posts`
+
+**Calculation:**  
+The number of posts made by each student in non-evaluative forums is counted.
+
+**Interpretation:**  
+Higher values indicate greater participation in interaction spaces that are not directly associated with formal assessment.
+
+**Discretization:**  
+The resulting value is classified into five relative levels.
+
+---
+
+### Performance
+
+**Purpose:**  
+Represents student academic performance while considering both absolute achievement and the student's position relative to the course cohort.
+
+**Data source:**
+
+- `mdl_grade_grades`
+
+**Calculation:**  
+The performance indicator combines:
+
+1. The student's absolute grade.
+2. The student's relative position in the course grade distribution.
+
+The final score is calculated as the arithmetic mean of these two components.
+
+**Interpretation:**  
+The indicator considers both the student's obtained grade and their performance relative to other students in the same course.
+
+**Categories:**
+
+| Category | Absolute grade | Relative position |
+| --- | --- | --- |
+| **Very low** | Below 39% | Below the lower bound |
+| **Low** | 40–59% | Between the lower bound and Q1 |
+| **Average** | 60–79% | Between Q1 and Q3 |
+| **Good** | 80–89% | Between Q3 and the upper bound |
+| **Very good** | Above 90% | Above the upper bound |
+
+---
+
+### Student-Instructor Interaction
+
+**Purpose:**  
+Measures interaction between students and instructors/tutors.
+
+**Data sources:**
+
+- `mdl_forum_posts`
+- `mdl_messages`
+
+**Calculation:**  
+The indicator considers the frequency of direct message exchanges and forum interactions between students and tutors.
+
+**Interpretation:**  
+Higher values indicate greater interaction between the student and the instructional staff.
+
+**Discretization:**  
+The resulting metric is classified into five relative levels.
+
+---
+
+### Cognitive Depth
+
+**Purpose:**  
+Estimates the depth of student engagement based on observable interaction traces in Moodle.
+
+**Data source:**
+
+- `mdl_logstore_standard_log`
+
+**Activity types considered:**
+
+- `assign`
+- `quiz`
+- `forum`
+
+**Calculation:**  
+Moodle events are organized into levels representing increasing degrees of interaction with an activity.
+
+The general progression considers:
+
+1. **View:** the student accesses the activity.
+2. **Action:** the student performs an active task, such as submitting an assignment or posting in a forum.
+3. **Revision/follow-up:** the student returns to the activity, such as viewing feedback or reviewing a quiz attempt.
+
+For each student-activity pair, the highest interaction level reached is identified. This value is normalized according to the observable depth available for the specific Moodle activity.
+
+The resulting achievement ratio is transformed into a continuous scale ranging from **-1 to 1**:
+
+- Lower values indicate more superficial interaction.
+- Higher values indicate deeper interaction.
+
+The final student score is calculated as the mean across the analyzed `assign`, `quiz` and `forum` activities.
+
+**Discretization:**  
+The final score is classified into five relative levels.
+
+---
+
+### Dropout Risk
+
+**Purpose:**  
+Identifies students who may require closer monitoring or pedagogical intervention.
+
+**Data sources:**
+
+- `mdl_user_lastaccess`
+- `mdl_logstore_*`
+
+**Calculation:**  
+A student is classified as being at risk when they simultaneously present **low or very low levels** in the four primary student indicators:
+
+- Engagement
+- Motivation
+- Cognitive Depth
+- Performance
+
+The simultaneous presence of these conditions is used as a signaling mechanism for potential dropout risk.
+
+**Interpretation:**  
+The indicator is intended as a monitoring signal and does not represent a definitive prediction of dropout.
+
+---
+
+### Course-level student aggregation
+
+Student indicators can be aggregated to produce a global representation of each course.
+
+For most indicators, the course-level value is obtained from the arithmetic mean of the corresponding student values.
+
+The following course-level metrics are calculated:
+
+- Average engagement.
+- Average motivation.
+- Average performance.
+- Average cognitive depth.
+- Average student-instructor interaction.
+
+For **Dropout Risk**, the course-level metric is the proportion of students classified as being at risk.
+
+Course-level results can subsequently be classified relative to the distribution of courses within the institution using the same five categories:
+
+- `very_low`
+- `low`
+- `average`
+- `high`
+- `very_high`
+
+---
+
+## Teacher and tutor indicators
+
+Teacher/tutor indicators represent instructional activity within Moodle. Three dimensions are considered:
+
+- **Access**
+- **Forum Replies**
+- **Feedback**
+
+| Indicator | Moodle source | Raw metrics |
+| --- | --- | --- |
+| **Access** | `mdl_logstore_standard_log` | Number of unique access days, total logins, course accesses, weekly login frequency and maximum inactivity period. |
+| **Forum Replies** | `mdl_forum_posts` | Number of replies, response time and response-time distribution. |
+| **Feedback** | `mdl_assign_grades`, `mdl_feedback` | Number of graded assignments, assignments with feedback, feedback proportion and feedback formats. |
+
+### Teacher/tutor temporal analysis window
+
+Tutor indicators are calculated only within the period in which the course was effectively active in Moodle.
+
+The analysis window is represented as:
+
+```text
+[t0, t1]
+```
+
+The window is determined from the course's daily event series. The procedure identifies periods of consistent activity while avoiding isolated accesses after course completion.
+
+The process considers:
+
+1. The volume of events observed over time.
+2. A minimum activity criterion.
+3. Contiguous periods of regular activity.
+4. Small gaps caused by weekends, holidays or brief interruptions.
+
+The period with the highest concentration of activity is selected as the primary academic window.
+
+Only interactions recorded within this interval are considered for tutor indicators.
+
+### Teacher/tutor discretization
+
+Tutor metrics are discretized into five relative categories:
+
+- **Very low**
+- **Low**
+- **Average**
+- **High**
+- **Very high**
+
+Unlike student indicators, tutor metrics use percentiles rather than the IQR-based approach.
+
+The thresholds are:
+
+| Category | Range |
+| --- | --- |
+| **Very low** | Up to P20 |
+| **Low** | P20–P40 |
+| **Average** | P40–P60 |
+| **High** | P60–P80 |
+| **Very high** | Above P80 |
+
+For metrics where lower values represent better performance, such as response time and inactivity period, the labels are inverted.
+
+The resulting categories are converted to numerical values from `0` to `4` and aggregated to obtain composite tutor scores.
+
+---
+
+### Access
+
+**Purpose:**  
+Measures tutor presence and regularity within Moodle during the course's active period.
+
+**Data source:**
+
+- `mdl_logstore_standard_log`
+
+**Raw metrics:**
+
+- Total number of logins.
+- Total number of accesses to the course.
+- Average weekly login frequency.
+- Maximum inactivity interval.
+
+**Weekly login frequency:**
+
+```text
+n_login_weekly = n_login / weeks
+```
+
+where:
+
+```text
+weeks = max(((last_login - first_login) + 1) / 7, 1)
+```
+
+**Maximum inactivity:**
+
+The longest period without recorded activity is calculated considering:
+
+- The period between the beginning of the analysis window and the tutor's first active day.
+- The period between the tutor's last active day and the end of the analysis window.
+- Gaps between consecutive active days.
 
 **Interpretation:**
-[Interpretation]
 
-**Displayed in:**
-[Front-End screen]
+Higher access frequency and shorter inactivity periods indicate greater presence and continuity within Moodle.
+
+---
+
+### Forum Replies
+
+**Purpose:**  
+Measures tutor responsiveness to student-initiated forum discussions.
+
+**Data source:**
+
+- `mdl_forum_posts`
+
+**Calculation:**  
+For each student-initiated post, the timestamp of the student's post and the timestamp of the tutor's first reply are identified.
+
+Response time is calculated in hours:
+
+```text
+response_time = (reply_timestamp - post_timestamp) / 3600
+```
+
+Responses are grouped into three categories:
+
+| Category | Response time |
+|---|---|
+| **Fast** | ≤ 24 hours |
+| **Normal** | > 24 and ≤ 120 hours |
+| **Late** | > 120 hours |
+
+A weighted responsiveness score is also calculated:
+
+```text
+score =
+(3 × fast + 2 × normal + 1 × late) / total_replies
+```
+
+When no replies are recorded, the temporal components are assigned a value of zero.
+
+**Interpretation:**  
+Higher scores indicate a greater volume of replies and/or faster responses.
+
+---
+
+### Feedback
+
+**Purpose:**  
+Measures tutor activity in assessment and the provision of feedback to students.
+
+**Data sources:**
+
+- `mdl_assign_grades`
+- `mdl_feedback`
+
+**Metrics:**
+
+- Number of graded assignments.
+- Number of graded assignments with feedback.
+- Percentage of graded assignments with feedback.
+- Amount of textual feedback.
+- Amount of file-based feedback.
+
+The feedback proportion is calculated as:
+
+```text
+feedback_proportion =
+(feedback_assignments / graded_assignments) × 100
+```
+
+**Interpretation:**
+
+The indicator considers both the volume of grading and the consistency and format of feedback provided to students.
+
+---
+
+## Tutor-level normalization and composite scores
+
+Tutor metrics have different scales and characteristics. To make them comparable, metrics are normalized using the distribution of tutors from the same institution and Moodle database version.
+
+The 5th and 95th percentiles are used as limits to reduce the influence of extreme values.
+
+The normalized value is calculated as:
+
+```text
+x_norm =
+(clip(x, P5, P95) - P5) /
+(P95 - P5)
+```
+
+For metrics where lower values represent better performance, the normalized value is inverted:
+
+```text
+x_norm_inv = 1 - x_norm
+```
+
+This produces a common interpretation in which higher values represent greater presence, activity or responsiveness.
+
+### Forum Replies Score
+
+The tutor-level Forum Replies score combines:
+
+- Total number of replies.
+- Mean response time.
+- Median response time.
+
+```text
+score_forum =
+(replies_norm +
+ mean_time_norm_inv +
+ median_time_norm_inv) / 3
+```
+
+### Access Score
+
+The tutor-level Access score combines:
+
+- General Moodle access.
+- Course-specific access.
+- Maximum inactivity period.
+
+```text
+score_access =
+(general_access_norm +
+ course_access_norm +
+ inactivity_norm_inv) / 3
+```
+
+### Feedback Score
+
+The tutor-level Feedback score combines:
+
+- Number of graded assignments.
+- Number of assignments with feedback.
+- Feedback proportion.
+- Textual feedback.
+- File-based feedback.
+
+```text
+score_feedback =
+(corrections_norm +
+ corrections_with_feedback_norm +
+ feedback_proportion +
+ textual_feedback_norm +
+ file_feedback_norm) / 5
+```
+
+---
+
+## Course-level tutor aggregation
+
+After calculating the three tutor-level scores, the scores are aggregated for each course.
+
+For each course, the **median** score among its assigned tutors is used:
+
+```text
+Course Score = median(tutor scores)
+```
+
+Three global course-level scores are therefore produced:
+
+- `Forum Replies`
+- `Access`
+- `Feedback`
+
+The median is used to reduce the influence of extreme individual tutor values and represent the predominant tutoring pattern within the course.
+
+### Institutional classification
+
+Course-level tutor scores are classified relative to the distribution of courses from the same institution and Moodle database version.
+
+The percentile rank is divided into five categories:
+
+| Percentile rank | Category |
+| --- | --- |
+| 0–20% | **Very low** |
+| 20–40% | **Low** |
+| 40–60% | **Average** |
+| 60–80% | **High** |
+| 80–100% | **Very high** |
+
+These categories are relative to the institutional population. Therefore, a course classified as **Very high** does not necessarily represent an absolute quality threshold; it means that its score is among the highest within the analyzed set of courses.
+
+When all courses have the same score for a dimension, all courses are assigned the **Average** category to avoid artificial differentiation.
+
+## Indicator implementation
+
+The indicator calculations are implemented within the Analysis System and rely on Moodle connectors for retrieving the required source data.
+
+The general dependency is:
+
+```text
+Institutional Database
+        │
+        ▼
+Moodle Connector
+        │
+        ▼
+Raw Moodle Data
+        │
+        ▼
+Metric Calculation
+        │
+        ▼
+Indicator Calculation
+        │
+        ▼
+Aggregation / Discretization
+        │
+        ▼
+Local Database
+        │
+        ▼
+Front-End
+```
+
+When adding or modifying an indicator, the implementation should be documented together with:
+
+- Moodle source tables.
+- Raw metrics.
+- Calculation procedure.
+- Discretization or normalization method.
+- Aggregation level.
+- Interpretation.
+- Analysis System implementation.
+- Local Database storage.
+- Front-End visualization.
+
+### Metrics and indicators implementation status
+
+| Indicator | Student/Tutor | Main Moodle sources | Status |
+| --- | --- | --- | --- |
+| Engagement | Student | `mdl_forum_posts` | Implemented |
+| Motivation | Student | `mdl_forum_posts` | Implemented |
+| Performance | Student | `mdl_grade_grades` | Implemented |
+| Student-Instructor Interaction | Student | `mdl_forum_posts`, `mdl_messages` | Implemented |
+| Cognitive Depth | Student | `mdl_logstore_standard_log` | Implemented |
+| Dropout Risk | Student | `mdl_user_lastaccess`, `mdl_logstore_*` | Implemented |
+| Access | Tutor | `mdl_logstore_standard_log` | Implemented |
+| Forum Replies | Tutor | `mdl_forum_posts` | Implemented |
+| Feedback | Tutor | `mdl_assign_grades`, `mdl_feedback` | Implemented |
 
 ## Local database
 
