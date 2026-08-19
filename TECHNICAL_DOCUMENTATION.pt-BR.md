@@ -33,7 +33,7 @@ A documentação é destinada principalmente a desenvolvedores, pesquisadores e 
 
 ## Sobre esta documentação
 
-O projeto Prisma envolve diversos componentes técnicos, incluindo o Front-End, Back-End, processamento assíncrono, sistema de análise, bancos de dados e integração com o Moodle.
+O projeto Prisma envolve diversos componentes técnicos, incluindo o **Front-End, Back-End, processamento assíncrono, sistema de análise, bancos de dados e integração com o Moodle**.
 
 Este documento centraliza informações mais específicas sobre desenvolvimento e manutenção, como:
 
@@ -146,24 +146,6 @@ As seguintes versões foram testadas com a integração atual:
 
 > Esta tabela deve ser atualizada sempre que uma nova versão do Moodle for testada e validada.
 
-### Atualização para outra versão do Moodle
-
-Ao migrar a integração para uma nova versão do Moodle, o seguinte procedimento deve ser seguido:
-
-1. Identificar a versão do Moodle atualmente suportada pelo projeto.
-2. Verificar as alterações introduzidas pela versão de destino.
-3. Identificar alterações que possam afetar o processo de recuperação dos dados.
-4. Verificar se o conector existente permanece compatível.
-5. Atualizar o Mapeamento de Versões do Moodle, quando necessário.
-6. Criar ou atualizar o Conector do Moodle correspondente.
-7. Testar a autenticação e a comunicação com a nova versão do Moodle.
-8. Testar a recuperação dos dados do Banco de Dados Institucional.
-9. Validar o formato e a completude dos dados recuperados.
-10. Executar o processo de cálculo dos indicadores.
-11. Verificar se os indicadores resultantes foram armazenados corretamente no Banco de Dados Local.
-12. Validar as visualizações correspondentes no Front-End.
-13. Atualizar a tabela de versões suportadas nesta documentação.
-
 Quaisquer alterações específicas de versão ou problemas de compatibilidade devem ser documentados nesta seção para facilitar futuras migrações.
 
 ## Processamento de dados
@@ -211,35 +193,6 @@ O RabbitMQ atua como camada de comunicação entre a API e os Workers.
 A API cria tarefas de processamento e as coloca na fila de mensagens. Os Workers consomem essas tarefas e executam as operações necessárias.
 
 Essa separação permite que múltiplas tarefas de processamento sejam tratadas de forma independente e fornece um mecanismo para escalonar as operações executadas em segundo plano.
-
-```text
-Front-End
-    │
-    ▼
-   API
-    │
-    ▼
-RabbitMQ
-    │
-    ▼
- Workers
-    │
-    ▼
-Sistema de Análise
-    │
-    ├── Mapeamento de Versões do Moodle
-    │
-    └── Conector do Moodle
-             │
-             ▼
-Banco de Dados Institucional
-             │
-             ▼
-Cálculo dos Indicadores
-             │
-             ▼
-Banco de Dados Local
-```
 
 ## Métricas e indicadores
 
@@ -841,19 +794,19 @@ Alterações na integração com o Moodle, por exemplo, podem afetar a extraçã
 
 Os seguintes aspectos devem ser considerados durante a manutenção:
 
-- Compatibilidade com as versões do Moodle.
-- Conectores do Moodle.
-- Mapeamento de versões do Moodle.
-- Comportamento da API.
-- Configuração do RabbitMQ.
-- Processos dos Workers.
-- Sistema de Análise.
-- Cálculo dos indicadores.
-- Estrutura e persistência do banco de dados.
-- Visualizações do Front-End.
-- Autenticação e regras de acesso.
-- Internacionalização.
-- Dependências externas.
+* Compatibilidade com as versões do Moodle.
+* Conectores do Moodle.
+* Mapeamento de versões do Moodle.
+* Comportamento da API.
+* Configuração do RabbitMQ.
+* Processos dos Workers.
+* Sistema de Análise.
+* Cálculo dos indicadores.
+* Estrutura e persistência do banco de dados.
+* Visualizações do Front-End.
+* Autenticação e regras de acesso.
+* Internacionalização.
+* Dependências externas.
 
 ### Adicionando ou modificando uma métrica
 
@@ -871,17 +824,378 @@ Ao criar ou modificar uma métrica:
 
 ### Adicionando suporte a uma nova versão do Moodle
 
-Ao adicionar suporte a uma nova versão do Moodle:
+O suporte a uma nova versão do Moodle é implementado principalmente na camada de mapeamento e conectores do Moodle.
 
-1. Identificar as diferenças em relação às versões anteriormente suportadas.
-2. Implementar ou atualizar o conector apropriado.
-3. Atualizar o Mapeamento de Versões do Moodle.
-4. Testar a conexão.
-5. Testar a recuperação dos dados.
-6. Executar o processo de análise.
-7. Validar os indicadores gerados.
-8. Atualizar a tabela de versões suportadas.
-9. Documentar qualquer comportamento específico da versão.
+```text
+src/
+└── analysis_lib/
+    └── mapper/
+        ├── map.py
+        ├── moodle.py
+        └── connectors/
+            └── moodle3_1.py
+```
+
+Atualmente, o Prisma fornece um conector específico para o Moodle 3.1.3:
+
+```text
+src/analysis_lib/mapper/connectors/moodle3_1.py
+```
+
+O componente `map.py` é responsável por identificar a versão do Moodle e selecionar o conector correspondente.
+
+O fluxo geral é:
+
+```text
+Conexão com o Banco de Dados do Moodle
+          │
+          ▼
+        map.py
+          │
+          ├── get_moodle_version()
+          │
+          ▼
+     Versão identificada
+          │
+          ▼
+       get_moodle()
+          │
+          ├── 3.1.3 → Moodle31
+          │
+          └── nova versão → MoodleXX
+                              │
+                              ▼
+                       Consultas específicas
+                         da versão
+```
+
+### Identificar a versão atual do Moodle
+
+A versão do Moodle é obtida diretamente do banco de dados institucional por meio da seguinte consulta:
+
+```sql
+SELECT name, value
+FROM mdl_config
+WHERE name = 'release'
+```
+
+Essa operação é realizada por:
+
+```text
+src/analysis_lib/mapper/map.py
+└── Mapper.get_moodle_version()
+```
+
+O método recupera a versão de lançamento do Moodle, que posteriormente é utilizada para selecionar o conector apropriado.
+
+### 2. Verificar como a versão é mapeada
+
+O método `get_moodle()` em `map.py` associa as versões do Moodle suportadas aos seus respectivos conectores.
+
+Por exemplo:
+
+```python
+def get_moodle(self, connector, version):
+    match version:
+        case '3.1.3':
+            return Moodle31(connector)
+        case _:
+            raise ValueError("Unsupported Moodle version")
+```
+
+Ao adicionar uma nova versão, um novo `case` deve ser incluído no mapeamento de versões.
+
+Por exemplo, para adicionar suporte ao Moodle `4.1.0`:
+
+```python
+case '4.1.0':
+    return Moodle410(connector)
+```
+
+### 3. Criar o conector para a nova versão
+
+Crie um novo arquivo de conector em:
+
+```text
+src/analysis_lib/mapper/connectors/
+```
+
+Por exemplo:
+
+```text
+src/analysis_lib/mapper/connectors/moodle4_1.py
+```
+
+O novo conector deve seguir a estrutura do conector específico da versão existente:
+
+```python
+from ..moodle import Moodle
+
+class Moodle410(Moodle):
+    ...
+```
+
+O conector é responsável por implementar ou adaptar as consultas necessárias ao Prisma para a versão do Moodle escolhida.
+
+O conector existente pode ser utilizado como referência inicial:
+
+```text
+src/analysis_lib/mapper/connectors/moodle3_1.py
+```
+
+As consultas SQL existentes não devem ser consideradas automaticamente compatíveis com a nova versão. As tabelas, campos e relacionamentos do banco de dados do Moodle devem ser verificados antes de reutilizá-las.
+
+### 4. Verificar os métodos utilizados pelo Mapper
+
+O componente `map.py` contém métodos que encaminham as requisições para o conector do Moodle selecionado.
+
+Os métodos atualmente utilizados pelo sistema incluem:
+
+```text
+get_general_query()
+get_engagement_data()
+get_all_students()
+get_courses()
+get_activity_weights()
+get_grades_by_course()
+get_foruns_non_required()
+get_forum_data()
+get_course_forum_viewed()
+get_forum_post_created()
+forum_reply_viewed()
+get_assign_submission_status_viewed()
+get_assign_assessable_submitted()
+get_assign_feedback_viewed()
+get_quizz_viewed()
+get_quizz_attempt_submitted()
+get_quizz_attempt_reviewd()
+fetch_subject_info()
+fetch_total_enrollment()
+get_pct_usage_resource()
+get_all_subjects()
+get_daily_active_subjects()
+get_week_active_subjects()
+get_month_active_subjects()
+fetch_student_summary()
+fetch_student_grades()
+fetch_subjects_summary()
+fetch_institution_info()
+fetch_responses_forums()
+fetch_subjects_summary()
+fetch_tutors_login_subject()
+fetch_daily_events()
+fetch_subject_info_tutors()
+fetch_tutors_names()
+fetch_tutors_names_by_ids()
+fetch_forum_messages_counts()
+fetch_tutor_summary()
+fetch_institution_info_tutors()
+fetch_tutors_feedback_subject()
+fetch_tutors_access_days()
+fetch_all_tutors()
+fetch_subjects_summary_tutors()
+```
+
+Esses métodos devem ser comparados com os métodos disponíveis no novo conector.
+
+A relação geral é:
+
+```text
+Mapper
+   │
+   ├── identifica a versão do Moodle
+   │
+   ├── seleciona o conector correspondente
+   │
+   ▼
+Moodle410
+   │
+   ├── get_courses()
+   ├── get_grades_by_course()
+   ├── get_forum_data()
+   ├── ...
+   │
+   ▼
+Banco de Dados do Moodle
+```
+
+Os métodos do `Mapper` normalmente não precisam ser duplicados para cada versão do Moodle. Em vez disso, o comportamento específico de cada versão deve ser implementado no conector selecionado por `get_moodle()`.
+
+### 5. Comparar as consultas SQL
+
+O arquivo:
+
+```text
+src/analysis_lib/mapper/connectors/moodle3_1.py
+```
+
+contém as consultas SQL utilizadas pelo Prisma para recuperar dados do Moodle.
+
+Ao adicionar uma nova versão do Moodle, cada consulta deve ser revisada para verificar se:
+
+* as tabelas necessárias ainda existem;
+* os campos necessários ainda existem;
+* os nomes dos campos não foram alterados;
+* os relacionamentos entre as tabelas permanecem válidos;
+* os valores retornados possuem o formato esperado;
+* as funções SQL utilizadas pelas consultas continuam disponíveis;
+* as consultas ainda retornam todos os dados necessários para os indicadores.
+
+Por exemplo, se o conector existente contém:
+
+```sql
+SELECT *
+FROM mdl_course
+```
+
+a estrutura de `mdl_course` deve ser verificada na versão do Moodle de destino.
+
+Consultas que dependem de estruturas específicas de uma versão do Moodle devem ser adaptadas no novo conector quando necessário.
+
+### 6. Criar uma cópia inicial do conector
+
+Uma abordagem recomendada é utilizar o conector existente como ponto de partida para a nova versão:
+
+```text
+moodle3_1.py
+      │
+      │ copiar e adaptar
+      ▼
+moodle4_1.py
+```
+
+O novo conector deve então ser revisado e modificado apenas nos pontos em que a versão de destino apresentar diferenças.
+
+Manter as implementações específicas de cada versão em conectores separados evita a introdução de lógica condicional específica de versão em diversas consultas individuais.
+
+### 7. Registrar o novo conector em `map.py`
+
+Importe a nova classe do conector em `map.py`:
+
+```python
+from .connectors.moodle3_1 import Moodle31
+from .connectors.moodle4_1 import Moodle410
+```
+
+Em seguida, adicione a nova versão ao método `get_moodle()`:
+
+```python
+def get_moodle(self, connector, version):
+    match version:
+        case '3.1.3':
+            return Moodle31(connector)
+        case '4.1.0':
+            return Moodle410(connector)
+        case _:
+            raise ValueError("Unsupported Moodle version")
+```
+
+### 8. Testar a identificação da versão do Moodle
+
+Antes de testar os indicadores, verifique se o Prisma identifica corretamente a nova versão do Moodle.
+
+O fluxo esperado é:
+
+```text
+Banco de Dados do Moodle
+     │
+     ▼
+mdl_config
+     │
+     ▼
+get_moodle_version()
+     │
+     ▼
+"4.1.0"
+     │
+     ▼
+get_moodle()
+     │
+     ▼
+Moodle410
+```
+
+A configuração da conexão com o Moodle também pode ser testada por meio das rotas administrativas do Back-End:
+
+```text
+/admin/moodle-config
+/admin/moodle-config/test
+```
+
+Essas rotas utilizam:
+
+```
+pre_api/services/moodle_config_service.py
+```
+
+### 9. Testar as consultas individualmente
+
+Antes de executar todo o pipeline de processamento dos indicadores, as consultas do novo conector devem ser testadas individualmente.
+
+No mínimo, deve-se verificar:
+
+* recuperação de cursos;
+* recuperação de estudantes;
+* recuperação de notas;
+* recuperação de fóruns;
+* recuperação de atividades;
+* recuperação de informações dos cursos;
+* recuperação de dados dos tutores;
+* recuperação de eventos;
+* dados necessários para os indicadores dos estudantes;
+* dados necessários para os indicadores dos tutores.
+
+O objetivo não é apenas verificar se as consultas são executadas com sucesso, mas também se seus resultados possuem a estrutura esperada pelo restante do sistema.
+
+### 10. Executar o pipeline de processamento dos indicadores
+
+Após validar o conector, execute o pipeline normal de processamento:
+
+```text
+Moodle
+   ↓
+Conector do Moodle
+   ↓
+Sistema de Análise
+   ↓
+Cálculo dos Indicadores
+   ↓
+Banco de Dados Local
+```
+
+Verifique se todos os indicadores dependentes dos dados do Moodle continuam sendo calculados corretamente.
+
+### 11. Validar os resultados no Front-End
+
+Por fim, verifique se os dados processados são exibidos corretamente no Front-End.
+
+A validação deve incluir:
+
+* indicadores;
+* rankings;
+* gráficos;
+* informações dos estudantes;
+* informações dos cursos;
+* informações dos tutores;
+* outras visualizações dependentes dos dados do Moodle.
+
+### Checklist para adicionar uma nova versão do Moodle
+
+- [ ] Identificar a versão do Moodle.
+- [ ] Verificar alterações na estrutura do banco de dados do Moodle.
+- [ ] Comparar as tabelas e os campos utilizados pelo Prisma.
+- [ ] Criar o novo conector em src/analysis_lib/mapper/connectors/.
+- [ ] Adaptar as consultas SQL necessárias.
+- [ ] Verificar todos os métodos utilizados pelo Mapper.
+- [ ] Registrar o novo conector em map.py.
+- [ ] Testar a identificação da versão do Moodle.
+- [ ] Testar a conexão com o Moodle.
+- [ ] Testar a recuperação dos dados.
+- [ ] Executar o cálculo dos indicadores.
+- [ ] Validar os dados armazenados no Banco de Dados Local.
+- [ ] Validar as visualizações do Front-End.
+- [ ] Adicionar a nova versão à tabela de versões suportadas.
+- [ ] Documentar comportamentos específicos da versão.
 
 ## Testes e validação
 

@@ -33,14 +33,15 @@ The documentation is intended primarily for developers, researchers and future c
 
 ## About this documentation
 
-The Prisma project involves multiple technical components, including the frontend, backend and integration with Moodle.
+The Prisma project involves several technical components, including the **Front-End, Back-End, asynchronous processing, analysis system, databases, and Moodle integration**.
 
 This document centralizes information that is more specific to development and maintenance, such as:
 
-- System architecture and component relationships.
-- Moodle integration requirements.
+- System architecture and relationships between its component.
+- Requirements for Moodle integration.
 - Procedures for updating Moodle versions.
 - Metrics and indicators used by the system.
+- Data processing and persistence.
 - Maintenance and extension guidelines.
 - Technical decisions and relevant implementation details.
 
@@ -62,9 +63,9 @@ The **Client Layer** contains the web interface through which users interact wit
 
 - **Front-End:** Web application responsible for presenting dashboards, indicators, rankings, graphs and other visualizations to users.
 
-#### Backend
+#### Back-end
 
-The backend is responsible for handling requests, orchestrating data processing and coordinating communication between the different components of the system.
+The back-end is responsible for handling requests, orchestrating data processing and coordinating communication between the different components of the system.
 
 ##### Ingestion and orchestration
 
