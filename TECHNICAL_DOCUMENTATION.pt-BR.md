@@ -778,13 +778,367 @@ Ao adicionar ou modificar um indicador, a implementação deve ser documentada j
 
 ## Banco de dados local
 
-O Banco de Dados Local é responsável por armazenar os indicadores e resultados processados gerados pelo Prisma.
+O Banco de Dados Local do Prisma utiliza **PostgreSQL** e é responsável por armazenar as configurações de conexão, o estado dos processos de análise e os indicadores calculados pelo Sistema de Análise.
 
-O banco de dados utiliza PostgreSQL.
+Sua principal função é manter os resultados processados de forma persistente, permitindo que a API e o Front-End consultem os indicadores sem a necessidade de executar novamente todo o processo de análise a cada requisição.
 
-As informações armazenadas permitem que o Front-End recupere resultados previamente calculados sem que seja necessário executar novamente todo o processo de análise a cada requisição.
+O banco é organizado em tabelas que armazenam informações em diferentes níveis de granularidade, incluindo:
 
-> Os esquemas, tabelas e relacionamentos do banco de dados devem ser documentados aqui quando estiverem estáveis e forem relevantes para futuras atividades de manutenção.
+- **Configurações e controle do sistema**;
+- **Status do processamento das disciplinas**;
+- **Status individual dos indicadores**;
+- **Indicadores de estudantes**;
+- **Indicadores agregados de estudantes por disciplina**;
+- **Indicadores de tutores**;
+- **Indicadores agregados de tutores por disciplina**;
+- **Status do agendador de tarefas**.
+
+### Estrutura do banco de dados
+
+As principais tabelas do Banco de Dados Local são:
+
+| Tabela | Nível | Finalidade |
+| --- | --- | --- |
+| `configs` | Instituição | Armazena as configurações de conexão com o banco institucional e a versão do Moodle utilizada. |
+| `subjects_status` | Disciplina | Armazena o status do processamento de uma disciplina. |
+| `subject_indicator_status` | Disciplina / Indicador / Ator | Controla o status do processamento de cada indicador para uma disciplina e um tipo de ator. |
+| `local_indicators_students` | Estudante / Disciplina | Armazena as métricas e classificações dos indicadores de cada estudante. |
+| `global_indicators_students` | Disciplina | Armazena os indicadores estudantis agregados no nível da disciplina. |
+| `local_indicators_tutors` | Tutor / Disciplina | Armazena as métricas e classificações dos indicadores de cada tutor. |
+| `global_indicators_tutors` | Disciplina | Armazena os indicadores de tutores agregados no nível da disciplina. |
+| `scheduler_status` | Sistema | Armazena o estado e a execução dos processos agendados. |
+
+### Tabela `configs`
+
+A tabela `configs` armazena as informações necessárias para estabelecer a conexão do Prisma com o Banco de Dados Institucional.
+
+| Coluna | Tipo | Descrição |
+| --- | --- | --- |
+| `institution_id` | `Integer` | Identificador da instituição. |
+| `version` | `String(40)` | Versão do Moodle utilizada pela instituição. |
+| `host` | `String` | Endereço do servidor do banco institucional. |
+| `port` | `Integer` | Porta utilizada para conexão. |
+| `database` | `String` | Nome do banco de dados institucional. |
+| `user` | `String` | Usuário utilizado na conexão. |
+| `password` | `String(512)` | Senha da conexão, armazenada de forma criptografada. |
+
+**Chave primária:**
+
+```text
+institution_id
+```
+
+A senha armazenada nessa tabela é criptografada por meio das funções `encrypt_config_secret()` e `decrypt_config_secret()`.
+
+### Tabela `subjects_status`
+
+A tabela `subjects_status` controla o estado do processamento das disciplinas.
+
+| Coluna           | Tipo         | Descrição                                      |
+| ---------------- | ------------ | ---------------------------------------------- |
+| `institution_id` | `Integer`    | Identificador da instituição.                  |
+| `subject_id`     | `Integer`    | Identificador da disciplina.                   |
+| `status`         | `String(1)`  | Estado do processamento da disciplina.         |
+| `start_date`     | `Date`       | Data inicial do período de análise.            |
+| `end_date`       | `Date`       | Data final do período de análise.              |
+| `updated_at`     | `DateTime`   | Data e hora da última atualização do registro. |
+| `update_type`    | `String(50)` | Tipo de atualização realizada.                 |
+
+Os estados utilizados pelo sistema incluem:
+
+```text
+P = Processing
+D = Done
+E = Error
+```
+
+Chave primária composta:
+
+```text
+institution_id + subject_id
+```
+### Tabela `subject_indicator_status`
+
+A tabela `subject_indicator_status` permite controlar individualmente o processamento de cada indicador para uma disciplina e um determinado ator.
+
+| Coluna           | Tipo         | Descrição                                                     |
+| ---------------- | ------------ | ------------------------------------------------------------- |
+| `institution_id` | `Integer`    | Identificador da instituição.                                 |
+| `subject_id`     | `Integer`    | Identificador da disciplina.                                  |
+| `actor`          | `String(20)` | Tipo de ator associado ao indicador, como estudante ou tutor. |
+| `indicator_name` | `String(50)` | Nome do indicador.                                            |
+| `status`         | `String(1)`  | Estado do processamento do indicador.                         |
+| `updated_at`     | `DateTime`   | Data e hora da última atualização.                            |
+
+Chave primária composta:
+
+```text
+institution_id + subject_id + actor + indicator_name
+```
+
+Essa tabela permite, por exemplo, identificar se um determinado indicador de estudantes ou tutores já foi processado para uma disciplina específica.
+
+### Tabela `local_indicators_students`
+
+A tabela `local_indicators_students` armazena os indicadores calculados individualmente para cada estudante em uma disciplina.
+
+| Coluna                                 | Tipo         | Descrição                                                       |
+| -------------------------------------- | ------------ | --------------------------------------------------------------- |
+| `institution_id`                       | `Integer`    | Identificador da instituição.                                   |
+| `version`                              | `String(40)` | Versão do Moodle.                                               |
+| `subject_id`                           | `Integer`    | Identificador da disciplina.                                    |
+| `student_id`                           | `Integer`    | Identificador do estudante.                                     |
+| `n_posts_engagement`                   | `Integer`    | Número de postagens utilizadas para o indicador de engajamento. |
+| `label_engagement`                     | `String(32)` | Classificação do engajamento.                                   |
+| `n_posts_motivation`                   | `Integer`    | Número de postagens utilizadas para o indicador de motivação.   |
+| `label_motivation`                     | `String(32)` | Classificação da motivação.                                     |
+| `grade_performance`                    | `Float`      | Nota utilizada no cálculo do desempenho.                        |
+| `grade_comparative_performance`        | `Float`      | Medida de desempenho comparativo em relação à turma.            |
+| `label_performance`                    | `String(32)` | Classificação do desempenho.                                    |
+| `mean_forum_interactions_cognitive`    | `Float`      | Média das interações cognitivas em fóruns.                      |
+| `mean_quiz_interactions_cognitive`     | `Float`      | Média das interações cognitivas em questionários.               |
+| `mean_assign_interactions_cognitive`   | `Float`      | Média das interações cognitivas em atividades.                  |
+| `label_cognitive`                      | `String(32)` | Classificação da profundidade cognitiva.                        |
+| `n_responses_relation_teacher_student` | `Integer`    | Número de interações entre estudante e professor/tutor.         |
+| `label_relation_teacher_student`       | `String(32)` | Classificação da interação estudante-instrutor.                 |
+| `label_give_up`                        | `String(32)` | Classificação relacionada ao risco de evasão.                   |
+
+Chave primária composta:
+
+```text
+institution_id + version + subject_id + student_id
+```
+
+Essa tabela representa o nível local/individual, pois cada registro corresponde a um estudante dentro de uma disciplina.
+
+### Tabela `global_indicators_students`
+
+A tabela `global_indicators_students` armazena os indicadores estudantis agregados no nível da disciplina.
+
+| Coluna                                    | Tipo         | Descrição                                              |
+| ----------------------------------------- | ------------ | ------------------------------------------------------ |
+| `institution_id`                          | `Integer`    | Identificador da instituição.                          |
+| `version`                                 | `String(40)` | Versão do Moodle.                                      |
+| `subject_id`                              | `Integer`    | Identificador da disciplina.                           |
+| `mean_posts_engagement`                   | `Float`      | Média do indicador de engajamento dos estudantes.      |
+| `label_engagement`                        | `String(32)` | Classificação global do engajamento.                   |
+| `mean_posts_motivation`                   | `Float`      | Média do indicador de motivação dos estudantes.        |
+| `label_motivation`                        | `String(32)` | Classificação global da motivação.                     |
+| `mean_grade_performance`                  | `Float`      | Média do desempenho dos estudantes.                    |
+| `label_performance`                       | `String(32)` | Classificação global do desempenho.                    |
+| `mean_interactions_cognitive`             | `Float`      | Média da profundidade cognitiva dos estudantes.        |
+| `label_cognitive`                         | `String(32)` | Classificação global da profundidade cognitiva.        |
+| `mean_responses_relation_teacher_student` | `Float`      | Média da interação estudante-instrutor.                |
+| `label_relation_teacher_student`          | `String(32)` | Classificação global da interação estudante-instrutor. |
+| `mean_give_up`                            | `Float`      | Proporção/média relacionada ao risco de evasão.        |
+| `label_give_up`                           | `String(32)` | Classificação global do risco de evasão.               |
+
+Chave primária composta:
+
+```text
+institution_id + version + subject_id
+```
+
+Essa tabela representa o nível global da disciplina, sendo alimentada a partir dos resultados individuais dos estudantes.
+
+### Tabela `local_indicators_tutors`
+
+A tabela `local_indicators_tutors` armazena os indicadores calculados individualmente para cada tutor em uma disciplina.
+
+| Coluna                               | Tipo         | Descrição                                                  |
+| ------------------------------------ | ------------ | ---------------------------------------------------------- |
+| `institution_id`                     | `Integer`    | Identificador da instituição.                              |
+| `version`                            | `String(40)` | Versão do Moodle.                                          |
+| `subject_id`                         | `Integer`    | Identificador da disciplina.                               |
+| `tutor_id`                           | `Integer`    | Identificador do tutor.                                    |
+| `median_forums_response_hours`       | `Float`      | Tempo mediano de resposta em fóruns, em horas.             |
+| `mean_forums_response_hours`         | `Float`      | Tempo médio de resposta em fóruns, em horas.               |
+| `total_response_forum`               | `Integer`    | Número total de respostas em fóruns.                       |
+| `score_access`                       | `Float`      | Pontuação de acesso do tutor.                              |
+| `mean_forums_response_hours_label`   | `String(32)` | Classificação do tempo médio de resposta.                  |
+| `median_forums_response_hours_label` | `String(32)` | Classificação do tempo mediano de resposta.                |
+| `score_access_label`                 | `String(32)` | Classificação da pontuação de acesso.                      |
+| `label_forums_response`              | `String(32)` | Classificação geral das respostas em fóruns.               |
+| `num_response_fast_forum`            | `Integer`    | Número de respostas rápidas.                               |
+| `num_response_late_forum`            | `Integer`    | Número de respostas atrasadas.                             |
+| `num_response_normal_forum`          | `Integer`    | Número de respostas normais.                               |
+| `n_login`                            | `Integer`    | Número de logins realizados pelo tutor.                    |
+| `n_login_subject`                    | `Integer`    | Número de acessos à disciplina.                            |
+| `n_login_weekly`                     | `Integer`    | Frequência semanal de login.                               |
+| `n_login_label`                      | `String(32)` | Classificação da frequência de login.                      |
+| `maximum_inactivity_days`            | `Integer`    | Maior período de inatividade do tutor, em dias.            |
+| `n_login_weekly_label`               | `String(32)` | Classificação da frequência semanal de login.              |
+| `label_access`                       | `String(32)` | Classificação geral do acesso.                             |
+| `maximum_inactivity_days_label`      | `String(32)` | Classificação do período máximo de inatividade.            |
+| `n_corrections`                      | `Integer`    | Número de atividades avaliadas/corrigidas.                 |
+| `n_corrections_with_feedback`        | `Integer`    | Número de atividades corrigidas com feedback.              |
+| `percentage_feedback`                | `Float`      | Percentual de atividades avaliadas que receberam feedback. |
+| `n_textual_feedback`                 | `Integer`    | Número de feedbacks textuais.                              |
+| `n_feedback_pdf`                     | `Integer`    | Número de feedbacks fornecidos em arquivo/PDF.             |
+| `n_corrections_label`                | `String(32)` | Classificação do número de correções.                      |
+| `n_corrections_with_feedback_label`  | `String(32)` | Classificação das correções com feedback.                  |
+| `percentage_feedback_label`          | `String(32)` | Classificação do percentual de feedback.                   |
+| `n_textual_feedback_label`           | `String(32)` | Classificação do feedback textual.                         |
+| `n_feedback_pdf_label`               | `String(32)` | Classificação do feedback em arquivo.                      |
+| `label_feedback`                     | `String(32)` | Classificação geral do feedback.                           |
+
+Chave primária composta:
+
+```text
+institution_id + version + subject_id + tutor_id
+```
+
+Essa tabela representa o nível local/individual dos tutores.
+
+### Tabela `global_indicators_tutors`
+
+A tabela `global_indicators_tutors` armazena os indicadores de tutores agregados no nível da disciplina.
+
+| Coluna                  | Tipo         | Descrição                                     |
+| ----------------------- | ------------ | --------------------------------------------- |
+| `institution_id`        | `Integer`    | Identificador da instituição.                 |
+| `version`               | `String(40)` | Versão do Moodle.                             |
+| `subject_id`            | `Integer`    | Identificador da disciplina.                  |
+| `score_global_forum`    | `Float`      | Pontuação global de respostas em fóruns.      |
+| `label_global_forum`    | `String(32)` | Classificação global das respostas em fóruns. |
+| `score_global_access`   | `Float`      | Pontuação global de acesso.                   |
+| `label_global_access`   | `String(32)` | Classificação global do acesso.               |
+| `score_global_feedback` | `Float`      | Pontuação global de feedback.                 |
+| `label_global_feedback` | `String(32)` | Classificação global do feedback.             |
+
+
+Chave primária composta:
+
+```text
+institution_id + version + subject_id
+```
+
+Os valores são obtidos a partir da agregação dos indicadores individuais dos tutores associados à disciplina.
+
+### Tabela `scheduler_status`
+
+A tabela `scheduler_status` armazena informações sobre a execução dos processos agendados do sistema.
+
+| Coluna             | Tipo           | Descrição                                              |
+| ------------------ | -------------- | ------------------------------------------------------ |
+| `job_id`           | `String(100)`  | Identificador único do processo agendado.              |
+| `channel`          | `String(50)`   | Canal associado ao processo.                           |
+| `process_id`       | `Integer`      | Identificador do processo em execução.                 |
+| `next_run_at`      | `DateTime`     | Data e hora previstas para a próxima execução.         |
+| `heartbeat_at`     | `DateTime`     | Data e hora do último sinal de atividade do processo.  |
+| `last_started_at`  | `DateTime`     | Data e hora do início da última execução.              |
+| `last_finished_at` | `DateTime`     | Data e hora do término da última execução.             |
+| `last_status`      | `String(20)`   | Status da última execução.                             |
+| `last_error`       | `String(1000)` | Mensagem de erro da última execução, quando existente. |
+| `updated_at`       | `DateTime`     | Data e hora da última atualização do registro.         |
+
+### Relacionamento entre os dados
+
+Os registros são organizados principalmente a partir da instituição, versão do Moodle e disciplina.
+
+A estrutura de indicadores segue uma relação de agregação:
+
+```text
+Instituição
+    │
+    ├── Versão do Moodle
+    │
+    └── Disciplina
+          │
+          ├── Estudantes
+          │      │
+          │      └── local_indicators_students
+          │
+          ├── Indicadores agregados
+          │      │
+          │      └── global_indicators_students
+          │
+          └── Tutores
+                 │
+                 ├── local_indicators_tutors
+                 │
+                 └── global_indicators_tutors
+```
+
+Além das tabelas de indicadores, o banco mantém tabelas de controle responsáveis pelo acompanhamento do processamento:
+
+```text
+configs
+    │
+    └── Configuração da instituição
+
+subjects_status
+    │
+    └── Status de processamento da disciplina
+
+subject_indicator_status
+    │
+    └── Status de processamento por indicador
+
+scheduler_status
+    │
+    └── Status dos processos agendados
+```
+
+### Níveis de armazenamento
+
+Os indicadores são armazenados em dois níveis principais:
+
+| Nível                   | Tabela                       | Unidade de análise                 |
+| ----------------------- | ---------------------------- | ---------------------------------- |
+| **Local — Estudante**   | `local_indicators_students`  | Estudante dentro de uma disciplina |
+| **Global — Estudantes** | `global_indicators_students` | Disciplina                         |
+| **Local — Tutor**       | `local_indicators_tutors`    | Tutor dentro de uma disciplina     |
+| **Global — Tutores**    | `global_indicators_tutors`   | Disciplina                         |
+
+Essa separação permite que o Prisma mantenha tanto os resultados individuais, utilizados para análises mais detalhadas, quanto os resultados agregados, utilizados na apresentação dos indicadores no nível da disciplina.
+
+### Diagrama entidade-relacionamento
+
+A estrutura conceitual do Banco de Dados Local pode ser representada pelo seguinte relacionamento:
+
+<p align="center">
+  <img src="docs/assets/DER_prisma.png" alt="Diagrama Entidade-Relacionamento" width="60%">
+</p>
+
+### Persistência dos indicadores
+
+O fluxo de persistência dos indicadores pode ser resumido como:
+
+```text
+Banco de Dados Institucional
+          │
+          ▼
+     Conector Moodle
+          │
+          ▼
+   Sistema de Análise
+          │
+          ▼
+ Cálculo das métricas
+          │
+          ▼
+ Cálculo dos indicadores
+          │
+          ├───────────────────────┐
+          ▼                       ▼
+Indicadores locais          Agregação
+          │                       │
+          │                       ▼
+          │              Indicadores globais
+          │                       │
+          └───────────┬───────────┘
+                      ▼
+             Banco de Dados Local
+                      │
+                      ▼
+                     API
+                      │
+                      ▼
+                  Front-End
+```
+
+Dessa forma, o Banco de Dados Local funciona como a camada de persistência dos resultados produzidos pelo Sistema de Análise, mantendo separados os dados individuais dos estudantes e tutores e os indicadores agregados no nível das disciplinas.
 
 ## Manutenção
 
