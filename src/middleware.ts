@@ -3,6 +3,8 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { routing } from "@/i18n/routing";
 
+const DEMO_MODE = process.env.NEXT_PUBLIC_DEMO_MODE === "true";
+
 const intlMiddleware = createIntlMiddleware(routing);
 
 export const config = {
@@ -38,6 +40,9 @@ function withAuthCookie(response: NextResponse, authSetCookie: string | null) {
 }
 
 export async function middleware(request: NextRequest) {
+  if(DEMO_MODE){
+    return intlMiddleware(request);
+  }
   const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
   const { pathnameWithoutLocale, localePrefix } = getPathInfo(
     request.nextUrl.pathname

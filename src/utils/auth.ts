@@ -26,6 +26,10 @@ export async function signOut() {
 }
 
 export async function getCurrentUser(): Promise<AuthUser | null> {
+    if(process.env.NEXT_PUBLIC_DEMO_MODE === "true"){
+       const { demoUser } = await import("@/demo/mockData");
+       return demoUser;
+    }
     try {
         const response = await api.get<AuthResponse>('/auth/me');
         return response.data.user;

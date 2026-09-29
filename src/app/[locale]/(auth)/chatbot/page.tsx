@@ -16,8 +16,7 @@ export default function ChatPage() {
 
                 <div className="col-span-6 h-full">
                     <ChatbotPage
-                        setResponse={setResponse}
-                    />
+                        setResponse={setResponse} />
                 </div>
 
                 <div className="col-span-6 flex flex-col gap-6 h-full">
