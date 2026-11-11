@@ -49,6 +49,24 @@ O Prisma é um projeto acadêmico desenvolvido na Universidade Federal de Juiz d
 
 O projeto reúne pesquisa e desenvolvimento tecnológico nas áreas de Computação e Educação, com foco no uso de dados educacionais, indicadores, visualizações e ferramentas computacionais para apoiar o acompanhamento acadêmico e a tomada de decisões.
 
+### Vídeo de apresentação
+
+<p align="center">
+  <a href="https://www.youtube.com/watch?v=XMu-aQlqkRI">
+    <img
+      src="https://img.youtube.com/vi/XMu-aQlqkRI/hqdefault.jpg"
+      alt="Assistir à apresentação do Prisma no YouTube"
+      width="85%"
+    >
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://www.youtube.com/watch?v=XMu-aQlqkRI">
+    ▶ Assistir à apresentação completa do PRISMA no YouTube
+  </a>
+</p>
+
 ### Colaboradores
 
 O projeto contou com a participação dos seguintes colaboradores em suas atividades de pesquisa, desenvolvimento e acadêmicas:
