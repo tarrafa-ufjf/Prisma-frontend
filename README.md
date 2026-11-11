@@ -43,6 +43,24 @@ This repository contains the web application. The API, authentication and access
   <img src="docs/assets/gif_interface.gif" alt="Prisma interface demonstration" width="85%">
 </p>
 
+### Presentation Video
+
+<p align="center">
+  <a href="https://www.youtube.com/watch?v=XMu-aQlqkRI">
+    <img
+      src="https://img.youtube.com/vi/XMu-aQlqkRI/hqdefault.jpg"
+      alt="Watch the PRISMA presentation on YouTube"
+      width="85%"
+    >
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://www.youtube.com/watch?v=XMu-aQlqkRI">
+    ▶ Watch the full PRISMA presentation on YouTube
+  </a>
+</p>
+
 ## Project
 
 Prisma is an academic project developed at the Federal University of Juiz de Fora (UFJF), as part of the research and development activities of the [LApIC — Laboratory of Innovative Applications in Computing](https://www.lapic.com.br/).
